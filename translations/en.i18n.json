@@ -1,6 +1,12 @@
 {
   "en": {
     "playlist": {
+      "show-plugin": "Show Playlist",
+      "hide-plugin": "Hide Playlist",
+      "amount-items": {
+        "one": "video",
+        "many": "{{count}} videos"
+      }
     }
   }
 }

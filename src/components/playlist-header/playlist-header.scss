@@ -1,0 +1,40 @@
+.playlistHeader {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  height: 48px;
+  .playlistMetadata {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: inherit;
+    .playlistTitle {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 21px;
+      color: #ffffff;
+    }
+    .playlistDuration {
+      margin-top: 3px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 18px;
+      color: #cccccc;
+    }
+  }
+  .closeButtonWrapper {
+    height: inherit;
+    padding-top: 4px;
+    padding-right: 4px;
+    .closeButton {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
