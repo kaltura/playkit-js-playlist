@@ -25,7 +25,7 @@ export const PlaylistHeader = withText(translates)(({onClose, title, amount, dur
     <div className={styles.playlistHeader}>
       <div className={styles.playlistMetadata}>
         <div className={styles.playlistTitle}>{title}</div>
-        <div className={styles.playlistDuration}>{`${amount}, ${duration}`}</div>
+        <div className={styles.playlistDuration}>{`${amount},${duration}`}</div>
       </div>
       <div className={styles.closeButtonWrapper}>
         <Tooltip label={otherProps.closeButtonLabel} type="bottom">

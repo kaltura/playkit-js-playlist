@@ -1,8 +1,9 @@
 import {h} from 'preact';
-import {useCallback} from 'preact/hooks';
+import {useCallback, useMemo} from 'preact/hooks';
 import * as styles from './playlist-wrapper.scss';
 import {PlaylistHeader} from '../playlist-header';
-import {PlaylistContent} from '../playlist-content';
+import {PlaylistItem} from '../playlist-item';
+import {convertDuration} from '../../utils';
 
 const {Tooltip, Icon} = KalturaPlayer.ui.components;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
@@ -18,7 +19,10 @@ const translates = ({player}: PlaylistWrapperProps) => {
         fields={{
           count: amount
         }}>{`${amount} videos`}</Text>
-    )
+    ),
+    hour: <Text id="playlist.hour">hr</Text>,
+    min: <Text id="playlist.min">min</Text>,
+    sec: <Text id="playlist.sec">sec</Text>
   };
 };
 
@@ -27,23 +31,52 @@ interface PlaylistWrapperProps {
   player: KalturaPlayerTypes.Player;
   eventManager: KalturaPlayerTypes.EventManager;
   amount?: string;
+  hour?: string;
+  min?: string;
+  sec?: string;
 }
 
-export const PlaylistWrapper = withText(translates)(({onClose, amount, player}: PlaylistWrapperProps) => {
+export const PlaylistWrapper = withText(translates)(({onClose, amount, player, ...otherProps}: PlaylistWrapperProps) => {
   // @ts-ignore
   const {playlist} = player;
 
   const handlePlaylistItemClick = useCallback(
-    (index: number) => {
+    (index: number) => () => {
       playlist.playItem(index);
     },
     [playlist]
   );
 
+  const playlistDuration = useMemo(() => {
+    const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
+      return acc + cur.sources.duration;
+    }, 0);
+    const convertedDuration = convertDuration(totalDuration);
+    let result = '';
+    if (convertedDuration.h) {
+      result += ` ${convertedDuration.h} ${otherProps.hour}`;
+    }
+    if (convertedDuration.m) {
+      result += ` ${convertedDuration.m} ${otherProps.min}`;
+    }
+    if (result) {
+      return result;
+    }
+    if (convertedDuration.s) {
+      result += ` ${convertedDuration.s} ${otherProps.sec}`;
+    }
+    return result;
+  }, [playlist]);
+
   return (
     <div className={styles.playlistWrapper}>
-      <PlaylistHeader onClose={onClose} title={playlist.metadata?.name} amount={amount} duration={'1 hr 43 min'} />
-      <PlaylistContent playlistItems={playlist.items} activeItem={playlist.current.index} onChange={handlePlaylistItemClick} />
+      <PlaylistHeader onClose={onClose} title={playlist.metadata?.name} amount={amount} duration={playlistDuration} />
+      <div className={styles.playlistContent}>
+        {playlist.items.map((item: any) => {
+          const {index} = item;
+          return <PlaylistItem item={item} onSelect={handlePlaylistItemClick(index)} active={playlist.current.index === index} />;
+        })}
+      </div>
     </div>
   );
 });

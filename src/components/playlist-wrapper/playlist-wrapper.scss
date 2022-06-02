@@ -1,5 +1,25 @@
 .playlistWrapper {
+  height: 100%;
   padding: 16px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(16px);
+  overflow-y: auto;
+
+  .playlistContent {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  // TODO: remove once side-panels fix the font
+  * {
+    font-family: sans-serif;
+    font-style: normal;
+  }
+}
+
+// TODO: remove once side-panels fix the height
+:global(.playkit-player > .playkit-vertical-side-panel > .playkit-side-panel-content > div) {
+  height: 100%;
 }

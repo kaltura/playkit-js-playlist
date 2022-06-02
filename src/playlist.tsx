@@ -1,6 +1,5 @@
 import {h} from 'preact';
 // @ts-ignore
-import {core} from 'kaltura-player-js';
 import {PlaylistConfig} from './types';
 import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
@@ -41,7 +40,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
         );
       },
       iconComponent: PluginButton,
-      presets: [ReservedPresetNames.Playback],
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       position: SidePanelPositions.RIGHT,
       expandMode: SidePanelModes.OVER
     });

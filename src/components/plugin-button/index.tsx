@@ -7,7 +7,7 @@ const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 const translates = ({isActive}: PluginButtonProps) => {
   return {
-    label: isActive ? <Text id="playlist.hide-plugin">Hide Playlist</Text> : <Text id="playlist.show-plugin">Show Playlist</Text>
+    label: isActive ? <Text id="playlist.hide_plugin">Hide Playlist</Text> : <Text id="playlist.show_plugin">Show Playlist</Text>
   };
 };
 
