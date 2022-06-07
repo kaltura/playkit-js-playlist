@@ -1,15 +1,32 @@
+@import '../../theme.scss';
+
 .playlistWrapper {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  padding: 16px;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(16px);
-  overflow-y: auto;
+  &.vertical {
+    padding: 16px;
+    .playlistContent {
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+  &.horizontal {
+    padding: 8px 16px 16px 16px;
+    .playlistContent {
+      flex-direction: row;
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+  }
 
   .playlistContent {
     display: flex;
-    flex-direction: column;
     width: 100%;
-    padding: 8px 0;
+    @include playlist-scrollbar();
   }
 
   // TODO: remove once side-panels fix the font

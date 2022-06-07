@@ -2,6 +2,7 @@ import {h} from 'preact';
 import {icons} from '../icons';
 import * as styles from './playlist-header.scss';
 import {A11yWrapper} from '../a11y-wrapper';
+import {PluginPositions} from '../../types';
 
 const {Tooltip, Icon} = KalturaPlayer.ui.components;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
@@ -18,11 +19,12 @@ interface PlaylistHeaderProps {
   title: string;
   amount: string;
   duration: string;
+  pluginMode: PluginPositions;
 }
 
-export const PlaylistHeader = withText(translates)(({onClose, title, amount, duration, ...otherProps}: PlaylistHeaderProps) => {
+export const PlaylistHeader = withText(translates)(({onClose, title, amount, duration, pluginMode, ...otherProps}: PlaylistHeaderProps) => {
   return (
-    <div className={styles.playlistHeader}>
+    <div className={[styles.playlistHeader, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
       <div className={styles.playlistMetadata}>
         <div className={styles.playlistTitle}>{title}</div>
         <div className={styles.playlistDuration}>{`${amount},${duration}`}</div>

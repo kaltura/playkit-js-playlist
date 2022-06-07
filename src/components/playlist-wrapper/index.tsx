@@ -3,6 +3,7 @@ import {useCallback, useMemo} from 'preact/hooks';
 import * as styles from './playlist-wrapper.scss';
 import {PlaylistHeader} from '../playlist-header';
 import {PlaylistItem} from '../playlist-item';
+import {PluginPositions} from '../../types';
 import {convertDuration} from '../../utils';
 
 const {Tooltip, Icon} = KalturaPlayer.ui.components;
@@ -29,14 +30,14 @@ const translates = ({player}: PlaylistWrapperProps) => {
 interface PlaylistWrapperProps {
   onClose: () => void;
   player: KalturaPlayerTypes.Player;
-  eventManager: KalturaPlayerTypes.EventManager;
+  pluginMode: PluginPositions;
   amount?: string;
   hour?: string;
   min?: string;
   sec?: string;
 }
 
-export const PlaylistWrapper = withText(translates)(({onClose, amount, player, ...otherProps}: PlaylistWrapperProps) => {
+export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMode, ...otherProps}: PlaylistWrapperProps) => {
   // @ts-ignore
   const {playlist} = player;
 
@@ -69,12 +70,20 @@ export const PlaylistWrapper = withText(translates)(({onClose, amount, player, .
   }, [playlist]);
 
   return (
-    <div className={styles.playlistWrapper}>
-      <PlaylistHeader onClose={onClose} title={playlist.metadata?.name} amount={amount} duration={playlistDuration} />
+    <div className={[styles.playlistWrapper, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
+      <PlaylistHeader
+        onClose={onClose}
+        title={playlist.metadata?.name}
+        amount={otherProps.amount}
+        duration={playlistDuration}
+        pluginMode={pluginMode}
+      />
       <div className={styles.playlistContent}>
         {playlist.items.map((item: any) => {
           const {index} = item;
-          return <PlaylistItem item={item} onSelect={handlePlaylistItemClick(index)} active={playlist.current.index === index} />;
+          return (
+            <PlaylistItem item={item} onSelect={handlePlaylistItemClick(index)} active={playlist.current.index === index} pluginMode={pluginMode} />
+          );
         })}
       </div>
     </div>

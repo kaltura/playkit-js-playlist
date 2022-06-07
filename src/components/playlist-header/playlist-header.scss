@@ -1,12 +1,38 @@
+@import '../../theme.scss';
+
 .playlistHeader {
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  height: 48px;
+  &.vertical {
+    height: 48px;
+    .playlistMetadata {
+      flex-direction: column;
+      .playlistDuration {
+        margin-top: 3px;
+      }
+    }
+    .closeButtonWrapper {
+      padding-right: 4px;
+    }
+  }
+  &.horizontal {
+    height: 32px;
+    .playlistMetadata {
+      flex-direction: row;
+      align-items: center;
+      .playlistDuration {
+        flex-shrink: 0;
+        margin: 0 8px;
+      }
+    }
+    .closeButtonWrapper {
+      height: inherit;
+    }
+  }
   .playlistMetadata {
     display: flex;
-    flex-direction: column;
     flex-grow: 1;
     height: inherit;
     overflow: hidden;
@@ -20,7 +46,6 @@
       overflow: hidden;
     }
     .playlistDuration {
-      margin-top: 3px;
       font-weight: 400;
       font-size: 14px;
       line-height: 18px;
@@ -29,7 +54,6 @@
   }
   .closeButtonWrapper {
     padding-top: 4px;
-    padding-right: 4px;
     .closeButton {
       display: flex;
       width: 24px;

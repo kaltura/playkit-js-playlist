@@ -5,3 +5,8 @@ export interface TotalDuration {
   m?: string;
   s?: string;
 }
+
+export enum PluginPositions {
+  HORIZONTAL = 'horizontal',
+  VERTICAL = 'vertical'
+}

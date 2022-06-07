@@ -6,6 +6,7 @@ import * as styles from './playlist-item.scss';
 import {A11yWrapper} from '../a11y-wrapper';
 import {icons} from '../icons';
 import {prepareTitle, prepareTime} from '../../utils';
+import {PluginPositions} from '../../types';
 
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 const {Tooltip, Icon} = KalturaPlayer.ui.components;
@@ -21,11 +22,12 @@ interface PlaylistItemProps {
   item: any; // TODO
   active: boolean;
   onSelect: () => void;
+  pluginMode: PluginPositions;
   quiz?: string;
   live?: string;
 }
 
-export const PlaylistItem = withText(translates)(({item, active, onSelect, ...otherProps}: PlaylistItemProps) => {
+export const PlaylistItem = withText(translates)(({item, active, onSelect, pluginMode, ...otherProps}: PlaylistItemProps) => {
   const {sources} = item;
   const lastProgress = 0; // TODO: make last progress
 
@@ -48,7 +50,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, ...ot
   const renderDescription = useMemo(() => {
     if (sources.type === core.MediaType.LIVE) {
       // TODO: get stream date
-      return <div className={styles.playlistItemDescription}>Dane placeholder</div>;
+      return <div className={styles.playlistItemDescription}>Date placeholder</div>;
     }
     // TODO: quiz icon placeholder
     if ('check if type is quiz') {
@@ -76,17 +78,24 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, ...ot
     return (
       <Fragment>
         <div className={[styles.playlistItemTitle, hasDescription ? styles.hasDescription : ''].join(' ')} title={name}>
-          {hasDescription ? name : prepareTitle(name)}
+          {hasDescription ? name : prepareTitle(pluginMode === PluginPositions.VERTICAL ? name : `${item.index + 1}. ${name}`)}
         </div>
         {hasDescription && renderDescription}
       </Fragment>
     );
-  }, [sources]);
+  }, [sources, pluginMode, item]);
 
   return (
     <A11yWrapper onClick={onSelect}>
-      <div className={[styles.playlistItem, active ? styles.active : ''].join(' ')} role="button" tabIndex={0}>
-        <div className={styles.playlistItemIndex}>{item.index}</div>
+      <div
+        className={[
+          styles.playlistItem,
+          pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal,
+          active ? styles.active : ''
+        ].join(' ')}
+        role="button"
+        tabIndex={0}>
+        {pluginMode === PluginPositions.VERTICAL && <div className={styles.playlistItemIndex}>{item.index + 1}</div>}
         <div className={styles.playlistItemThumbnailWrapper} style={{backgroundImage: `url('${sources.poster}')`}}>
           <div className={styles.playlistItemAddons}>{renderAddons}</div>
         </div>
