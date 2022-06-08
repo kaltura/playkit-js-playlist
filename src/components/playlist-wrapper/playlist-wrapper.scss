@@ -18,8 +18,7 @@
     padding: 8px 16px 16px 16px;
     .playlistContent {
       flex-direction: row;
-      overflow-y: hidden;
-      overflow-x: auto;
+      overflow: auto;
     }
   }
 

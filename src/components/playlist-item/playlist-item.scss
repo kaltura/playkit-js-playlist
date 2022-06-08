@@ -1,3 +1,5 @@
+$line-height: 18px;
+
 .playlistItem {
   display: flex;
   align-items: center;
@@ -23,13 +25,20 @@
       height: 56px;
       margin: 0 8px;
     }
+    .playlistItemMetadata .playlistItemTitle {
+      max-height: $line-height * 3;
+      -webkit-line-clamp: 3;
+      &.hasDescription {
+        max-height: $line-height * 2;
+        -webkit-line-clamp: 2;
+      }
+    }
   }
   &.horizontal {
     flex-direction: column;
-    align-items: center;
     width: 176px;
-    height: 128px;
-    padding: 0 6px;
+    height: 132px;
+    padding: 0 6px 4px 6px;
     border-right: 2px solid transparent;
     .playlistItemThumbnailWrapper {
       width: 160px;
@@ -38,6 +47,12 @@
     .playlistItemMetadata .playlistItemTitle {
       width: 160px;
       margin-top: 4px;
+      max-height: $line-height * 2;
+      -webkit-line-clamp: 3;
+      &.hasDescription {
+        max-height: $line-height;
+        -webkit-line-clamp: 1;
+      }
     }
   }
   .playlistItemIndex {
@@ -112,15 +127,16 @@
     justify-content: center;
     overflow: hidden;
     .playlistItemTitle {
-      font-size: 14px;
-      line-height: 18px;
       color: #ffffff;
-      // TODO: https://stackoverflow.com/questions/53156266/reactjs-multiline-textarea-with-ellipsis
-      &.hasDescription {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
+      display: block; /* Fallback for non-webkit */
+      display: -webkit-box;
+      max-width: 100%;
+      margin: 0 auto;
+      font-size: 14px;
+      line-height: $line-height;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .playlistItemDescription {
       display: flex;

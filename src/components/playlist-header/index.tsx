@@ -26,7 +26,7 @@ export const PlaylistHeader = withText(translates)(({onClose, title, amount, dur
   return (
     <div className={[styles.playlistHeader, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
       <div className={styles.playlistMetadata}>
-        <div className={styles.playlistTitle}>{title}</div>
+        <div className={styles.playlistTitle} title={title}>{title}</div>
         <div className={styles.playlistDuration}>{`${amount},${duration}`}</div>
       </div>
       <div className={styles.closeButtonWrapper}>

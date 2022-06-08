@@ -27,10 +27,3 @@ export const prepareTime = (sec: number): string => {
   }
   return `${result}${duration.m}:${duration.s}`;
 };
-
-export const prepareTitle = (title: string, maxLength = 34) => {
-  if (title.length > maxLength) {
-    return `${title.substring(0, maxLength)}...`;
-  }
-  return title;
-};

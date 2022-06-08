@@ -5,7 +5,7 @@ import {core} from 'kaltura-player-js';
 import * as styles from './playlist-item.scss';
 import {A11yWrapper} from '../a11y-wrapper';
 import {icons} from '../icons';
-import {prepareTitle, prepareTime} from '../../utils';
+import {prepareTime} from '../../utils';
 import {PluginPositions} from '../../types';
 
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
@@ -78,7 +78,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
     return (
       <Fragment>
         <div className={[styles.playlistItemTitle, hasDescription ? styles.hasDescription : ''].join(' ')} title={name}>
-          {hasDescription ? name : prepareTitle(pluginMode === PluginPositions.VERTICAL ? name : `${item.index + 1}. ${name}`)}
+          {pluginMode === PluginPositions.VERTICAL ? name : `${item.index + 1}. ${name}`}
         </div>
         {hasDescription && renderDescription}
       </Fragment>
