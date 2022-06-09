@@ -1,5 +1,5 @@
 import {h} from 'preact';
-import {PlaylistConfig, PluginPositions} from './types';
+import {PlaylistConfig, PluginPositions, PluginStates} from './types';
 import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
 
@@ -9,6 +9,7 @@ const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = KalturaPlayer.
 export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
   private _playlistPanel = null;
+  private _pluginState: PluginStates | null = null;
 
   static defaultConfig: PlaylistConfig = {
     position: SidePanelPositions.RIGHT,
@@ -21,37 +22,54 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this._player = player;
   }
 
+  get sidePanelsManager() {
+    return this.player.getService('sidePanelsManager') as any;
+  }
+
   loadMedia(): void {
-    const sidePanelsManager: any = this.player.getService('sidePanelsManager');
-    if (!sidePanelsManager) {
+    if (!this.sidePanelsManager || this._playlistPanel) {
       this.logger.warn('sidePanelsManager service is not registered');
       return;
     }
     const pluginMode: PluginPositions = [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position)
       ? PluginPositions.VERTICAL
       : PluginPositions.HORIZONTAL;
-    this._playlistPanel = sidePanelsManager.addItem({
+    this._playlistPanel = this.sidePanelsManager.addItem({
       label: 'Playlist',
       panelComponent: () => {
         return (
           <PlaylistWrapper
             onClose={() => {
-              sidePanelsManager.deactivateItem(this._playlistPanel);
+              this.sidePanelsManager.deactivateItem(this._playlistPanel);
+              this._pluginState = PluginStates.CLOSED;
             }}
             player={this._player}
             pluginMode={pluginMode}
           />
         );
       },
-      iconComponent: PluginButton,
+      iconComponent: () => {
+        return (
+          <PluginButton
+            onClick={() => {
+              if (this.sidePanelsManager.isItemActive(this._playlistPanel)) {
+                this._pluginState = PluginStates.CLOSED;
+              }
+            }}
+          />
+        );
+      },
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
       position: this.config.position,
-      expandMode: this.config.expandMode
+      expandMode: this.config.expandMode,
+      onActivate: () => {
+        this._pluginState = PluginStates.OPENED;
+      }
     });
-    if (this.config.expandOnFirstPlay) {
+    if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
       // @ts-ignore
       this.ready.then(() => {
-        sidePanelsManager.activateItem(this._playlistPanel);
+        this.sidePanelsManager.activateItem(this._playlistPanel);
       });
     }
   }
@@ -60,10 +78,10 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     return true;
   }
   reset(): void {
-    return;
+    this._playlistPanel = null;
   }
 
   destroy(): void {
-    return;
+    this._pluginState = null;
   }
 }

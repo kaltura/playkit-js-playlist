@@ -19,7 +19,7 @@ const translates = ({}: PlaylistItemProps) => {
 };
 
 interface PlaylistItemProps {
-  item: any; // TODO
+  item: any; // TODO take difinition from KalturaPlayerTypes.Playlist
   active: boolean;
   onSelect: () => void;
   pluginMode: PluginPositions;
@@ -50,10 +50,10 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
   const renderDescription = useMemo(() => {
     if (sources.type === core.MediaType.LIVE) {
       // TODO: get stream date
-      return <div className={styles.playlistItemDescription}>Date placeholder</div>;
+      return <div className={styles.playlistItemDescription}></div>;
     }
-    // TODO: quiz icon placeholder
-    if ('check if type is quiz') {
+    // TODO: get if quiz type
+    if (false) {
       return (
         <div className={styles.playlistItemDescription}>
           <div className={styles.iconContainer}>

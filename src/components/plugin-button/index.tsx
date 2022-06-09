@@ -13,13 +13,14 @@ const translates = ({isActive}: PluginButtonProps) => {
 
 interface PluginButtonProps {
   isActive: boolean;
+  onClick: () => void;
   label?: string;
 }
 
-export const PluginButton = withText(translates)(({isActive, ...otherProps}: PluginButtonProps) => {
+export const PluginButton = withText(translates)(({isActive, onClick, ...otherProps}: PluginButtonProps) => {
   return (
     <Tooltip label={otherProps.label} type="bottom">
-      <button aria-label={otherProps.label} className={[styles.pluginButton, isActive ? styles.active : ''].join(' ')}>
+      <button aria-label={otherProps.label} className={[styles.pluginButton, isActive ? styles.active : ''].join(' ')} onClick={onClick}>
         <Icon
           id="playlist-plugin-button"
           height={icons.BigSize}

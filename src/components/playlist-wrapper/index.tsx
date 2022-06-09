@@ -11,7 +11,7 @@ const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 const translates = ({player}: PlaylistWrapperProps) => {
   // @ts-ignore
-  const amount = player.playlist?.items.length; // TODO: add player TS definition
+  const amount: number = player.playlist?.items.length;
   return {
     amount: (
       <Text

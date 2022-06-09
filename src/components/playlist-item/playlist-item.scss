@@ -8,6 +8,7 @@ $line-height: 18px;
   cursor: pointer;
   overflow: hidden;
   border-left: 2px solid transparent;
+  outline-offset: -1px;
   &:hover,
   &.active {
     background: rgba(255, 255, 255, 0.12);
