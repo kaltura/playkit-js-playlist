@@ -1,1 +1,5 @@
-export interface PlaylistConfig {}
+export interface PlaylistConfig {
+  position: string;
+  expandMode: string;
+  expandOnFirstPlay: boolean;
+}

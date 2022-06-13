@@ -1,6 +1,17 @@
 {
   "en": {
     "playlist": {
+      "show_plugin": "Show Playlist",
+      "hide_plugin": "Hide Playlist",
+      "amount-items": {
+        "one": "video",
+        "many": "{{count}} videos"
+      },
+      "hour": "hr",
+      "min": "min",
+      "sec": "sec",
+      "quiz_type": "Quiz",
+      "live_type": "Live"
     }
   }
 }

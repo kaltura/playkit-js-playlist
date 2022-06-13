@@ -1,0 +1,36 @@
+@import '../../theme.scss';
+
+.playlistWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+  &.vertical {
+    padding: 16px;
+    .playlistContent {
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+  &.horizontal {
+    padding: 8px 16px 16px 16px;
+    .playlistContent {
+      flex-direction: row;
+      overflow: auto;
+    }
+  }
+
+  .playlistContent {
+    display: flex;
+    width: 100%;
+    @include playlist-scrollbar();
+  }
+
+  // TODO: remove once player fix the font
+  * {
+    font-family: sans-serif;
+    font-style: normal;
+  }
+}
