@@ -59,7 +59,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
           />
         );
       },
-      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live],
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Ads],
       position: this.config.position,
       expandMode: this.config.expandMode,
       onActivate: () => {

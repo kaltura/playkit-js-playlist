@@ -5,11 +5,11 @@ import {core} from 'kaltura-player-js';
 import * as styles from './playlist-item.scss';
 import {A11yWrapper} from '../a11y-wrapper';
 import {icons} from '../icons';
-import {prepareTime} from '../../utils';
 import {PluginPositions} from '../../types';
 
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
-const {Tooltip, Icon} = KalturaPlayer.ui.components;
+const {Icon} = KalturaPlayer.ui.components;
+const {toHHMMSS} = KalturaPlayer.ui.utils;
 
 const translates = ({}: PlaylistItemProps) => {
   return {
@@ -37,7 +37,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
     }
     return (
       <Fragment>
-        <div className={styles.playlistItemDuration}>{prepareTime(sources.duration)}</div>
+        <div className={styles.playlistItemDuration}>{toHHMMSS(sources.duration)}</div>
         {lastProgress > 0 && (
           <div className={styles.playlistItemProgress}>
             <div className={styles.lastProgress} style={{width: `${lastProgress}%`}} />

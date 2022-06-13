@@ -4,9 +4,8 @@ import * as styles from './playlist-wrapper.scss';
 import {PlaylistHeader} from '../playlist-header';
 import {PlaylistItem} from '../playlist-item';
 import {PluginPositions} from '../../types';
-import {convertDuration} from '../../utils';
 
-const {Tooltip, Icon} = KalturaPlayer.ui.components;
+const {toHHMMSS} = KalturaPlayer.ui.utils;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 const translates = ({player}: PlaylistWrapperProps) => {
@@ -52,21 +51,15 @@ export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMod
     const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
       return acc + cur.sources.duration;
     }, 0);
-    const convertedDuration = convertDuration(totalDuration);
-    let result = '';
-    if (convertedDuration.h) {
-      result += ` ${convertedDuration.h} ${otherProps.hour}`;
+    const convertedDuration = toHHMMSS(totalDuration).split(":");
+
+    if (convertedDuration.length === 3) {
+      return ` ${convertedDuration[0]} ${otherProps.hour} ${convertedDuration[1]} ${otherProps.min}`;
     }
-    if (convertedDuration.m) {
-      result += ` ${convertedDuration.m} ${otherProps.min}`;
+    if (convertedDuration[0] !== '00') {
+      return ` ${convertedDuration[0]} ${otherProps.min} ${convertedDuration[1]} ${otherProps.sec}`;
     }
-    if (result) {
-      return result;
-    }
-    if (convertedDuration.s) {
-      result += ` ${convertedDuration.s} ${otherProps.sec}`;
-    }
-    return result;
+    return ` ${convertedDuration[1]} ${otherProps.sec}`;
   }, [playlist]);
 
   return (
