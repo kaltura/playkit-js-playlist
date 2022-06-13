@@ -6,6 +6,7 @@ import {PlaylistWrapper} from './components/playlist-wrapper';
 // @ts-ignore
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = KalturaPlayer.ui;
 
+// @ts-ignore
 export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
   private _playlistPanel = null;
