@@ -27,8 +27,9 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   }
 
   loadMedia(): void {
-    if (!this.sidePanelsManager || this._playlistPanel) {
-      this.logger.warn('sidePanelsManager service is not registered');
+    // @ts-ignore
+    if (!this.sidePanelsManager || this._playlistPanel || !this._player.playlist?.items?.length) {
+      this.logger.warn('sidePanelsManager service is not registered or playlist empty');
       return;
     }
     const pluginMode: PluginPositions = [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position)
