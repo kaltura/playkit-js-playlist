@@ -1,2 +1,2 @@
 export * from './typesUI';
-export * from './PlaylistConfig';
+export * from './playlistConfig';

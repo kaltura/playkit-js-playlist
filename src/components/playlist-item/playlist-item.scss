@@ -72,6 +72,7 @@ $line-height: 18px;
     flex-shrink: 0;
     border-radius: 4px;
     background-size: contain;
+    background-position: center;
     .playlistItemAddons {
       position: absolute;
       bottom: 2px;
@@ -90,6 +91,7 @@ $line-height: 18px;
         font-size: 12px;
         line-height: 14px;
         color: #ffffff;
+        text-transform: uppercase;
       }
       .playlistItemDuration {
         display: flex;

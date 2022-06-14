@@ -6,6 +6,7 @@ import * as styles from './playlist-item.scss';
 import {A11yWrapper} from '../a11y-wrapper';
 import {icons} from '../icons';
 import {PluginPositions} from '../../types';
+import {KalturaViewHistoryUserEntry, KalturaBaseEntry, Capabilities} from '../../providers';
 
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 const {Icon} = KalturaPlayer.ui.components;
@@ -23,17 +24,25 @@ interface PlaylistItemProps {
   active: boolean;
   onSelect: () => void;
   pluginMode: PluginPositions;
+  viewHistory?: KalturaViewHistoryUserEntry;
+  baseEntry?: KalturaBaseEntry;
   quiz?: string;
   live?: string;
 }
 
-export const PlaylistItem = withText(translates)(({item, active, onSelect, pluginMode, ...otherProps}: PlaylistItemProps) => {
+export const PlaylistItem = withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, ...otherProps}: PlaylistItemProps) => {
   const {sources} = item;
-  const lastProgress = 0; // TODO: make last progress
+  const lastProgress = useMemo(() => {
+    if (!viewHistory?.lastTimeReached) {
+      return 0;
+    }
+    const progress = (viewHistory?.lastTimeReached / sources.duration) * 100;
+    return progress.toFixed(2);
+  }, [sources, viewHistory]);
 
   const renderAddons = useMemo(() => {
     if (sources.type === core.MediaType.LIVE) {
-      return <div className={styles.liveLabel}>{otherProps.live?.toLocaleUpperCase()}</div>;
+      return <div className={styles.liveLabel}>{otherProps.live}</div>;
     }
     return (
       <Fragment>
@@ -45,15 +54,14 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
         )}
       </Fragment>
     );
-  }, [sources]);
+  }, [sources, lastProgress]);
 
   const renderDescription = useMemo(() => {
     if (sources.type === core.MediaType.LIVE) {
       // TODO: get stream date
       return <div className={styles.playlistItemDescription}></div>;
     }
-    // TODO: get if quiz type
-    if (false) {
+    if (baseEntry?.capabilities === Capabilities.Quiz) {
       return (
         <div className={styles.playlistItemDescription}>
           <div className={styles.iconContainer}>
@@ -70,20 +78,20 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
         </div>
       );
     }
-  }, [sources]);
+    return null;
+  }, [sources, baseEntry]);
 
   const renderTitle = useMemo(() => {
-    const hasDescription = sources.type !== core.MediaType.VOD;
     const {name} = sources.metadata;
     return (
       <Fragment>
-        <div className={[styles.playlistItemTitle, hasDescription ? styles.hasDescription : ''].join(' ')} title={name}>
+        <div className={[styles.playlistItemTitle, renderDescription ? styles.hasDescription : ''].join(' ')} title={name}>
           {pluginMode === PluginPositions.VERTICAL ? name : `${item.index + 1}. ${name}`}
         </div>
-        {hasDescription && renderDescription}
+        {renderDescription}
       </Fragment>
     );
-  }, [sources, pluginMode, item]);
+  }, [sources, pluginMode, item, renderDescription]);
 
   return (
     <A11yWrapper onClick={onSelect}>
