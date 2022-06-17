@@ -67,13 +67,6 @@ Playlist plugin configuration can been found here:
 
 - **[Configuration](docs/configuration.md)**
 
-###Slides configuration
-If you are showing slides, you MUST also include kalturaCuePoints plugin in the configuration as follow -
-
-```html
-plugins: { playlist: {...}, kalturaCuepoints: { } }
-```
-
 ## Running the tests
 
 Tests can be run locally via [Karma], which will run on Chrome, Firefox and Safari

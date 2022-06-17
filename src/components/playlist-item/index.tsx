@@ -37,7 +37,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
       return 0;
     }
     const progress = (viewHistory?.lastTimeReached / sources.duration) * 100;
-    return progress.toFixed(2);
+    return progress.toFixed();
   }, [sources, viewHistory]);
 
   const renderAddons = useMemo(() => {
