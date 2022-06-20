@@ -34,3 +34,8 @@
     font-style: normal;
   }
 }
+
+// TODO: remove once core team fix alignment of plugin icons
+:global(.playkit-player .playkit-top-bar .playkit-right-controls) {
+  display: inline-block;
+}

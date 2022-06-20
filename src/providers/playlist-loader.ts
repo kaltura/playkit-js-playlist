@@ -70,9 +70,9 @@ export class PlaylistLoader implements ILoader {
     if (viewHistoryUserEntryListResponse.totalCount) {
       this._response.viewHistory = viewHistoryUserEntryListResponse?.data;
     }
-    const lalturaUserEntryListResponse = new KalturaBaseEntryListResponse(response[1]?.data);
-    if (lalturaUserEntryListResponse.totalCount) {
-      this._response.baseEntry = lalturaUserEntryListResponse?.data;
+    const klalturaUserEntryListResponse = new KalturaBaseEntryListResponse(response[1]?.data);
+    if (klalturaUserEntryListResponse.totalCount) {
+      this._response.baseEntry = klalturaUserEntryListResponse?.data;
     }
   }
 
