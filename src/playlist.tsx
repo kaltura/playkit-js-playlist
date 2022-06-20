@@ -2,6 +2,7 @@ import {h} from 'preact';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
 import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
+import {DataManager} from './data-manager';
 
 // @ts-ignore
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = KalturaPlayer.ui;
@@ -11,6 +12,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
   private _playlistPanel = null;
   private _pluginState: PluginStates | null = null;
+  private _dataManager: DataManager;
 
   static defaultConfig: PlaylistConfig = {
     position: SidePanelPositions.RIGHT,
@@ -21,6 +23,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   constructor(name: string, player: KalturaPlayerTypes.Player, config: PlaylistConfig) {
     super(name, player, config);
     this._player = player;
+    this._dataManager = new DataManager(this._player, this.logger);
   }
 
   get sidePanelsManager() {
@@ -47,6 +50,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
             }}
             player={this._player}
             pluginMode={pluginMode}
+            playlistData={this._dataManager.getPlaylistData()}
           />
         );
       },
@@ -85,5 +89,6 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
 
   destroy(): void {
     this._pluginState = null;
+    this._dataManager.destroy();
   }
 }
