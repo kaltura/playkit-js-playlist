@@ -7,7 +7,6 @@ import {DataManager} from './data-manager';
 // @ts-ignore
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = KalturaPlayer.ui;
 
-// @ts-ignore
 export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
   private _playlistPanel = null;
@@ -31,7 +30,6 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   }
 
   loadMedia(): void {
-    // @ts-ignore
     if (!this.sidePanelsManager || this._playlistPanel || !this._player.playlist?.items?.length) {
       this.logger.warn('sidePanelsManager service is not registered or playlist empty');
       return;

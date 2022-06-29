@@ -23,7 +23,6 @@ export class DataManager {
     if (this._playlistData || this._playlistExtraDataIsFetching) {
       return;
     }
-    // @ts-ignore
     const playlistItems = this._player.playlist.items;
     this._playlistExtraDataIsFetching = true;
     return this._player.provider

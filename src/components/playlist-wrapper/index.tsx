@@ -10,8 +10,7 @@ const {toHHMMSS} = KalturaPlayer.ui.utils;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 const translates = ({player}: PlaylistWrapperProps) => {
-  // @ts-ignore
-  const amount: number = player.playlist?.items.length;
+  const amount = player.playlist?.items.length;
   return {
     amount: (
       <Text
@@ -39,7 +38,6 @@ interface PlaylistWrapperProps {
 }
 
 export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMode, playlistData, ...otherProps}: PlaylistWrapperProps) => {
-  // @ts-ignore
   const {playlist} = player;
   const [playlistExtraData, setPlaylistExtraData] = useState<PlaylistExtraData>({});
 
