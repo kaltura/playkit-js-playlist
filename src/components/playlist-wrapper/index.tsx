@@ -111,7 +111,7 @@ export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMod
   return (
     <div className={[styles.playlistWrapper, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
       {renderPlaylistHeader}
-      <div className={[styles.playlistContent, scrolling ? styles.scrolling : ''].join(' ')} {...playlistContentParams}>
+      <div className={[styles.playlistContent, scrolling ? styles.scrolling : ''].join(' ')} {...playlistContentParams} role="list">
         {playlist.items.map((item: any) => {
           const {index} = item;
           return (
