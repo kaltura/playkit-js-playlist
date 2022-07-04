@@ -1,13 +1,15 @@
 import {h} from 'preact';
-import {useCallback, useMemo, useEffect, useState} from 'preact/hooks';
+import {useCallback, useMemo, useEffect, useState, useRef} from 'preact/hooks';
 import * as styles from './playlist-wrapper.scss';
 import {PlaylistHeader} from '../playlist-header';
 import {PlaylistItem} from '../playlist-item';
 import {PluginPositions, PlaylistExtraData} from '../../types';
-import {KalturaViewHistoryUserEntry} from '../../providers/response-types';
 
 const {toHHMMSS} = KalturaPlayer.ui.utils;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
+
+let scrollTimerId: ReturnType<typeof setTimeout>;
+const SCROLL_BAR_TIMEOUT = 250;
 
 const translates = ({player}: PlaylistWrapperProps) => {
   const amount = player.playlist?.items.length;
@@ -40,6 +42,8 @@ interface PlaylistWrapperProps {
 export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMode, playlistData, ...otherProps}: PlaylistWrapperProps) => {
   const {playlist} = player;
   const [playlistExtraData, setPlaylistExtraData] = useState<PlaylistExtraData>({});
+  const [scrolling, setScrolling] = useState(false);
+  const playlistContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     playlistData.then(data => {
@@ -53,6 +57,22 @@ export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMod
     },
     [playlist]
   );
+
+  const handleScroll = useCallback(() => {
+    clearTimeout(scrollTimerId);
+    setScrolling(true);
+    scrollTimerId = setTimeout(() => {
+      setScrolling(false);
+    }, SCROLL_BAR_TIMEOUT);
+  }, []);
+
+  const handleWheel = useCallback((e: WheelEvent) => {
+    e.preventDefault();
+    if (playlistContentRef?.current) {
+      playlistContentRef.current.scrollLeft += e.deltaY;
+      handleScroll();
+    }
+  }, []);
 
   const playlistDuration = useMemo(() => {
     const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
@@ -69,7 +89,7 @@ export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMod
     return ` ${convertedDuration[1]} ${otherProps.sec}`;
   }, [playlist]);
 
-  const renderPlaylistDuration = useMemo(() => {
+  const renderPlaylistHeader = useMemo(() => {
     return (
       <PlaylistHeader
         onClose={onClose}
@@ -81,10 +101,17 @@ export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMod
     );
   }, [pluginMode, playlistDuration, onClose]);
 
+  const playlistContentParams = useMemo(() => {
+    if (pluginMode === PluginPositions.VERTICAL) {
+      return {onScroll: handleScroll};
+    }
+    return {onWheel: handleWheel, ref: playlistContentRef};
+  }, [pluginMode]);
+
   return (
     <div className={[styles.playlistWrapper, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
-      {renderPlaylistDuration}
-      <div className={styles.playlistContent}>
+      {renderPlaylistHeader}
+      <div className={[styles.playlistContent, scrolling ? styles.scrolling : ''].join(' ')} {...playlistContentParams}>
         {playlist.items.map((item: any) => {
           const {index} = item;
           return (

@@ -1,15 +1,14 @@
-// TODO: apply theme variables
 $theme-colors: (
   'primary': #ffffff,
-  'secondary': #888888,
-  'semi-gray': rgba(255, 255, 255, 0.16),
-  'active': rgba(255, 255, 255, 0.2)
+  'secondary': #cccccc,
+  'gray': #444444,
+  'active': #006efa
 );
 
 @mixin playlist-scrollbar {
   &::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 0px;
+    height: 0px;
   }
   &::-webkit-scrollbar-track {
     background: rgba(33, 33, 33, 0.9);

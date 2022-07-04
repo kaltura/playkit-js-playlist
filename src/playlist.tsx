@@ -15,7 +15,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
 
   static defaultConfig: PlaylistConfig = {
     position: SidePanelPositions.RIGHT,
-    expandMode: SidePanelModes.OVER,
+    expandMode: SidePanelModes.ALONGSIDE,
     expandOnFirstPlay: true
   };
 
@@ -71,7 +71,6 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       }
     });
     if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
-      // @ts-ignore
       this.ready.then(() => {
         this.sidePanelsManager.activateItem(this._playlistPanel);
       });

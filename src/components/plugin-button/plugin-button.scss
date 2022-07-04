@@ -1,3 +1,5 @@
+@import '../../theme.scss';
+
 .pluginButton {
   display: flex;
   width: 36px;
@@ -8,6 +10,11 @@
   border-radius: 4px;
   cursor: pointer;
   &.active {
-    background-color: #444444;
+    background-color: map-get($theme-colors, 'gray');
   }
+}
+
+// TODO: remove once core team fix alignment of plugin icons
+:global(.playkit-player .playkit-top-bar .playkit-right-controls) {
+  display: flex;
 }

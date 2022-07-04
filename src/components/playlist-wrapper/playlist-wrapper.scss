@@ -10,15 +10,14 @@
     padding: 16px;
     .playlistContent {
       flex-direction: column;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden auto;
     }
   }
   &.horizontal {
     padding: 8px 16px 16px 16px;
     .playlistContent {
       flex-direction: row;
-      overflow: auto;
+      overflow: auto hidden;
     }
   }
 
@@ -26,6 +25,10 @@
     display: flex;
     width: 100%;
     @include playlist-scrollbar();
+    &.scrolling::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
   }
 
   // TODO: remove once player fix the font
@@ -33,9 +36,4 @@
     font-family: sans-serif;
     font-style: normal;
   }
-}
-
-// TODO: remove once core team fix alignment of plugin icons
-:global(.playkit-player .playkit-top-bar .playkit-right-controls) {
-  display: flex;
 }
