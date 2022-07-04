@@ -9,7 +9,7 @@ const {toHHMMSS} = KalturaPlayer.ui.utils;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 let scrollTimerId: ReturnType<typeof setTimeout>;
-const SCROLL_BAR_TIMEOUT = 175;
+const SCROLL_BAR_TIMEOUT = 250;
 
 const translates = ({player}: PlaylistWrapperProps) => {
   const amount = player.playlist?.items.length;
@@ -58,7 +58,7 @@ export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMod
     [playlist]
   );
 
-  const handleScroll = useCallback((e: Event) => {
+  const handleScroll = useCallback(() => {
     clearTimeout(scrollTimerId);
     setScrolling(true);
     scrollTimerId = setTimeout(() => {
@@ -70,6 +70,7 @@ export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMod
     e.preventDefault();
     if (playlistContentRef?.current) {
       playlistContentRef.current.scrollLeft += e.deltaY;
+      handleScroll();
     }
   }, []);
 

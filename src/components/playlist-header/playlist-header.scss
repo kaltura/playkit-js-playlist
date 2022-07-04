@@ -40,7 +40,7 @@
       font-weight: 700;
       font-size: 16px;
       line-height: 21px;
-      color: #ffffff;
+      color: map-get($theme-colors, 'primary');
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -49,7 +49,7 @@
       font-weight: 400;
       font-size: 14px;
       line-height: 18px;
-      color: #cccccc;
+      color: map-get($theme-colors, 'secondary');
     }
   }
   .closeButtonWrapper {

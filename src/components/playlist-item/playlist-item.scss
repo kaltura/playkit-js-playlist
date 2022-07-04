@@ -1,3 +1,5 @@
+@import '../../theme.scss';
+
 $line-height: 18px;
 
 .playlistItem {
@@ -14,7 +16,7 @@ $line-height: 18px;
     background: rgba(255, 255, 255, 0.12);
   }
   &.active {
-    border-color: #006efa;
+    border-color: map-get($theme-colors, 'active');
   }
   &.vertical {
     flex-direction: row;
@@ -42,6 +44,7 @@ $line-height: 18px;
     padding: 0 6px 4px 6px;
     border-right: 2px solid transparent;
     .playlistItemThumbnailWrapper {
+      margin-top: 1px;
       width: 160px;
       height: 90px;
     }
@@ -63,7 +66,7 @@ $line-height: 18px;
     height: inherit;
     font-size: 12px;
     line-height: 18px;
-    color: #ffffff;
+    color: map-get($theme-colors, 'primary');
     justify-content: flex-end;
     align-items: center;
   }
@@ -90,7 +93,7 @@ $line-height: 18px;
         border-radius: 2px;
         font-size: 12px;
         line-height: 14px;
-        color: #ffffff;
+        color: map-get($theme-colors, 'primary');
         text-transform: uppercase;
       }
       .playlistItemDuration {
@@ -106,20 +109,20 @@ $line-height: 18px;
         border-radius: 3px;
         font-size: 12px;
         font-weight: 700;
-        color: #ffffff;
+        color: map-get($theme-colors, 'primary');
       }
       .playlistItemProgress {
         position: relative;
         width: 100%;
         height: 4px;
-        background: #444444;
+        background: map-get($theme-colors, 'gray');
         border-radius: 2px;
         overflow: hidden;
         .lastProgress {
           position: absolute;
           height: inherit;
           left: 0;
-          background: #006efa;
+          background: map-get($theme-colors, 'active');
         }
       }
     }
@@ -130,7 +133,7 @@ $line-height: 18px;
     justify-content: center;
     overflow: hidden;
     .playlistItemTitle {
-      color: #ffffff;
+      color: map-get($theme-colors, 'primary');
       display: block; /* Fallback for non-webkit */
       display: -webkit-box;
       max-width: 100%;
@@ -146,7 +149,7 @@ $line-height: 18px;
       align-items: center;
       font-size: 12px;
       line-height: 18px;
-      color: #cccccc;
+      color: map-get($theme-colors, 'secondary');
       .iconContainer {
         width: 16px;
         height: 16px;

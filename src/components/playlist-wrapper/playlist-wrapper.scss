@@ -10,15 +10,14 @@
     padding: 16px;
     .playlistContent {
       flex-direction: column;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden auto;
     }
   }
   &.horizontal {
     padding: 8px 16px 16px 16px;
     .playlistContent {
       flex-direction: row;
-      overflow: auto;
+      overflow: auto hidden;
     }
   }
 
