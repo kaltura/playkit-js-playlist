@@ -15,7 +15,10 @@ const {toHHMMSS} = KalturaPlayer.ui.utils;
 const translates = ({}: PlaylistItemProps) => {
   return {
     quiz: <Text id="playlist.quiz_type">Quiz</Text>,
-    live: <Text id="playlist.live_type">Live</Text>
+    live: <Text id="playlist.live_type">Live</Text>,
+    toPlayAreaLabel: <Text id="playlist.play-item-area-label">Click to play:</Text>,
+    currentlyPlaying: <Text id="playlist.currently-playing">Currently playing:</Text>,
+    playlistItemIndex: <Text id="playlist.playlist-item-index">Playlist item #</Text>
   };
 };
 
@@ -28,10 +31,16 @@ interface PlaylistItemProps {
   baseEntry?: KalturaBaseEntry;
   quiz?: string;
   live?: string;
+  toPlayAreaLabel?: string;
+  currentlyPlaying?: string;
+  playlistItemIndex?: string;
 }
 
 export const PlaylistItem = withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, ...otherProps}: PlaylistItemProps) => {
-  const {sources} = item;
+  const {sources, index} = item;
+  const playlistItemIndex = index + 1;
+  const playlistItemName = sources.metadata?.name;
+
   const lastProgress = useMemo(() => {
     if (!viewHistory?.lastTimeReached) {
       return 0;
@@ -82,29 +91,35 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
   }, [sources, baseEntry]);
 
   const renderTitle = useMemo(() => {
-    const {name} = sources.metadata;
     return (
       <Fragment>
-        <div className={[styles.playlistItemTitle, renderDescription ? styles.hasDescription : ''].join(' ')} title={name}>
-          {pluginMode === PluginPositions.VERTICAL ? name : `${item.index + 1}. ${name}`}
+        <div className={[styles.playlistItemTitle, renderDescription ? styles.hasDescription : ''].join(' ')} role="text">
+          {pluginMode === PluginPositions.VERTICAL ? playlistItemName : `${playlistItemIndex}. ${playlistItemName}`}
         </div>
         {renderDescription}
       </Fragment>
     );
-  }, [sources, pluginMode, item, renderDescription]);
+  }, [playlistItemName, pluginMode, playlistItemIndex, renderDescription]);
 
   return (
     <A11yWrapper onClick={onSelect}>
       <div
+        title={`${otherProps.playlistItemIndex}${index + 1}. ${
+          active ? otherProps.currentlyPlaying : otherProps.toPlayAreaLabel
+        } ${playlistItemName}`}
         className={[
           styles.playlistItem,
           pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal,
           active ? styles.active : ''
         ].join(' ')}
-        role="button"
+        role="listitem"
         tabIndex={0}>
-        {pluginMode === PluginPositions.VERTICAL && <div className={styles.playlistItemIndex}>{item.index + 1}</div>}
-        <div className={styles.playlistItemThumbnailWrapper} style={{backgroundImage: `url('${sources.poster}')`}}>
+        {pluginMode === PluginPositions.VERTICAL && (
+          <div className={styles.playlistItemIndex} aria-hidden="true">
+            {item.index + 1}
+          </div>
+        )}
+        <div className={styles.playlistItemThumbnailWrapper} style={{backgroundImage: `url('${sources.poster}')`}} aria-hidden="true">
           <div className={styles.playlistItemAddons}>{renderAddons}</div>
         </div>
         <div className={styles.playlistItemMetadata}>{renderTitle}</div>

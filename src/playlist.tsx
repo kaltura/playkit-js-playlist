@@ -52,9 +52,10 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
           />
         );
       },
-      iconComponent: () => {
+      iconComponent: ({isActive}: {isActive: boolean}) => {
         return (
           <PluginButton
+            isActive={isActive}
             onClick={() => {
               if (this.sidePanelsManager.isItemActive(this._playlistPanel)) {
                 this._pluginState = PluginStates.CLOSED;

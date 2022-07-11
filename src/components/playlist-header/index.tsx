@@ -25,9 +25,11 @@ interface PlaylistHeaderProps {
 export const PlaylistHeader = withText(translates)(({onClose, title, amount, duration, pluginMode, ...otherProps}: PlaylistHeaderProps) => {
   return (
     <div className={[styles.playlistHeader, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
-      <div className={styles.playlistMetadata}>
-        <div className={styles.playlistTitle} title={title}>{title}</div>
-        <div className={styles.playlistDuration}>{`${amount},${duration}`}</div>
+      <div className={styles.playlistMetadata} role="dialog">
+        <div className={styles.playlistTitle} title={title} role="text">
+          {title}
+        </div>
+        <div className={styles.playlistDuration} role="text">{`${amount},${duration}`}</div>
       </div>
       <div className={styles.closeButtonWrapper}>
         <Tooltip label={otherProps.closeButtonLabel} type="bottom">
