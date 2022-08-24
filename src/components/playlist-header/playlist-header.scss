@@ -65,3 +65,9 @@
     }
   }
 }
+:global(.playkit-player.has-live-plugin-overlay) {
+  .closeButtonWrapper {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
