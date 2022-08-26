@@ -32,6 +32,7 @@ interface PlaylistWrapperProps {
   onClose: () => void;
   player: KalturaPlayerTypes.Player;
   pluginMode: PluginPositions;
+  eventManager: KalturaPlayerTypes.EventManager;
   playlistData: Promise<PlaylistExtraData>;
   amount?: string;
   hour?: string;
@@ -39,16 +40,20 @@ interface PlaylistWrapperProps {
   sec?: string;
 }
 
-export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMode, playlistData, ...otherProps}: PlaylistWrapperProps) => {
+export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMode, playlistData, eventManager, ...otherProps}: PlaylistWrapperProps) => {
   const {playlist} = player;
   const [playlistExtraData, setPlaylistExtraData] = useState<PlaylistExtraData>({});
   const [scrolling, setScrolling] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(playlist.current.index);
   const playlistContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     playlistData.then(data => {
       setPlaylistExtraData(data);
     });
+    eventManager.listen(player, player.Event.MEDIA_LOADED, () => {
+      setActiveIndex(playlist.current.index);
+    })
   }, []);
 
   const handlePlaylistItemClick = useCallback(
@@ -118,7 +123,7 @@ export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMod
             <PlaylistItem
               item={item}
               onSelect={handlePlaylistItemClick(index)}
-              active={playlist.current.index === index}
+              active={activeIndex === index}
               pluginMode={pluginMode}
               viewHistory={playlistExtraData?.viewHistory?.[item.sources.id]}
               baseEntry={playlistExtraData?.baseEntry?.[item.sources.id]}

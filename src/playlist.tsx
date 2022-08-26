@@ -30,10 +30,12 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   }
 
   loadMedia(): void {
+
     if (!this.sidePanelsManager || this._playlistPanel || !this._player.playlist?.items?.length) {
       this.logger.warn('sidePanelsManager service is not registered or playlist empty');
       return;
     }
+
     const pluginMode: PluginPositions = [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position)
       ? PluginPositions.VERTICAL
       : PluginPositions.HORIZONTAL;
@@ -42,6 +44,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       panelComponent: () => {
         return (
           <PlaylistWrapper
+            eventManager={this.eventManager}
             onClose={() => {
               this.sidePanelsManager.deactivateItem(this._playlistPanel);
               this._pluginState = PluginStates.CLOSED;
@@ -71,6 +74,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
         this._pluginState = PluginStates.OPENED;
       }
     });
+
     if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
       this.ready.then(() => {
         this.sidePanelsManager.activateItem(this._playlistPanel);
@@ -81,11 +85,12 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   static isValid(): boolean {
     return true;
   }
-  reset(): void {
-    this._playlistPanel = null;
-  }
+
+  reset(): void {}
 
   destroy(): void {
+    this.eventManager.removeAll();
+    this._playlistPanel = null;
     this._pluginState = null;
     this._dataManager.destroy();
   }
