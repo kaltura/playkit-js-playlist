@@ -1,17 +1,19 @@
 import {h} from 'preact';
+import {ui} from 'kaltura-player-js';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
 import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 
-// @ts-ignore
-const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = KalturaPlayer.ui;
+const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
 
 export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
   private _playlistPanel = null;
   private _pluginState: PluginStates | null = null;
   private _dataManager: DataManager;
+  private _offlineSlateActive = false;
+  private _unsubscribeStore: Function = () => {};
 
   static defaultConfig: PlaylistConfig = {
     position: SidePanelPositions.RIGHT,
@@ -23,6 +25,20 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     super(name, player, config);
     this._player = player;
     this._dataManager = new DataManager(this._player, this.logger);
+    // subscribe on store changes
+    this._unsubscribeStore = this._player.ui.store?.subscribe(() => {
+      const state = this._player.ui.store.getState();
+      if (state.shell.playerClasses.includes('has-live-plugin-overlay') && !this._offlineSlateActive) {
+        this._offlineSlateActive = true;
+        // deactivate all plugins
+        this.sidePanelsManager?.componentsRegistry?.forEach((plugin: any, key: number) => {
+          if (plugin.isActive) {
+            this.sidePanelsManager.deactivateItem(key);
+          }
+        });
+        this._activetePlugin();
+      }
+    });
   }
 
   get sidePanelsManager() {
@@ -30,7 +46,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   }
 
   loadMedia(): void {
-
+    this._offlineSlateActive = false;
     if (!this.sidePanelsManager || this._playlistPanel || !this._player.playlist?.items?.length) {
       this.logger.warn('sidePanelsManager service is not registered or playlist empty');
       return;
@@ -45,10 +61,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
         return (
           <PlaylistWrapper
             eventManager={this.eventManager}
-            onClose={() => {
-              this.sidePanelsManager.deactivateItem(this._playlistPanel);
-              this._pluginState = PluginStates.CLOSED;
-            }}
+            onClose={this._deactivatePlugin}
             player={this._player}
             pluginMode={pluginMode}
             playlistData={this._dataManager.getPlaylistData()}
@@ -76,11 +89,20 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     });
 
     if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
-      this.ready.then(() => {
-        this.sidePanelsManager.activateItem(this._playlistPanel);
-      });
+      this._activetePlugin();
     }
   }
+
+  private _activetePlugin = () => {
+    this.ready.then(() => {
+      this.sidePanelsManager?.activateItem(this._playlistPanel);
+    });
+  };
+
+  private _deactivatePlugin = () => {
+    this.sidePanelsManager.deactivateItem(this._playlistPanel);
+    this._pluginState = PluginStates.CLOSED;
+  };
 
   static isValid(): boolean {
     return true;
@@ -92,6 +114,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this.eventManager.removeAll();
     this._playlistPanel = null;
     this._pluginState = null;
+    this._unsubscribeStore();
     this._dataManager.destroy();
   }
 }
