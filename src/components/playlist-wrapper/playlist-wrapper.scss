@@ -37,3 +37,6 @@
     font-style: normal;
   }
 }
+:global(.playkit-player.has-live-plugin-overlay .playkit-side-panel) {
+  z-index: 6;
+}
