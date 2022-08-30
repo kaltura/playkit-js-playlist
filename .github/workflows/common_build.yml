@@ -10,6 +10,7 @@ on:
   
 jobs:
    canary_build:
+    #test
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     uses: kaltura/playkit-js-common/.github/workflows/build.yml@master
     with:
