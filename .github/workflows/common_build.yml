@@ -27,4 +27,5 @@ jobs:
    print_events:
     runs-on: ubuntu-latest
     steps:
-       - run: echo event_name ${{ github.event_name }} action ${{ github.event.action }} state ${{ github.event.review.state }}
+       - run: echo event_name ${{ github.event_name }} action ${{ github.event.action }} state ${{ github.event.review.state }} testsing
+       
