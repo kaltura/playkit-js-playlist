@@ -27,5 +27,7 @@ jobs:
    print_events:
     runs-on: ubuntu-latest
     steps:
-       - run: echo event_name ${{ github.event_name }} action ${{ github.event.action }} state ${{ github.event.review.state }} testsing
+       - run: |
+          echo event_name ${{ github.event_name }} action ${{ github.event.action }} state ${{ github.event.review.state }} 
+          echo build number ${{ github.run_number }} increased - $(( ${{ github.run_number }} + 10 ))
        
