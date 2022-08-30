@@ -2,7 +2,11 @@ name: deploy to QA
 
 on:
   pull_request:
-    #types: [closed,submitted]
+    types: 
+      - closed
+  pull_request_review:
+    types: 
+      - submitted
   
 jobs:
    canary_build:
@@ -13,7 +17,7 @@ jobs:
       prefix: canary
     secrets: inherit
    dev_build:
-    if: github.event_name == 'pull_request' && github.event.review.state == 'approved'
+    if: github.event.review.state == 'approved'
     uses: kaltura/playkit-js-common/.github/workflows/build.yml@master
     with:
       pluginPath: playkit-playlist
