@@ -30,5 +30,5 @@ jobs:
        - run: |
           echo event_name ${{ github.event_name }} action ${{ github.event.action }} state ${{ github.event.review.state }} 
           echo build number ${{ github.run_number }} increased - $(( ${{ github.run_number }} + 10 ))
-          echo test
+          echo test2
        
