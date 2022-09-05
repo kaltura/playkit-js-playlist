@@ -6,6 +6,7 @@ import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
+const LIVE_PLUGIN_CLASSNAME = 'has-live-plugin-overlay';
 
 export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
@@ -28,10 +29,12 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     // subscribe on store changes
     this._unsubscribeStore = this._player.ui.store?.subscribe(() => {
       const state = this._player.ui.store.getState();
-      if (state.shell.playerClasses.includes('has-live-plugin-overlay') && !this._offlineSlateActive) {
+      if (this.hasPlaylist && state.shell.playerClasses.includes(LIVE_PLUGIN_CLASSNAME) && !this._offlineSlateActive) {
         this._offlineSlateActive = true;
         // deactivate all plugins
-        this.sidePanelsManager?.componentsRegistry?.forEach((plugin: any, key: number) => {
+        // TODO: consider close plugins from Live repo;
+        // TODO: open plugins (if expandOfFirstPlay set to true) only after this._player.ready() instead of this.ready (changes for all plugin repos);
+        this.sidePanelsManager?.componentsRegistry?.forEach((plugin: {isActive: boolean}, key: number) => {
           if (plugin.isActive) {
             this.sidePanelsManager.deactivateItem(key);
           }
@@ -45,9 +48,13 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     return this.player.getService('sidePanelsManager') as any;
   }
 
+  get hasPlaylist() {
+    return this._player.playlist?.items?.length > 0;
+  }
+
   loadMedia(): void {
     this._offlineSlateActive = false;
-    if (!this.sidePanelsManager || this._playlistPanel || !this._player.playlist?.items?.length) {
+    if (!this.sidePanelsManager || this._playlistPanel || !this.hasPlaylist) {
       this.logger.warn('sidePanelsManager service is not registered or playlist empty');
       return;
     }

@@ -37,6 +37,6 @@
     font-style: normal;
   }
 }
-:global(.playkit-player.has-live-plugin-overlay .playkit-side-panel) {
+:global(.playkit-player.has-live-plugin-overlay .playkit-side-panel:has(.playlistWrapper)) {
   z-index: 6;
 }
