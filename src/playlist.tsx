@@ -13,7 +13,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _pluginState: PluginStates | null = null;
   private _dataManager: DataManager;
   private _offlineSlateActive = false;
-  private _activePresetName = ''
+  private _activePresetName = '';
   private _unsubscribeStore: Function = () => {};
 
   static defaultConfig: PlaylistConfig = {
@@ -35,6 +35,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       }
       if (this._activePresetName !== '' && this._activePresetName !== state.shell.activePresetName) {
         this._activePresetName = state.shell.activePresetName;
+        // when switching from non-broadcasting live to VOD we need to toggle the plugin since the live plugin disables it
         this._deactivatePlugin();
         this._activetePlugin();
       } else if (this._activePresetName === '') {
