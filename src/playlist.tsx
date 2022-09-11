@@ -13,6 +13,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _pluginState: PluginStates | null = null;
   private _dataManager: DataManager;
   private _offlineSlateActive = false;
+  private _activePresetName = '';
   private _unsubscribeStore: Function = () => {};
 
   static defaultConfig: PlaylistConfig = {
@@ -30,15 +31,18 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       const state = this._player.ui.store.getState();
       if (state.shell.playerClasses.includes('has-live-plugin-overlay') && !this._offlineSlateActive) {
         this._offlineSlateActive = true;
-        // deactivate all plugins
-        this.sidePanelsManager?.componentsRegistry?.forEach((plugin: any, key: number) => {
-          if (plugin.isActive) {
-            this.sidePanelsManager.deactivateItem(key);
-          }
-        });
         this._activetePlugin();
       }
+      if (this._activePresetName !== '' && this._activePresetName !== state.shell.activePresetName) {
+        this._activePresetName = state.shell.activePresetName;
+        // when switching from non-broadcasting live to VOD we need to toggle the plugin since the live plugin disables it
+        this._deactivatePlugin();
+        this._activetePlugin();
+      } else if (this._activePresetName === '') {
+        this._activePresetName = state.shell.activePresetName;
+      }
     });
+
   }
 
   get sidePanelsManager() {
