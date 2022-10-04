@@ -55,5 +55,11 @@
     "playkit-js",
     "playkit-js-playlist",
     "html5 player"
-  ]
+  ],
+  "kaltura": {
+    "name": "playlist",
+    "dependencies": {
+      "playkit-ui-managers": "1.2.2"
+    }
+  }
 }
