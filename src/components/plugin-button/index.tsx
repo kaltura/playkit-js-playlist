@@ -20,7 +20,12 @@ interface PluginButtonProps {
 export const PluginButton = withText(translates)(({isActive, onClick, ...otherProps}: PluginButtonProps) => {
   return (
     <Tooltip label={otherProps.label} type="bottom">
-      <button aria-label={otherProps.label} className={[styles.pluginButton, isActive ? styles.active : ''].join(' ')} onClick={onClick}>
+      <button
+        role="button"
+        aria-label={otherProps.label}
+        aria-haspopup="true"
+        className={[styles.pluginButton, isActive ? styles.active : ''].join(' ')}
+        onClick={onClick}>
         <Icon
           id="playlist-plugin-button"
           height={icons.BigSize}

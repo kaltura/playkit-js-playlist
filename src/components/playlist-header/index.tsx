@@ -34,7 +34,7 @@ export const PlaylistHeader = withText(translates)(({onClose, title, amount, dur
       <div className={styles.closeButtonWrapper}>
         <Tooltip label={otherProps.closeButtonLabel} type="bottom">
           <A11yWrapper onClick={onClose}>
-            <button aria-label={otherProps.closeButtonLabel} className={styles.closeButton}>
+            <button role="button" aria-label={otherProps.closeButtonLabel} className={styles.closeButton}>
               <Icon
                 id="close-playlist-button"
                 height={icons.MediumSize}

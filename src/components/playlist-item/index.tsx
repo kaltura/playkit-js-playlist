@@ -40,6 +40,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
   const {sources, index} = item;
   const playlistItemIndex = index + 1;
   const playlistItemName = sources.metadata?.name;
+  const isVertical = useMemo(() => pluginMode === PluginPositions.VERTICAL, [pluginMode]);
 
   const lastProgress = useMemo(() => {
     if (!viewHistory?.lastTimeReached) {
@@ -94,7 +95,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
     return (
       <Fragment>
         <div className={[styles.playlistItemTitle, renderDescription ? styles.hasDescription : ''].join(' ')} role="text">
-          {pluginMode === PluginPositions.VERTICAL ? playlistItemName : `${playlistItemIndex}. ${playlistItemName}`}
+          {isVertical ? playlistItemName : `${playlistItemIndex}. ${playlistItemName}`}
         </div>
         {renderDescription}
       </Fragment>
@@ -109,12 +110,13 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
         } ${playlistItemName}`}
         className={[
           styles.playlistItem,
-          pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal,
+          isVertical ? styles.vertical : styles.horizontal,
           active ? styles.active : ''
         ].join(' ')}
         role="listitem"
+        aria-label={playlistItemName}
         tabIndex={0}>
-        {pluginMode === PluginPositions.VERTICAL && (
+        {isVertical && (
           <div className={styles.playlistItemIndex} aria-hidden="true">
             {item.index + 1}
           </div>
