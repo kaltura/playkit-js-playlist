@@ -34,13 +34,13 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       const state = this._player.ui.store.getState();
       if (state.shell.playerClasses.includes('has-live-plugin-overlay') && !this._offlineSlateActive) {
         this._offlineSlateActive = true;
-        this._activetePlugin();
+        this._activatePlugin();
       }
       if (this._activePresetName !== '' && this._activePresetName !== state.shell.activePresetName) {
         this._activePresetName = state.shell.activePresetName;
         // when switching from non-broadcasting live to VOD we need to toggle the plugin since the live plugin disables it
         this._deactivatePlugin();
-        this._activetePlugin();
+        this._activatePlugin();
       } else if (this._activePresetName === '') {
         this._activePresetName = state.shell.activePresetName;
       }
@@ -95,7 +95,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     }) as number;
 
     if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
-      this._activetePlugin();
+      this._activatePlugin();
     }
   }
 
@@ -103,7 +103,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     if (this._isPluginActive()) {
       this._deactivatePlugin();
     } else {
-      this._activetePlugin();
+      this._activatePlugin();
     }
   };
 
@@ -127,7 +127,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     return this.sidePanelsManager!.isItemActive(this._playlistPanel);
   };
 
-  private _activetePlugin = () => {
+  private _activatePlugin = () => {
     this.ready.then(() => {
       this.sidePanelsManager?.activateItem(this._playlistPanel);
       this._pluginState === PluginStates.OPENED;
