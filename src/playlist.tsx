@@ -1,15 +1,18 @@
 import {h} from 'preact';
 import {ui} from 'kaltura-player-js';
+import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
 import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
+import {icons} from './components/icons';
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
 
 export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
-  private _playlistPanel = null;
+  private _playlistPanel = -1;
+  private _playlistIcon = -1;
   private _pluginState: PluginStates | null = null;
   private _dataManager: DataManager;
   private _offlineSlateActive = false;
@@ -42,24 +45,27 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
         this._activePresetName = state.shell.activePresetName;
       }
     });
-
   }
 
   get sidePanelsManager() {
-    return this.player.getService('sidePanelsManager') as any;
+    return this.player.getService('sidePanelsManager') as SidePanelsManager | undefined;
+  }
+
+  get upperBarManager() {
+    return this.player.getService('upperBarManager') as UpperBarManager | undefined;
   }
 
   loadMedia(): void {
     this._offlineSlateActive = false;
-    if (!this.sidePanelsManager || this._playlistPanel || !this._player.playlist?.items?.length) {
-      this.logger.warn('sidePanelsManager service is not registered or playlist empty');
+    if (!this._isPlaylistValid()) {
       return;
     }
 
     const pluginMode: PluginPositions = [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position)
       ? PluginPositions.VERTICAL
       : PluginPositions.HORIZONTAL;
-    this._playlistPanel = this.sidePanelsManager.addItem({
+    // add side panel
+    this._playlistPanel = this.sidePanelsManager!.add({
       label: 'Playlist',
       panelComponent: () => {
         return (
@@ -72,40 +78,71 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
           />
         );
       },
-      iconComponent: ({isActive}: {isActive: boolean}) => {
-        return (
-          <PluginButton
-            isActive={isActive}
-            onClick={() => {
-              if (this.sidePanelsManager.isItemActive(this._playlistPanel)) {
-                this._pluginState = PluginStates.CLOSED;
-              }
-            }}
-          />
-        );
-      },
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Ads],
       position: this.config.position,
       expandMode: this.config.expandMode === SidePanelModes.ALONGSIDE ? SidePanelModes.ALONGSIDE : SidePanelModes.OVER,
       onActivate: () => {
         this._pluginState = PluginStates.OPENED;
       }
-    });
+    }) as number;
+
+    // add plugin button
+    this._playlistIcon = this.upperBarManager!.add({
+      label: 'Playlist',
+      svgIcon: {path: icons.PLUGIN_ICON, viewBox: '0 0 32 32'},
+      onClick: this._handleClickOnPluginIcon,
+      component: () => {
+        return <PluginButton isActive={this._isPluginActive()} onClick={this._handleClickOnPluginIcon} />;
+      }
+    }) as number;
 
     if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
       this._activetePlugin();
     }
   }
 
+  private _handleClickOnPluginIcon = () => {
+    if (this._isPluginActive()) {
+      this._deactivatePlugin();
+    } else {
+      this._activetePlugin();
+    }
+  };
+
+  private _isPlaylistValid = () => {
+    if (!this.sidePanelsManager || !this.upperBarManager) {
+      this.logger.warn('sidePanelsManager or upperBarManager service not registered');
+      return false;
+    }
+    if (Math.max(this._playlistPanel, this._playlistIcon) > 0) {
+      this.logger.warn('playlist plugin already initialized');
+      return false;
+    }
+    if (!this._player.playlist?.items?.length) {
+      this.logger.warn("playlist doesn't have playlist items");
+      return false;
+    }
+    return true;
+  };
+
+  private _isPluginActive = () => {
+    return this.sidePanelsManager!.isItemActive(this._playlistPanel);
+  };
+
   private _activetePlugin = () => {
     this.ready.then(() => {
       this.sidePanelsManager?.activateItem(this._playlistPanel);
+      this._pluginState === PluginStates.OPENED;
+      this.upperBarManager?.update(this._playlistIcon);
     });
   };
 
   private _deactivatePlugin = () => {
-    this.sidePanelsManager.deactivateItem(this._playlistPanel);
-    this._pluginState = PluginStates.CLOSED;
+    this.ready.then(() => {
+      this.sidePanelsManager?.deactivateItem(this._playlistPanel);
+      this._pluginState = PluginStates.CLOSED;
+      this.upperBarManager?.update(this._playlistIcon);
+    });
   };
 
   static isValid(): boolean {
@@ -116,7 +153,8 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
 
   destroy(): void {
     this.eventManager.removeAll();
-    this._playlistPanel = null;
+    this._playlistPanel = -1;
+    this._playlistIcon = -1;
     this._pluginState = null;
     this._unsubscribeStore();
     this._dataManager.destroy();

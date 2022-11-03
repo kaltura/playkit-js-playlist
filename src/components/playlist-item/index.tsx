@@ -3,7 +3,7 @@ import {useMemo} from 'preact/hooks';
 // @ts-ignore
 import {core} from 'kaltura-player-js';
 import * as styles from './playlist-item.scss';
-import {A11yWrapper} from '../a11y-wrapper';
+import {A11yWrapper} from '@playkit-js/common';
 import {icons} from '../icons';
 import {PluginPositions} from '../../types';
 import {KalturaViewHistoryUserEntry, KalturaBaseEntry, Capabilities} from '../../providers';

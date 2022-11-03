@@ -1,7 +1,7 @@
 import {h} from 'preact';
 import {icons} from '../icons';
 import * as styles from './playlist-header.scss';
-import {A11yWrapper} from '../a11y-wrapper';
+import {A11yWrapper} from '@playkit-js/common';
 import {PluginPositions} from '../../types';
 
 const {Tooltip, Icon} = KalturaPlayer.ui.components;

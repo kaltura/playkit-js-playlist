@@ -1,4 +1,5 @@
 import {h} from 'preact';
+import {A11yWrapper, OnClick} from '@playkit-js/common';
 import {icons} from '../icons';
 import * as styles from './plugin-button.scss';
 
@@ -13,22 +14,24 @@ const translates = ({isActive}: PluginButtonProps) => {
 
 interface PluginButtonProps {
   isActive: boolean;
-  onClick: () => void;
+  onClick: OnClick;
   label?: string;
 }
 
 export const PluginButton = withText(translates)(({isActive, onClick, ...otherProps}: PluginButtonProps) => {
   return (
     <Tooltip label={otherProps.label} type="bottom">
-      <button aria-label={otherProps.label} className={[styles.pluginButton, isActive ? styles.active : ''].join(' ')} onClick={onClick}>
-        <Icon
-          id="playlist-plugin-button"
-          height={icons.BigSize}
-          width={icons.BigSize}
-          viewBox={`0 0 ${icons.BigSize} ${icons.BigSize}`}
-          path={icons.PLUGIN_ICON}
-        />
-      </button>
+      <A11yWrapper onClick={onClick}>
+        <button aria-label={otherProps.label} className={[styles.pluginButton, isActive ? styles.active : ''].join(' ')}>
+          <Icon
+            id="playlist-plugin-button"
+            height={icons.BigSize}
+            width={icons.BigSize}
+            viewBox={`0 0 ${icons.BigSize} ${icons.BigSize}`}
+            path={icons.PLUGIN_ICON}
+          />
+        </button>
+      </A11yWrapper>
     </Tooltip>
   );
 });
