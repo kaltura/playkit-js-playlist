@@ -81,15 +81,13 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Ads],
       position: this.config.position,
       expandMode: this.config.expandMode === SidePanelModes.ALONGSIDE ? SidePanelModes.ALONGSIDE : SidePanelModes.OVER,
-      onActivate: () => {
-        this._pluginState = PluginStates.OPENED;
-      }
+      onDeactivate: this._deactivatePlugin
     }) as number;
 
     // add plugin button
     this._playlistIcon = this.upperBarManager!.add({
       label: 'Playlist',
-      svgIcon: {path: icons.PLUGIN_ICON, viewBox: '0 0 32 32'},
+      svgIcon: {path: icons.PLUGIN_ICON, viewBox: `0 0 ${icons.BigSize} ${icons.BigSize}`},
       onClick: this._handleClickOnPluginIcon,
       component: () => {
         return <PluginButton isActive={this._isPluginActive()} onClick={this._handleClickOnPluginIcon} />;
