@@ -1,9 +1,11 @@
-$theme-colors: (
-  'primary': #ffffff,
-  'secondary': #cccccc,
-  'gray': #444444,
-  'active': #006efa
-);
+@import '~@playkit-js/playkit-js-ui';
+
+$brand-color: #006EFA;
+$danger-color: #E12437;
+
+$roundness-1: 4px;
+$roundness-2: 8px;
+$roundness-3: 16px;
 
 @mixin playlist-scrollbar {
   &::-webkit-scrollbar {
