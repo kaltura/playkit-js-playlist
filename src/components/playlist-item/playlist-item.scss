@@ -94,7 +94,7 @@ $line-height: 18px;
         border-radius: 2px;
         font-size: 12px;
         line-height: 14px;
-        color: $tone-1;
+        color: $primary-text-contrast;
         text-transform: uppercase;
       }
       .playlistItemDuration {
@@ -111,7 +111,7 @@ $line-height: 18px;
         font-size: 12px;
         font-weight: 700;
         line-height: 14px;
-        color: $tone-1;
+        color: white;
       }
       .playlistItemProgress {
         position: relative;

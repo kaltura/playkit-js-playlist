@@ -2,10 +2,10 @@
 
 $brand-color: #006EFA;
 $danger-color: #E12437;
+$primary-text-contrast: #ffffff;
 
 $roundness-1: 4px;
 $roundness-2: 8px;
-$roundness-3: 16px;
 
 @mixin playlist-scrollbar {
   &::-webkit-scrollbar {
