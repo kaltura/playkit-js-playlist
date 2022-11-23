@@ -1,6 +1,7 @@
 @import '../../theme.scss';
 
 $line-height: 18px;
+$playlist-item-metadata-height: 46px;
 
 .playlistItem {
   display: flex;
@@ -39,24 +40,30 @@ $line-height: 18px;
   }
   &.horizontal {
     flex-direction: column;
-    width: 176px;
-    height: 132px;
+    height: 100%;
     padding: 0 6px 4px 6px;
     border-right: 2px solid transparent;
+    align-items: flex-start;
+    max-width: min-content;
     .playlistItemThumbnailWrapper {
       margin-top: 1px;
-      width: 160px;
-      height: 90px;
+      height: calc(100% - $playlist-item-metadata-height);
+      background-size: cover;
+      max-height: 100%;
     }
-    .playlistItemMetadata .playlistItemTitle {
-      width: 160px;
+    .playlistItemMetadata {
+      height: $playlist-item-metadata-height;
+      justify-content: flex-start;
+      margin-top: 4px;
+    .playlistItemTitle {
       margin-top: 4px;
       max-height: $line-height * 2;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       &.hasDescription {
         max-height: $line-height;
         -webkit-line-clamp: 1;
       }
+    }
     }
   }
   .playlistItemIndex {

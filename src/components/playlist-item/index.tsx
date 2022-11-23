@@ -120,6 +120,10 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
           </div>
         )}
         <div className={styles.playlistItemThumbnailWrapper} style={{backgroundImage: `url('${sources.poster}')`}} aria-hidden="true">
+          {/*for horizontal mode need to add image element in order to match width-height proportion*/}
+          {pluginMode === PluginPositions.HORIZONTAL && (
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAAJklEQVR42u3OMQEAAAgDoJnc6BpjDyRgLrcpGgEBAQEBAQGBduABaVYs3Q5APwQAAAAASUVORK5CYII="
+               style={{width: 'auto', height: '100%', visibility: 'hidden'}}/>)}
           <div className={styles.playlistItemAddons}>{renderAddons}</div>
         </div>
         <div className={styles.playlistItemMetadata}>{renderTitle}</div>
