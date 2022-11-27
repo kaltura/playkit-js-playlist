@@ -7,14 +7,16 @@ $theme-colors: (
 
 @mixin playlist-scrollbar {
   &::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
+    width: 4px;
+    height: 4px;
   }
   &::-webkit-scrollbar-track {
     background: rgba(33, 33, 33, 0.9);
+    visibility: hidden;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background-color: rgba(255, 255, 255, 0.3);
+    visibility: hidden;
   }
 }
