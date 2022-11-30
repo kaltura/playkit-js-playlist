@@ -29,6 +29,7 @@ const translates = ({player}: PlaylistWrapperProps) => {
 };
 
 interface PlaylistWrapperProps {
+  toggledByKeyboard: boolean;
   onClose: () => void;
   player: KalturaPlayerTypes.Player;
   pluginMode: PluginPositions;
@@ -40,97 +41,104 @@ interface PlaylistWrapperProps {
   sec?: string;
 }
 
-export const PlaylistWrapper = withText(translates)(({onClose, player, pluginMode, playlistData, eventManager, ...otherProps}: PlaylistWrapperProps) => {
-  const {playlist} = player;
-  const [playlistExtraData, setPlaylistExtraData] = useState<PlaylistExtraData>({});
-  const [scrolling, setScrolling] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(playlist.current.index);
-  const playlistContentRef = useRef<HTMLDivElement>(null);
+export const PlaylistWrapper = withText(translates)(
+  ({onClose, player, pluginMode, playlistData, eventManager, toggledByKeyboard, ...otherProps}: PlaylistWrapperProps) => {
+    const {playlist} = player;
+    const [playlistExtraData, setPlaylistExtraData] = useState<PlaylistExtraData>({});
+    const [scrolling, setScrolling] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(playlist.current.index);
+    const playlistContentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    playlistData.then(data => {
-      setPlaylistExtraData(data);
-    });
-    eventManager.listen(player, player.Event.MEDIA_LOADED, () => {
-      setActiveIndex(playlist.current.index);
-    })
-  }, []);
+    useEffect(() => {
+      playlistData.then(data => {
+        setPlaylistExtraData(data);
+      });
+      eventManager.listen(player, player.Event.MEDIA_LOADED, () => {
+        setActiveIndex(playlist.current.index);
+      });
+    }, []);
 
-  const handlePlaylistItemClick = useCallback(
-    (index: number) => () => {
-      playlist.playItem(index);
-    },
-    [playlist]
-  );
-
-  const handleScroll = useCallback(() => {
-    clearTimeout(scrollTimerId);
-    setScrolling(true);
-    scrollTimerId = setTimeout(() => {
-      setScrolling(false);
-    }, SCROLL_BAR_TIMEOUT);
-  }, []);
-
-  const handleWheel = useCallback((e: WheelEvent) => {
-    e.preventDefault();
-    if (playlistContentRef?.current) {
-      playlistContentRef.current.scrollLeft += e.deltaY;
-      handleScroll();
-    }
-  }, []);
-
-  const playlistDuration = useMemo(() => {
-    const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
-      return acc + cur.sources.duration;
-    }, 0);
-    const convertedDuration = toHHMMSS(totalDuration).split(':');
-
-    if (convertedDuration.length === 3) {
-      return ` ${convertedDuration[0]} ${otherProps.hour} ${convertedDuration[1]} ${otherProps.min}`;
-    }
-    if (convertedDuration[0] !== '00') {
-      return ` ${convertedDuration[0]} ${otherProps.min} ${convertedDuration[1]} ${otherProps.sec}`;
-    }
-    return ` ${convertedDuration[1]} ${otherProps.sec}`;
-  }, [playlist]);
-
-  const renderPlaylistHeader = useMemo(() => {
-    return (
-      <PlaylistHeader
-        onClose={onClose}
-        title={playlist.metadata?.name}
-        amount={otherProps.amount}
-        duration={playlistDuration}
-        pluginMode={pluginMode}
-      />
+    const handlePlaylistItemClick = useCallback(
+      (index: number) => () => {
+        playlist.playItem(index);
+      },
+      [playlist]
     );
-  }, [pluginMode, playlistDuration, onClose]);
 
-  const playlistContentParams = useMemo(() => {
-    if (pluginMode === PluginPositions.VERTICAL) {
-      return {onScroll: handleScroll};
-    }
-    return {onWheel: handleWheel, ref: playlistContentRef};
-  }, [pluginMode]);
+    const handleScroll = useCallback(() => {
+      clearTimeout(scrollTimerId);
+      setScrolling(true);
+      scrollTimerId = setTimeout(() => {
+        setScrolling(false);
+      }, SCROLL_BAR_TIMEOUT);
+    }, []);
 
-  return (
-    <div className={[styles.playlistWrapper, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
-      {renderPlaylistHeader}
-      <div className={[styles.playlistContent, scrolling ? styles.scrolling : ''].join(' ')} {...playlistContentParams} role="list">
-        {playlist.items.map((item: any) => {
-          const {index} = item;
-          return (
-            <PlaylistItem
-              item={item}
-              onSelect={handlePlaylistItemClick(index)}
-              active={activeIndex === index}
-              pluginMode={pluginMode}
-              viewHistory={playlistExtraData?.viewHistory?.[item.sources.id]}
-              baseEntry={playlistExtraData?.baseEntry?.[item.sources.id]}
-            />
-          );
-        })}
+    const handleWheel = useCallback((e: WheelEvent) => {
+      e.preventDefault();
+      if (playlistContentRef?.current) {
+        playlistContentRef.current.scrollLeft += e.deltaY;
+        handleScroll();
+      }
+    }, []);
+
+    const playlistDuration = useMemo(() => {
+      const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
+        return acc + cur.sources.duration;
+      }, 0);
+      const convertedDuration = toHHMMSS(totalDuration).split(':');
+
+      if (convertedDuration.length === 3) {
+        return ` ${convertedDuration[0]} ${otherProps.hour} ${convertedDuration[1]} ${otherProps.min}`;
+      }
+      if (convertedDuration[0] !== '00') {
+        return ` ${convertedDuration[0]} ${otherProps.min} ${convertedDuration[1]} ${otherProps.sec}`;
+      }
+      return ` ${convertedDuration[1]} ${otherProps.sec}`;
+    }, [playlist]);
+
+    const renderPlaylistHeader = useMemo(() => {
+      return (
+        <PlaylistHeader
+          onClose={onClose}
+          title={playlist.metadata?.name}
+          amount={otherProps.amount}
+          duration={playlistDuration}
+          pluginMode={pluginMode}
+          toggledByKeyboard={toggledByKeyboard}
+        />
+      );
+    }, [pluginMode, playlistDuration, toggledByKeyboard, onClose]);
+
+    const playlistContentParams = useMemo(() => {
+      if (pluginMode === PluginPositions.VERTICAL) {
+        return {onScroll: handleScroll};
+      }
+      return {onWheel: handleWheel, ref: playlistContentRef};
+    }, [pluginMode]);
+
+    return (
+      <div className={[styles.playlistWrapper, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
+        {renderPlaylistHeader}
+        <div
+          className={[styles.playlistContent, scrolling ? styles.scrolling : ''].join(' ')}
+          {...playlistContentParams}
+          role="list"
+          aria-live="polite">
+          {playlist.items.map((item: any) => {
+            const {index} = item;
+            return (
+              <PlaylistItem
+                item={item}
+                onSelect={handlePlaylistItemClick(index)}
+                active={activeIndex === index}
+                pluginMode={pluginMode}
+                viewHistory={playlistExtraData?.viewHistory?.[item.sources.id]}
+                baseEntry={playlistExtraData?.baseEntry?.[item.sources.id]}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
