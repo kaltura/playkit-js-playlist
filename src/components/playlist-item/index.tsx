@@ -12,6 +12,9 @@ const {withText, Text} = KalturaPlayer.ui.preacti18n;
 const {Icon} = KalturaPlayer.ui.components;
 const {toHHMMSS} = KalturaPlayer.ui.utils;
 
+const PLACEHOLDER_IMAGE_SRC =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAAJklEQVR42u3OMQEAAAgDoJnc6BpjDyRgLrcpGgEBAQEBAQGBduABaVYs3Q5APwQAAAAASUVORK5CYII=';
+
 const translates = ({}: PlaylistItemProps) => {
   return {
     quiz: <Text id="playlist.quiz_type">Quiz</Text>,
@@ -113,6 +116,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
           active ? styles.active : ''
         ].join(' ')}
         role="listitem"
+        aria-current={active}
         tabIndex={0}>
         {pluginMode === PluginPositions.VERTICAL && (
           <div className={styles.playlistItemIndex} aria-hidden="true">
@@ -122,8 +126,8 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
         <div className={styles.playlistItemThumbnailWrapper} style={{backgroundImage: `url('${sources.poster}')`}} aria-hidden="true">
           {/*for horizontal mode need to add image element in order to match width-height proportion*/}
           {pluginMode === PluginPositions.HORIZONTAL && (
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAAJklEQVR42u3OMQEAAAgDoJnc6BpjDyRgLrcpGgEBAQEBAQGBduABaVYs3Q5APwQAAAAASUVORK5CYII="
-               style={{width: 'auto', height: '100%', visibility: 'hidden'}}/>)}
+            <img src={PLACEHOLDER_IMAGE_SRC} style={{width: 'auto', height: '100%', visibility: 'hidden'}} />
+          )}
           <div className={styles.playlistItemAddons}>{renderAddons}</div>
         </div>
         <div className={styles.playlistItemMetadata}>{renderTitle}</div>

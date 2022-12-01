@@ -1,5 +1,6 @@
 import {h} from 'preact';
 import {ui} from 'kaltura-player-js';
+import {OnClickEvent} from '@playkit-js/common';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
 import {PluginButton} from './components/plugin-button';
@@ -18,6 +19,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _offlineSlateActive = false;
   private _activePresetName = '';
   private _unsubscribeStore: Function = () => {};
+  private _triggeredByKeyboard = false;
 
   static defaultConfig: PlaylistConfig = {
     position: SidePanelPositions.RIGHT,
@@ -75,6 +77,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
             player={this._player}
             pluginMode={pluginMode}
             playlistData={this._dataManager.getPlaylistData()}
+            toggledByKeyboard={this._triggeredByKeyboard}
           />
         );
       },
@@ -88,7 +91,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this._playlistIcon = this.upperBarManager!.add({
       label: 'Playlist',
       svgIcon: {path: icons.PLUGIN_ICON, viewBox: `0 0 ${icons.BigSize} ${icons.BigSize}`},
-      onClick: this._handleClickOnPluginIcon,
+      onClick: this._handleClickOnPluginIcon as () => void,
       component: () => {
         return <PluginButton isActive={this._isPluginActive()} onClick={this._handleClickOnPluginIcon} />;
       }
@@ -99,10 +102,12 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     }
   }
 
-  private _handleClickOnPluginIcon = () => {
+  private _handleClickOnPluginIcon = (e: OnClickEvent, byKeyboard?: boolean) => {
     if (this._isPluginActive()) {
+      this._triggeredByKeyboard = false;
       this._deactivatePlugin();
     } else {
+      this._triggeredByKeyboard = Boolean(byKeyboard);
       this._activatePlugin();
     }
   };
@@ -154,6 +159,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this._playlistPanel = -1;
     this._playlistIcon = -1;
     this._pluginState = null;
+    this._triggeredByKeyboard = false;
     this._unsubscribeStore();
     this._dataManager.destroy();
   }
