@@ -44,7 +44,6 @@ $playlist-item-metadata-height: 46px;
     padding: 0 6px 4px 6px;
     border-right: 2px solid transparent;
     align-items: flex-start;
-    max-width: min-content;
     .playlistItemThumbnailWrapper {
       margin-top: 1px;
       height: calc(100% - $playlist-item-metadata-height);
@@ -55,10 +54,12 @@ $playlist-item-metadata-height: 46px;
       height: $playlist-item-metadata-height;
       justify-content: flex-start;
       margin-top: 4px;
+      max-width: fit-content;
     .playlistItemTitle {
       margin-top: 4px;
       max-height: $line-height * 2;
       -webkit-line-clamp: 2;
+      word-break: break-word;
       &.hasDescription {
         max-height: $line-height;
         -webkit-line-clamp: 1;
