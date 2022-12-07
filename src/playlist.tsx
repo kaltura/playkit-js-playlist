@@ -91,7 +91,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this._playlistIcon = this.upperBarManager!.add({
       label: 'Playlist',
       svgIcon: {path: icons.PLUGIN_ICON, viewBox: `0 0 ${icons.BigSize} ${icons.BigSize}`},
-      onClick: this._handleClickOnPluginIcon as () => void,
+      onClick: ((e: OnClickEvent) => this._handleClickOnPluginIcon(e, true)) as any,
       component: () => {
         return <PluginButton isActive={this._isPluginActive()} onClick={this._handleClickOnPluginIcon} />;
       }
