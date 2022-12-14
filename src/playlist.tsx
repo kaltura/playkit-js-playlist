@@ -1,6 +1,6 @@
 import {h} from 'preact';
 import {ui} from 'kaltura-player-js';
-import {OnClickEvent} from '@playkit-js/common';
+import {OnClickEvent, isKeyboardEvent} from '@playkit-js/common';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
 import {PluginButton} from './components/plugin-button';
@@ -91,7 +91,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this._playlistIcon = this.upperBarManager!.add({
       label: 'Playlist',
       svgIcon: {path: icons.PLUGIN_ICON, viewBox: `0 0 ${icons.BigSize} ${icons.BigSize}`},
-      onClick: this._handleClickOnPluginIcon as () => void,
+      onClick: (e?: OnClickEvent) => this._handleClickOnPluginIcon(e, e ? isKeyboardEvent(e) : true),
       component: () => {
         return <PluginButton isActive={this._isPluginActive()} onClick={this._handleClickOnPluginIcon} />;
       }
@@ -102,7 +102,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     }
   }
 
-  private _handleClickOnPluginIcon = (e: OnClickEvent, byKeyboard?: boolean) => {
+  private _handleClickOnPluginIcon = (e?: OnClickEvent, byKeyboard?: boolean) => {
     if (this._isPluginActive()) {
       this._triggeredByKeyboard = false;
       this._deactivatePlugin();
