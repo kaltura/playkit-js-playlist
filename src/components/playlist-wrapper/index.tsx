@@ -60,7 +60,7 @@ export const PlaylistWrapper = withText(translates)(
 
     const handlePlaylistItemClick = useCallback(
       (index: number) => () => {
-        playlist.playItem(index);
+        index === playlist.current.index ? player.currentTime = 0 : playlist.playItem(index);
       },
       [playlist]
     );
