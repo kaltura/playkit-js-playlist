@@ -44,6 +44,7 @@ $playlist-item-metadata-height: 46px;
     padding: 0 6px 4px 6px;
     border-right: 2px solid transparent;
     align-items: flex-start;
+    max-width: min-content;
     .playlistItemThumbnailWrapper {
       margin-top: 1px;
       height: calc(100% - $playlist-item-metadata-height);
