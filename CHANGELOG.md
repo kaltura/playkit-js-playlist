@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/kaltura/playkit-js-playlist/compare/v3.1.0...v3.2.0) (2023-01-19)
+
+
+### Features
+
+* **FEV-1573:** migrate style of plugin playlist ([#21](https://github.com/kaltura/playkit-js-playlist/issues/21)) ([1e72067](https://github.com/kaltura/playkit-js-playlist/commit/1e720675d0299a2c4fdd61ccec10deac01f661b0))
+
+
+### Bug Fixes
+
+* **FEV-1298:** seek player to 0 when selecting the active playlist item ([#26](https://github.com/kaltura/playkit-js-playlist/issues/26)) ([9546ba6](https://github.com/kaltura/playkit-js-playlist/commit/9546ba6a109744faa37a1b377af6055682b7f99f))
+* **FEV-1590:** Mac voice over issues ([#25](https://github.com/kaltura/playkit-js-playlist/issues/25)) ([97a3888](https://github.com/kaltura/playkit-js-playlist/commit/97a3888d1e59ed2b595627757c963e168a61a477))
+* **FEV-1598:** fix width of playlist items in horizontal layout ([#27](https://github.com/kaltura/playkit-js-playlist/issues/27)) ([8c54b3a](https://github.com/kaltura/playkit-js-playlist/commit/8c54b3aad10c0c29ac115eb23b1850ec8b9fc381))
+
 ## [3.1.0](https://github.com/kaltura/playkit-js-playlist/compare/v3.0.0...v3.1.0) (2022-12-13)
 
 
