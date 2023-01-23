@@ -50,6 +50,9 @@ $playlist-item-metadata-height: 46px;
       height: calc(100% - $playlist-item-metadata-height);
       background-size: cover;
       max-height: 100%;
+      img {
+        max-width: fit-content; // override style from kms
+      }
     }
     .playlistItemMetadata {
       height: $playlist-item-metadata-height;
