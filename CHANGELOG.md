@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.0...v3.2.1) (2023-01-23)
+
+
+### Bug Fixes
+
+* **FEV-1598:** fix width of the images in horizontal layout ([#28](https://github.com/kaltura/playkit-js-playlist/issues/28)) ([d18feb8](https://github.com/kaltura/playkit-js-playlist/commit/d18feb8337e3a29fe6dc7368dbf6a5efe7a9a23d))
+
 ## [3.2.0](https://github.com/kaltura/playkit-js-playlist/compare/v3.1.0...v3.2.0) (2023-01-19)
 
 
