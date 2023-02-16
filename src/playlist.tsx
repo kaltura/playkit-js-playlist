@@ -1,6 +1,6 @@
 import {h} from 'preact';
 import {ui} from 'kaltura-player-js';
-import {OnClickEvent, isKeyboardEvent} from '@playkit-js/common';
+import {OnClickEvent} from '@playkit-js/common';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
 import {PluginButton} from './components/plugin-button';
@@ -20,6 +20,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _activePresetName = '';
   private _unsubscribeStore: Function = () => {};
   private _triggeredByKeyboard = false;
+  private _pluginButtonRef: HTMLButtonElement | null = null;
 
   static defaultConfig: PlaylistConfig = {
     position: SidePanelPositions.RIGHT,
@@ -73,7 +74,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
         return (
           <PlaylistWrapper
             eventManager={this.eventManager}
-            onClose={this._deactivatePlugin}
+            onClose={this._handleClose}
             player={this._player}
             pluginMode={pluginMode}
             playlistData={this._dataManager.getPlaylistData()}
@@ -91,9 +92,9 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this._playlistIcon = this.upperBarManager!.add({
       label: 'Playlist',
       svgIcon: {path: icons.PLUGIN_ICON, viewBox: `0 0 ${icons.BigSize} ${icons.BigSize}`},
-      onClick: (e?: OnClickEvent) => this._handleClickOnPluginIcon(e, e ? isKeyboardEvent(e) : true),
+      onClick: this._handleClickOnPluginIcon,
       component: () => {
-        return <PluginButton isActive={this._isPluginActive()} onClick={this._handleClickOnPluginIcon} />;
+        return <PluginButton isActive={this._isPluginActive()} onClick={this._handleClickOnPluginIcon} setRef={this._setPluginButtonRef} />;
       }
     }) as number;
 
@@ -101,6 +102,10 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this._activatePlugin();
     }
   }
+
+  private _setPluginButtonRef = (ref: HTMLButtonElement) => {
+    this._pluginButtonRef = ref;
+  };
 
   private _handleClickOnPluginIcon = (e?: OnClickEvent, byKeyboard?: boolean) => {
     if (this._isPluginActive()) {
@@ -132,6 +137,13 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     return this.sidePanelsManager!.isItemActive(this._playlistPanel);
   };
 
+  private _handleClose = (e: OnClickEvent, byKeyboard: boolean) => {
+    if (byKeyboard) {
+      this._pluginButtonRef?.focus();
+    }
+    this._deactivatePlugin();
+  };
+
   private _activatePlugin = () => {
     this.ready.then(() => {
       this.sidePanelsManager?.activateItem(this._playlistPanel);
@@ -158,6 +170,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this.eventManager.removeAll();
     this._playlistPanel = -1;
     this._playlistIcon = -1;
+    this._pluginButtonRef = null;
     this._pluginState = null;
     this._triggeredByKeyboard = false;
     this._unsubscribeStore();

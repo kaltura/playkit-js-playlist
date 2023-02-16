@@ -17,13 +17,19 @@ interface PluginButtonProps {
   isActive: boolean;
   onClick: OnClick;
   label?: string;
+  setRef: (ref: HTMLButtonElement | null) => void;
 }
 
-export const PluginButton = withText(translates)(({isActive, onClick, ...otherProps}: PluginButtonProps) => {
+export const PluginButton = withText(translates)(({isActive, onClick, setRef, ...otherProps}: PluginButtonProps) => {
   return (
     <Tooltip label={otherProps.label} type="bottom">
       <A11yWrapper onClick={onClick}>
-        <button aria-label={otherProps.label} className={[ui.style.upperBarIcon, styles.pluginButton, isActive ? styles.active : ''].join(' ')}>
+        <button
+          aria-label={otherProps.label}
+          className={[ui.style.upperBarIcon, styles.pluginButton, isActive ? styles.active : ''].join(' ')}
+          ref={node => {
+            setRef(node);
+          }}>
           <Icon
             id="playlist-plugin-button"
             height={icons.BigSize}

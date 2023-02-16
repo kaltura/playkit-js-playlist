@@ -1,11 +1,12 @@
 import {h} from 'preact';
 import {useCallback, useMemo, useEffect, useState, useRef} from 'preact/hooks';
+import {OnClick} from '@playkit-js/common';
 import * as styles from './playlist-wrapper.scss';
 import {PlaylistHeader} from '../playlist-header';
 import {PlaylistItem} from '../playlist-item';
 import {PluginPositions, PlaylistExtraData} from '../../types';
 
-const {toHHMMSS} = KalturaPlayer.ui.utils;
+const {toHHMMSS, KeyMap} = KalturaPlayer.ui.utils;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 let scrollTimerId: ReturnType<typeof setTimeout>;
@@ -30,7 +31,7 @@ const translates = ({player}: PlaylistWrapperProps) => {
 
 interface PlaylistWrapperProps {
   toggledByKeyboard: boolean;
-  onClose: () => void;
+  onClose: OnClick;
   player: KalturaPlayerTypes.Player;
   pluginMode: PluginPositions;
   eventManager: KalturaPlayerTypes.EventManager;
@@ -60,7 +61,7 @@ export const PlaylistWrapper = withText(translates)(
 
     const handlePlaylistItemClick = useCallback(
       (index: number) => () => {
-        index === playlist.current.index ? player.currentTime = 0 : playlist.playItem(index);
+        index === playlist.current.index ? (player.currentTime = 0) : playlist.playItem(index);
       },
       [playlist]
     );
@@ -80,6 +81,15 @@ export const PlaylistWrapper = withText(translates)(
         handleScroll();
       }
     }, []);
+
+    const handleClose = useCallback(
+      (event: KeyboardEvent) => {
+        if (event.keyCode === KeyMap.ESC) {
+          onClose(event, true);
+        }
+      },
+      [onClose]
+    );
 
     const playlistDuration = useMemo(() => {
       const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
@@ -117,7 +127,9 @@ export const PlaylistWrapper = withText(translates)(
     }, [pluginMode]);
 
     return (
-      <div className={[styles.playlistWrapper, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
+      <div
+        className={[styles.playlistWrapper, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}
+        onKeyUp={handleClose}>
         {renderPlaylistHeader}
         <div
           className={[styles.playlistContent, scrolling ? styles.scrolling : ''].join(' ')}
