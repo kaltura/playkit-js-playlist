@@ -105,7 +105,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
   }, [playlistItemName, pluginMode, playlistItemIndex, renderDescription]);
 
   return (
-    <A11yWrapper onClick={onSelect}>
+    <A11yWrapper onClick={onSelect} role="listitem">
       <div
         title={`${otherProps.playlistItemIndex}${index + 1}. ${
           active ? otherProps.currentlyPlaying : otherProps.toPlayAreaLabel
@@ -115,7 +115,6 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
           pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal,
           active ? styles.active : ''
         ].join(' ')}
-        role="listitem"
         aria-current={active}
         tabIndex={0}>
         {pluginMode === PluginPositions.VERTICAL && (
