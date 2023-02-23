@@ -2,7 +2,7 @@ import {h} from 'preact';
 import {useRef, useEffect} from 'preact/hooks';
 import {icons} from '../icons';
 import * as styles from './playlist-header.scss';
-import {A11yWrapper} from '@playkit-js/common';
+import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {PluginPositions} from '../../types';
 
 const {Tooltip, Icon} = KalturaPlayer.ui.components;
@@ -29,7 +29,7 @@ export const PlaylistHeader = withText(translates)(
     const titleRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
       if (toggledByKeyboard) {
-        titleRef.current?.focus();
+        titleRef.current?.focus({preventScroll: true});
       }
     }, [toggledByKeyboard]);
     const durationText = `${amount},${duration}`;
