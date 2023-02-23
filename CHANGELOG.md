@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.3](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.2...v3.2.3) (2023-02-23)
+
+
+### Bug Fixes
+
+* **FEC-12918:** handle focus change ([#30](https://github.com/kaltura/playkit-js-playlist/issues/30)) ([ce73448](https://github.com/kaltura/playkit-js-playlist/commit/ce734483fa5f7549ee3cad61ff705e0da1711460))
+
 ### [3.2.2](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.1...v3.2.2) (2023-01-26)
 
 ### [3.2.1](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.0...v3.2.1) (2023-01-23)
