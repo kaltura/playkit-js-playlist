@@ -19,6 +19,7 @@ const translates = ({}: PlaylistItemProps) => {
   return {
     quiz: <Text id="playlist.quiz_type">Quiz</Text>,
     live: <Text id="playlist.live_type">Live</Text>,
+    image: <Text id="playlist.image_type">Image</Text>,
     toPlayAreaLabel: <Text id="playlist.play-item-area-label">Click to play:</Text>,
     currentlyPlaying: <Text id="playlist.currently-playing">Currently playing:</Text>,
     playlistItemIndex: <Text id="playlist.playlist-item-index">Playlist item #</Text>
@@ -34,6 +35,7 @@ interface PlaylistItemProps {
   baseEntry?: KalturaBaseEntry;
   quiz?: string;
   live?: string;
+  image?: string;
   toPlayAreaLabel?: string;
   currentlyPlaying?: string;
   playlistItemIndex?: string;
@@ -72,6 +74,24 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
     if (sources.type === core.MediaType.LIVE) {
       // TODO: get stream date
       return <div className={styles.playlistItemDescription}></div>;
+    }
+    if (sources.type === core.MediaType.IMAGE) {
+      return (
+          <div className={styles.playlistItemDescription}>
+            <div className={styles.iconContainer}>
+              <Icon
+                  fillRule="evenodd"
+                  id="playlist-image-icon"
+                  height={icons.SmallSize}
+                  width={icons.SmallSize}
+                  viewBox={`0 0 14 12`}
+                  path={icons.IMAGE_ICON}
+                  color="#cccccc"
+              />
+            </div>
+            {otherProps.image}
+          </div>
+      );
     }
     if (baseEntry?.capabilities === Capabilities.Quiz) {
       return (
