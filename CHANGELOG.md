@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.4](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.3...v3.2.4) (2023-03-22)
+
+
+### Bug Fixes
+
+* **FEC-12614:** Image Entry Playlist Indicator ([#33](https://github.com/kaltura/playkit-js-playlist/issues/33)) ([6316e3f](https://github.com/kaltura/playkit-js-playlist/commit/6316e3f687d9d6a0d5deab1de36e60fd79c21ffc)), closes [kaltura/playkit-js-ui#734](https://github.com/kaltura/playkit-js-ui/issues/734)
+
 ### [3.2.3](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.2...v3.2.3) (2023-02-23)
 
 
