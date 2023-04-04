@@ -1,0 +1,20 @@
+{
+  "zh_tw": {
+    "playlist": {
+      "show_plugin": "顯示播放清單",
+      "hide_plugin": "隱藏播放清單",
+      "amount-items": {
+        "one": "影片",
+        "many": "{{count}} 影片"
+      },
+      "hour": "小時",
+      "min": "分鐘",
+      "sec": "秒",
+      "quiz_type": "測驗",
+      "live_type": "直播",
+      "play-item-area-label": "點擊播放：",
+      "currently-playing": "現在播放中：",
+      "playlist-item-index": "播放清單項目#"
+    }
+  }
+}

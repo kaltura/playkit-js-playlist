@@ -1,0 +1,20 @@
+{
+  "it": {
+    "playlist": {
+      "show_plugin": "Mostra playlist",
+      "hide_plugin": "Nascondi playlist",
+      "amount-items": {
+        "one": "video",
+        "many": "{{count}} video"
+      },
+      "hour": "h",
+      "min": "min",
+      "sec": "sec",
+      "quiz_type": "Quiz",
+      "live_type": "Live",
+      "play-item-area-label": "Fai clic per riprodurre:",
+      "currently-playing": "In riproduzione:",
+      "playlist-item-index": "Elemento playlist n."
+    }
+  }
+}

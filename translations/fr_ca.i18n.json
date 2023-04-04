@@ -1,0 +1,20 @@
+{
+  "fr_ca": {
+    "playlist": {
+      "show_plugin": "Afficher la liste de lecture",
+      "hide_plugin": "Masquer la liste de lecture",
+      "amount-items": {
+        "one": "vidéo",
+        "many": "Vidéos {{count}}"
+      },
+      "hour": "hr",
+      "min": "min",
+      "sec": "sec",
+      "quiz_type": "Questionnaire",
+      "live_type": "En direct",
+      "play-item-area-label": "Cliquer pour lire :",
+      "currently-playing": "En cours de lecture :",
+      "playlist-item-index": "Élément de la liste de lecture #"
+    }
+  }
+}
