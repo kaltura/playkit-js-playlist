@@ -1,0 +1,20 @@
+{
+  "ja": {
+    "playlist": {
+      "show_plugin": "プレーリストを表示にする",
+      "hide_plugin": "プレーリストを非表示にする",
+      "amount-items": {
+        "one": "ビデオ",
+        "many": "{{count}} ビデオ"
+      },
+      "hour": "時",
+      "min": "分",
+      "sec": "秒",
+      "quiz_type": "クイズ",
+      "live_type": "ライブ",
+      "play-item-area-label": "クリックして再生する",
+      "currently-playing": "現在プレー中：",
+      "playlist-item-index": "プレーリスト項目#"
+    }
+  }
+}

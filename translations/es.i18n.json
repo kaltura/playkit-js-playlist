@@ -1,0 +1,20 @@
+{
+  "es": {
+    "playlist": {
+      "show_plugin": "Mostrar lista de reproducción",
+      "hide_plugin": "Ocultar lista de reproducción",
+      "amount-items": {
+        "one": "vídeo",
+        "many": "{{count}} videos"
+      },
+      "hour": "h",
+      "min": "min",
+      "sec": "segundos",
+      "quiz_type": "Cuestionario",
+      "live_type": "En directo",
+      "play-item-area-label": "Haga clic para reproducir:",
+      "currently-playing": "Actualmente reproduciendo:",
+      "playlist-item-index": "N.º de elemento de la lista de reproducción"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "de": {
+    "playlist": {
+      "show_plugin": "Wiedergabeliste anzeigen",
+      "hide_plugin": "Wiedergabeliste ausblenden",
+      "amount-items": {
+        "one": "Video",
+        "many": "{{count}} Videos"
+      },
+      "hour": "h",
+      "min": "min",
+      "sec": "sek",
+      "quiz_type": "Quiz",
+      "live_type": "Live",
+      "play-item-area-label": "Zum Abspielen anklicken:",
+      "currently-playing": "Wird abgespielt:",
+      "playlist-item-index": "Wiedergabelistennr. #"
+    }
+  }
+}

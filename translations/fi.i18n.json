@@ -1,0 +1,20 @@
+{
+  "fi": {
+    "playlist": {
+      "show_plugin": "Näytä soittolista",
+      "hide_plugin": "Piilota soittolista",
+      "amount-items": {
+        "one": "video",
+        "many": "{{count}} videota"
+      },
+      "hour": "h",
+      "min": "min",
+      "sec": "s",
+      "quiz_type": "Testi",
+      "live_type": "Live",
+      "play-item-area-label": "Toista klikkaamalla:",
+      "currently-playing": "Tällä hetkellä toistetaan:",
+      "playlist-item-index": "Soittolistan kohde # "
+    }
+  }
+}

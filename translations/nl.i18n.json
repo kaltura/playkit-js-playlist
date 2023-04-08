@@ -1,0 +1,20 @@
+{
+  "nl": {
+    "playlist": {
+      "show_plugin": "Afspeellijst tonen",
+      "hide_plugin": "Afspeellijst verbergen",
+      "amount-items": {
+        "one": "video",
+        "many": "{{count}} video's"
+      },
+      "hour": "uur",
+      "min": "min",
+      "sec": "sec",
+      "quiz_type": "Toets",
+      "live_type": "Live",
+      "play-item-area-label": "Klik om af te spelen:",
+      "currently-playing": "Speelt nu af:",
+      "playlist-item-index": "Afspeellijst item nr."
+    }
+  }
+}
