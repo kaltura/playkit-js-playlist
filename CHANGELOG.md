@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.5](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.4...v3.2.5) (2023-04-19)
+
+
+### Bug Fixes
+
+* **FEC-13084:** add translations folder ([#35](https://github.com/kaltura/playkit-js-playlist/issues/35)) ([e804ebb](https://github.com/kaltura/playkit-js-playlist/commit/e804ebb9cf0a8ebd56efcb34b1636a3fa14578fc))
+
 ### [3.2.4](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.3...v3.2.4) (2023-03-22)
 
 
