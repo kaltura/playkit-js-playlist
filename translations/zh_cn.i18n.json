@@ -1,0 +1,20 @@
+{
+  "zh_cn": {
+    "playlist": {
+      "show_plugin": "显示播放列表",
+      "hide_plugin": "隐藏播放列表",
+      "amount-items": {
+        "one": "视频",
+        "many": "{{count}} 个视频"
+      },
+      "hour": "小时",
+      "min": "分钟",
+      "sec": "秒",
+      "quiz_type": "测验",
+      "live_type": "直播",
+      "play-item-area-label": "点击播放：",
+      "currently-playing": "当前正在播放：",
+      "playlist-item-index": "播放列表项目 #"
+    }
+  }
+}

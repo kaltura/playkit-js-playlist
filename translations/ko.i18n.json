@@ -1,0 +1,20 @@
+{
+  "ko": {
+    "playlist": {
+      "show_plugin": "재생 목록 보기",
+      "hide_plugin": "재생 목록 숨기기",
+      "amount-items": {
+        "one": "비디오",
+        "many": "{{count}} 비디오"
+      },
+      "hour": "시",
+      "min": "분",
+      "sec": "초",
+      "quiz_type": "퀴즈",
+      "live_type": "라이브",
+      "play-item-area-label": "클릭하여 재생:",
+      "currently-playing": "현재 재생:",
+      "playlist-item-index": "재생 목록 번호"
+    }
+  }
+}

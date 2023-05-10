@@ -1,0 +1,20 @@
+{
+  "pt_br": {
+    "playlist": {
+      "show_plugin": "Mostrar playlist",
+      "hide_plugin": "Ocultar playlist",
+      "amount-items": {
+        "one": "vídeo",
+        "many": "{{count}} vídeos"
+      },
+      "hour": "h",
+      "min": "min",
+      "sec": "s",
+      "quiz_type": "Quiz",
+      "live_type": "Ao vivo",
+      "play-item-area-label": "Clique para reproduzir:",
+      "currently-playing": "Reproduzindo agora:",
+      "playlist-item-index": "Nº do item da playlist"
+    }
+  }
+}

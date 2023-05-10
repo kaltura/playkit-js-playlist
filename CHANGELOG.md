@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.5](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.4...v3.2.5) (2023-04-19)
+
+
+### Bug Fixes
+
+* **FEC-13084:** add translations folder ([#35](https://github.com/kaltura/playkit-js-playlist/issues/35)) ([e804ebb](https://github.com/kaltura/playkit-js-playlist/commit/e804ebb9cf0a8ebd56efcb34b1636a3fa14578fc))
+
+### [3.2.4](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.3...v3.2.4) (2023-03-22)
+
+
+### Bug Fixes
+
+* **FEC-12614:** Image Entry Playlist Indicator ([#33](https://github.com/kaltura/playkit-js-playlist/issues/33)) ([6316e3f](https://github.com/kaltura/playkit-js-playlist/commit/6316e3f687d9d6a0d5deab1de36e60fd79c21ffc)), closes [kaltura/playkit-js-ui#734](https://github.com/kaltura/playkit-js-ui/issues/734)
+
+### [3.2.3](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.2...v3.2.3) (2023-02-23)
+
+
+### Bug Fixes
+
+* **FEC-12918:** handle focus change ([#30](https://github.com/kaltura/playkit-js-playlist/issues/30)) ([ce73448](https://github.com/kaltura/playkit-js-playlist/commit/ce734483fa5f7549ee3cad61ff705e0da1711460))
+
 ### [3.2.2](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.1...v3.2.2) (2023-01-26)
 
 ### [3.2.1](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.0...v3.2.1) (2023-01-23)

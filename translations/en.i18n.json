@@ -12,6 +12,7 @@
       "sec": "sec",
       "quiz_type": "Quiz",
       "live_type": "Live",
+      "image_type": "Image",
       "play-item-area-label": "Click to play:",
       "currently-playing": "Currently playing:",
       "playlist-item-index": "Playlist item #"
