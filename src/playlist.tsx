@@ -1,6 +1,6 @@
 import {h} from 'preact';
 import {ui} from 'kaltura-player-js';
-import {OnClickEvent} from '@playkit-js/common';
+import {OnClickEvent} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
 import {PluginButton} from './components/plugin-button';
@@ -109,7 +109,6 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
 
   private _handleClickOnPluginIcon = (e?: OnClickEvent, byKeyboard?: boolean) => {
     if (this._isPluginActive()) {
-      this._triggeredByKeyboard = false;
       this._deactivatePlugin();
     } else {
       this._triggeredByKeyboard = Boolean(byKeyboard);
@@ -154,6 +153,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
 
   private _deactivatePlugin = () => {
     this.ready.then(() => {
+      this._triggeredByKeyboard = false;
       this.sidePanelsManager?.deactivateItem(this._playlistPanel);
       this._pluginState = PluginStates.CLOSED;
       this.upperBarManager?.update(this._playlistIcon);

@@ -1,6 +1,6 @@
 import {h} from 'preact';
 import {useCallback, useMemo, useEffect, useState, useRef} from 'preact/hooks';
-import {OnClick} from '@playkit-js/common';
+import {OnClick} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import * as styles from './playlist-wrapper.scss';
 import {PlaylistHeader} from '../playlist-header';
 import {PlaylistItem} from '../playlist-item';
