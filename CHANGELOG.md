@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.6](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.5...v3.2.6) (2023-05-17)
+
+
+### Bug Fixes
+
+* **FEV-1623:** provide setFocus option to fix sidebar animation ([#32](https://github.com/kaltura/playkit-js-playlist/issues/32)) ([d474d3d](https://github.com/kaltura/playkit-js-playlist/commit/d474d3df3e816e035da4d44c78ff379368a9d8af))
+
 ### [3.2.5](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.4...v3.2.5) (2023-04-19)
 
 
