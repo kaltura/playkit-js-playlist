@@ -25,6 +25,7 @@ export const PluginButton = withText(translates)(({isActive, onClick, setRef, ..
     <Tooltip label={otherProps.label} type="bottom">
       <A11yWrapper onClick={onClick}>
         <button
+          data-testid={'playlist_pluginButton'}
           aria-label={otherProps.label}
           className={[ui.style.upperBarIcon, styles.pluginButton, isActive ? styles.active : ''].join(' ')}
           ref={node => {

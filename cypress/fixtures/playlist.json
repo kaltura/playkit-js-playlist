@@ -1,0 +1,62 @@
+[
+  {
+    "partnerId": 1091,
+    "ks": "",
+    "userId": 0,
+    "objectType": "KalturaStartWidgetSessionResponse"
+  },
+  {
+    "id": "1_g0n50ldx",
+    "name": "new playlist",
+    "description": "",
+    "thumbnailUrl": "https://cfvod.kaltura.com/p/27017/sp/0/thumbnail/entry_id/1_g0n50ldx/version/100011",
+    "objectType": "KalturaPlaylist"
+  },
+  [
+    {
+      "mediaType": 1,
+      "dataUrl": "https://cdnapisec.kaltura.com/p/27017/sp/2701700/playManifest/entryId/1_vqro0wdl/format/url/protocol/https",
+      "flavorParamsIds": "0,295181,487041,487051,487061,487071,487081,487091,487111,2076221,2215371",
+      "duration": 6,
+      "msDuration": 5805,
+      "id": "1_vqro0wdl",
+      "name": "5s media (Lorem ipsum dolor sit amet, consectetur adipiscing elit)",
+      "description": "line one<br>line two<br>line three<br>Praesent sapien massa, convallis a <u>pellentesque nec, egest</u>as non nisi. Mauris blandit aliquet elit, eget <a target=\"_blank\" rel=\"nofollow noopener noreferrer\" href=\"http://google.com\">tincidunt</a> nibh pulvinar a. <b>Curabitur arcu erat, accumsan </b>id imperdiet et, <span class=\"wysiwyg-color-red\">porttitor</span> at sem.<i> Vestibulum ante ipsum prim</i>is in faucibus;<br><blockquote><ul><li>one</li><li>two</li></ul></blockquote>Last line<br>Pellentesque in ipsum id orci porta dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum id orci porta dapibus. Cras ultricies ligula sed magna dictum porta. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sollicitudin molestie malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi.<br>Pellentesque in ipsum id orci porta dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum id orci porta dapibus. Cras ultricies ligula sed magna dictum porta. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sollicitudin molestie malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi.<br>Pellentesque in ipsum id orci porta dapibus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum id orci porta dapibus. Cras ultricies ligula sed magna dictum porta. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sollicitudin molestie malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi.<br><br>",
+      "tags": "",
+      "status": 2,
+      "type": 1,
+      "thumbnailUrl": "https://cfvod.kaltura.com/p/27017/sp/2701700/thumbnail/entry_id/1_vqro0wdl/version/100061",
+      "objectType": "KalturaMediaEntry"
+    },
+    {
+      "mediaType": 1,
+      "dataUrl": "https://cdnapisec.kaltura.com/p/27017/sp/2701700/playManifest/entryId/1_ahuv8q4v/format/url/protocol/https",
+      "flavorParamsIds": "0,295181,487041,487051,487061,487111,2076221,2215371",
+      "duration": 1750,
+      "msDuration": 1750403,
+      "id": "1_ahuv8q4v",
+      "name": "BBC.The.Sky.at.Night.2009.02.The.Merry.Dancers",
+      "description": "BBC.The.Sky.at.Night.2009.02.The.Merry.Dancers",
+      "tags": "",
+      "status": 2,
+      "type": 1,
+      "thumbnailUrl": "https://cfvod.kaltura.com/p/27017/sp/2701700/thumbnail/entry_id/1_ahuv8q4v/version/100011",
+      "objectType": "KalturaMediaEntry"
+    },
+    {
+      "mediaType": 1,
+      "dataUrl": "https://cdnapisec.kaltura.com/p/27017/sp/2701700/playManifest/entryId/1_l4h9vq7r/format/url/protocol/https",
+      "flavorParamsIds": "0,295181,487071,487111,2076221,2215371",
+      "duration": 300,
+      "msDuration": 300002,
+      "id": "1_l4h9vq7r",
+      "name": "Hotspots migration test",
+      "description": "Cras ultricies ligula sed magna dictum porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Nulla quis lorem ut libero malesuada feugiat. Sed porttitor lectus nibh. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Sed porttitor lectus nibh. Pellentesque in ipsum id orci porta dapibus.",
+      "tags": "",
+      "status": 2,
+      "type": 1,
+      "thumbnailUrl": "https://cfvod.kaltura.com/p/27017/sp/2701700/thumbnail/entry_id/1_l4h9vq7r/version/100001",
+      "objectType": "KalturaMediaEntry"
+    }
+  ]
+]

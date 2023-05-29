@@ -128,6 +128,7 @@ export const PlaylistWrapper = withText(translates)(
 
     return (
       <div
+        data-testid={'playlist_root'}
         className={[styles.playlistWrapper, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}
         onKeyUp={handleClose}>
         {renderPlaylistHeader}
