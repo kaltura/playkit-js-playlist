@@ -10,7 +10,7 @@ const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 const translates = ({}: PlaylistHeaderProps) => {
   return {
-    closeButtonLabel: <Text id="playlist.hide-plugin">Hide Playlist</Text>
+    closeButtonLabel: <Text id="playlist.hide_plugin">Hide Playlist</Text>
   };
 };
 
