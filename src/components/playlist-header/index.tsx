@@ -10,7 +10,7 @@ const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 const translates = ({}: PlaylistHeaderProps) => {
   return {
-    closeButtonLabel: <Text id="playlist.hide-plugin">Hide Playlist</Text>
+    closeButtonLabel: <Text id="playlist.hide_plugin">Hide Playlist</Text>
   };
 };
 
@@ -36,17 +36,17 @@ export const PlaylistHeader = withText(translates)(
     return (
       <div className={[styles.playlistHeader, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
         <div className={styles.playlistMetadata} tabIndex={0} ref={titleRef} aria-label={`${title} ${durationText}`}>
-          <div className={styles.playlistTitle} title={title} aria-hidden="true">
+          <div className={styles.playlistTitle} title={title} aria-hidden="true" data-testid={'playlist_title'}>
             {title}
           </div>
-          <div className={styles.playlistDuration} aria-hidden="true">
+          <div className={styles.playlistDuration} aria-hidden="true" data-testid={'playlist_duration'}>
             {durationText}
           </div>
         </div>
         <div className={styles.closeButtonWrapper}>
           <Tooltip label={otherProps.closeButtonLabel} type="bottom">
             <A11yWrapper onClick={onClose}>
-              <button aria-label={otherProps.closeButtonLabel} className={styles.closeButton}>
+              <button aria-label={otherProps.closeButtonLabel} className={styles.closeButton} data-testid={'playlist_closeButton'}>
                 <Icon
                   id="close-playlist-button"
                   height={icons.MediumSize}

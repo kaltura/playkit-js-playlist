@@ -51,7 +51,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
       return 0;
     }
     const progress = (viewHistory?.lastTimeReached / sources.duration) * 100;
-    return progress.toFixed();
+    return Number(progress.toFixed());
   }, [sources, viewHistory]);
 
   const renderAddons = useMemo(() => {
@@ -77,20 +77,20 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
     }
     if (sources.type === core.MediaType.IMAGE) {
       return (
-          <div className={styles.playlistItemDescription}>
-            <div className={styles.iconContainer}>
-              <Icon
-                  fillRule="evenodd"
-                  id="playlist-image-icon"
-                  height={icons.SmallSize}
-                  width={icons.SmallSize}
-                  viewBox={`0 0 14 12`}
-                  path={icons.IMAGE_ICON}
-                  color="#cccccc"
-              />
-            </div>
-            {otherProps.image}
+        <div className={styles.playlistItemDescription}>
+          <div className={styles.iconContainer}>
+            <Icon
+              fillRule="evenodd"
+              id="playlist-image-icon"
+              height={icons.SmallSize}
+              width={icons.SmallSize}
+              viewBox={`0 0 14 12`}
+              path={icons.IMAGE_ICON}
+              color="#cccccc"
+            />
           </div>
+          {otherProps.image}
+        </div>
       );
     }
     if (baseEntry?.capabilities === Capabilities.Quiz) {
@@ -135,6 +135,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
           pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal,
           active ? styles.active : ''
         ].join(' ')}
+        data-testid={'playlist_item'}
         aria-current={active}
         tabIndex={0}>
         {pluginMode === PluginPositions.VERTICAL && (
