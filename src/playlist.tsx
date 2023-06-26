@@ -84,8 +84,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       },
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Ads],
       position: this.config.position,
-      expandMode: this.config.expandMode === SidePanelModes.ALONGSIDE ? SidePanelModes.ALONGSIDE : SidePanelModes.OVER,
-      onDeactivate: this._deactivatePlugin
+      expandMode: this.config.expandMode === SidePanelModes.ALONGSIDE ? SidePanelModes.ALONGSIDE : SidePanelModes.OVER
     }) as number;
 
     // add plugin button
@@ -94,7 +93,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       svgIcon: {path: icons.PLUGIN_ICON, viewBox: `0 0 ${icons.BigSize} ${icons.BigSize}`},
       onClick: this._handleClickOnPluginIcon,
       component: () => {
-        return <PluginButton isActive={this._isPluginActive()} onClick={this._handleClickOnPluginIcon} setRef={this._setPluginButtonRef} />;
+        return <PluginButton isActive={this._isPluginActive()} setRef={this._setPluginButtonRef} />;
       }
     }) as number;
 
