@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.2.9 (2023-06-27)
+
+
+### Bug Fixes
+
+* **FEC-13241:** handle open/close plugin by upper-bar listener ([#43](https://github.com/kaltura/playkit-js-playlist/issues/43)) ([ef0dcb8](https://github.com/kaltura/playkit-js-playlist/commit/ef0dcb893e91f9e16bf83ea82d75a7d04ca4aa25))
+
 ### 3.2.8 (2023-06-07)
 
 ### [3.2.6](https://github.com/kaltura/playkit-js-playlist/compare/v3.2.5...v3.2.6) (2023-05-17)
