@@ -116,7 +116,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
   const renderTitle = useMemo(() => {
     return (
       <Fragment>
-        <div className={[styles.playlistItemTitle, renderDescription ? styles.hasDescription : ''].join(' ')} role="text">
+        <div className={[styles.playlistItemTitle, renderDescription ? styles.hasDescription : ''].join(' ')}>
           {pluginMode === PluginPositions.VERTICAL ? playlistItemName : `${playlistItemIndex}. ${playlistItemName}`}
         </div>
         {renderDescription}
