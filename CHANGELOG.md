@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.3.0 (2023-10-08)
+
+
+### Features
+
+* **FEC-13390:** add canary workflow that uses script from common ([#48](https://github.com/kaltura/playkit-js-playlist/issues/48)) ([febc596](https://github.com/kaltura/playkit-js-playlist/commit/febc596a5b3677957aa8fc10303f838dc1c4911a))
+
 ### 3.2.11 (2023-09-11)
 
 ### 3.2.10 (2023-09-11)
