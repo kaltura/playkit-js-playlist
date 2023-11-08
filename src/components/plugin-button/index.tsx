@@ -22,6 +22,7 @@ export const PluginButton = withText(translates)(({isActive, setRef, ...otherPro
   return (
     <Tooltip label={otherProps.label} type="bottom">
       <button
+        type="button"
         data-testid={'playlist_pluginButton'}
         aria-label={otherProps.label}
         className={[ui.style.upperBarIcon, styles.pluginButton, isActive ? styles.active : ''].join(' ')}
