@@ -35,11 +35,11 @@ export const PlaylistHeader = withText(translates)(
     const durationText = `${amount},${duration}`;
     return (
       <div className={[styles.playlistHeader, pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal].join(' ')}>
-        <div className={styles.playlistMetadata} tabIndex={0} ref={titleRef} aria-label={`${title} ${durationText}`}>
-          <div className={styles.playlistTitle} title={title} aria-hidden="true" data-testid={'playlist_title'}>
+        <div className={styles.playlistMetadata} tabIndex={0} ref={titleRef}>
+          <div className={styles.playlistTitle} title={title} data-testid={'playlist_title'}>
             {title}
           </div>
-          <div className={styles.playlistDuration} aria-hidden="true" data-testid={'playlist_duration'}>
+          <div className={styles.playlistDuration} data-testid={'playlist_duration'}>
             {durationText}
           </div>
         </div>
