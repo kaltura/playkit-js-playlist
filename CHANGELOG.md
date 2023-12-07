@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.2 (2023-12-07)
+
+
+### Bug Fixes
+
+* **ADA-96:** Playlist info at top of playlist not announced by JAWS ([#50](https://github.com/kaltura/playkit-js-playlist/issues/50)) ([6924ace](https://github.com/kaltura/playkit-js-playlist/commit/6924ace38fe13bf32c63f80f261281cd58f6eb58))
+
 ### 3.3.1 (2023-11-26)
 
 
