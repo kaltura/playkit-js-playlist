@@ -20,6 +20,7 @@ const translates = ({}: PlaylistItemProps) => {
     quiz: <Text id="playlist.quiz_type">Quiz</Text>,
     live: <Text id="playlist.live_type">Live</Text>,
     image: <Text id="playlist.image_type">Image</Text>,
+    document: <Text id="playlist.document_type">Document</Text>,
     toPlayAreaLabel: <Text id="playlist.play-item-area-label">Click to play:</Text>,
     currentlyPlaying: <Text id="playlist.currently-playing">Currently playing:</Text>,
     playlistItemIndex: <Text id="playlist.playlist-item-index">Playlist item #</Text>
@@ -36,26 +37,38 @@ interface PlaylistItemProps {
   quiz?: string;
   live?: string;
   image?: string;
+  document?: string;
   toPlayAreaLabel?: string;
   currentlyPlaying?: string;
   playlistItemIndex?: string;
 }
 
+const MediaTypes = {
+  Live: core.MediaType.LIVE,
+  Image: core.MediaType.IMAGE,
+  Document: 'Document' // TODO: import from core.MediaType.DOCUMENT
+};
+
 export const PlaylistItem = withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, ...otherProps}: PlaylistItemProps) => {
   const {sources, index} = item;
   const playlistItemIndex = index + 1;
   const playlistItemName = sources.metadata?.name;
+  const duration = sources.duration || 0;
 
   const lastProgress = useMemo(() => {
     if (!viewHistory?.lastTimeReached) {
       return 0;
     }
-    const progress = (viewHistory?.lastTimeReached / sources.duration) * 100;
+    const progress = (viewHistory?.lastTimeReached / duration) * 100;
     return Number(progress.toFixed());
   }, [sources, viewHistory]);
 
   const renderAddons = useMemo(() => {
-    if (sources.type === core.MediaType.LIVE) {
+    const type = sources.mediaEntryType || sources.type;
+    if ([MediaTypes.Image, MediaTypes.Document].includes(type)) {
+      return null;
+    }
+    if (sources.mediaEntryType === MediaTypes.Live) {
       return <div className={styles.liveLabel}>{otherProps.live}</div>;
     }
     return (
@@ -71,11 +84,12 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
   }, [sources, lastProgress]);
 
   const renderDescription = useMemo(() => {
-    if (sources.type === core.MediaType.LIVE) {
+    const type = sources.mediaEntryType || sources.type;
+    if (type === MediaTypes.Live) {
       // TODO: get stream date
       return <div className={styles.playlistItemDescription}></div>;
     }
-    if (sources.type === core.MediaType.IMAGE) {
+    if (type === MediaTypes.Image) {
       return (
         <div className={styles.playlistItemDescription}>
           <div className={styles.iconContainer}>
@@ -90,6 +104,24 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
             />
           </div>
           {otherProps.image}
+        </div>
+      );
+    }
+    if (type === MediaTypes.Document) {
+      return (
+        <div className={styles.playlistItemDescription}>
+          <div className={styles.iconContainer}>
+            <Icon
+              fillRule="evenodd"
+              id="playlist-document-icon"
+              height={icons.SmallSize}
+              width={icons.SmallSize}
+              viewBox={`0 0 16 16`}
+              path={icons.DOCUMENT_ICON}
+              color="#cccccc"
+            />
+          </div>
+          {otherProps.document}
         </div>
       );
     }

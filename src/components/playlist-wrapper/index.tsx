@@ -93,7 +93,7 @@ export const PlaylistWrapper = withText(translates)(
 
     const playlistDuration = useMemo(() => {
       const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
-        return acc + cur.sources.duration;
+        return acc + (cur.sources.duration || 0);
       }, 0);
       const convertedDuration = toHHMMSS(totalDuration).split(':');
 
