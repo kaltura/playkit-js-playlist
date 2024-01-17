@@ -2,6 +2,7 @@ import {h} from 'preact';
 import {icons} from '../icons';
 import * as styles from './plugin-button.scss';
 import {ui} from '@playkit-js/kaltura-player-js';
+import { pluginName } from "../../index";
 
 const {Tooltip, Icon} = KalturaPlayer.ui.components;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
@@ -30,7 +31,7 @@ export const PluginButton = withText(translates)(({isActive, setRef, ...otherPro
           setRef(node);
         }}>
         <Icon
-          id="playlist-plugin-button"
+          id={pluginName}
           height={icons.BigSize}
           width={icons.BigSize}
           viewBox={`0 0 ${icons.BigSize} ${icons.BigSize}`}
