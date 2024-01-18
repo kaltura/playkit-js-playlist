@@ -68,7 +68,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
     if ([MediaTypes.Image, MediaTypes.Document].includes(type)) {
       return null;
     }
-    if (sources.mediaEntryType === MediaTypes.Live) {
+    if (type === MediaTypes.Live) {
       return <div className={styles.liveLabel}>{otherProps.live}</div>;
     }
     return (
