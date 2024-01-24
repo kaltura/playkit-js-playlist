@@ -46,7 +46,7 @@ interface PlaylistItemProps {
 const MediaTypes = {
   Live: core.MediaType.LIVE,
   Image: core.MediaType.IMAGE,
-  Document: 'Document' // TODO: import from core.MediaType.DOCUMENT
+  Document: core.MediaType.DOCUMENT
 };
 
 export const PlaylistItem = withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, ...otherProps}: PlaylistItemProps) => {
@@ -100,7 +100,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
               width={icons.SmallSize}
               viewBox={`0 0 14 12`}
               path={icons.IMAGE_ICON}
-              color="#cccccc"
+              color={icons.Color}
             />
           </div>
           {otherProps.image}
@@ -118,7 +118,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
               width={icons.SmallSize}
               viewBox={`0 0 16 16`}
               path={icons.DOCUMENT_ICON}
-              color="#cccccc"
+              color={icons.Color}
             />
           </div>
           {otherProps.document}
@@ -135,7 +135,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
               width={icons.SmallSize}
               viewBox={`0 0 ${icons.SmallSize} ${icons.SmallSize}`}
               path={icons.QUIZ_ICON}
-              color="#cccccc"
+              color={icons.Color}
             />
           </div>
           {otherProps.quiz}

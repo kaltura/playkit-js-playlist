@@ -12,4 +12,5 @@ export namespace icons {
   export const BigSize = 32;
   export const MediumSize = 24;
   export const SmallSize = 16;
+  export const Color = '#cccccc';
 }
