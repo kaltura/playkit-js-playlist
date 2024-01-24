@@ -7,6 +7,7 @@ import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 import {icons} from './components/icons';
+import { pluginName } from "./index";
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
 
@@ -88,9 +89,14 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     }) as number;
 
     // add plugin button
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     this._playlistIcon = this.upperBarManager!.add({
-      label: 'Playlist',
-      svgIcon: {path: icons.PLUGIN_ICON, viewBox: `0 0 ${icons.BigSize} ${icons.BigSize}`},
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      ariaLabel: 'Playlist',
+      displayName: 'Playlist',
+      svgIcon: {path: icons.PLUGIN_ICON},
       onClick: this._handleClickOnPluginIcon,
       component: () => {
         return <PluginButton isActive={this._isPluginActive()} setRef={this._setPluginButtonRef} />;
