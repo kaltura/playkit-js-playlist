@@ -59,7 +59,7 @@
   "kaltura": {
     "name": "playlist",
     "dependencies": {
-      "playkit-ui-managers": "1.5.0"
+      "playkit-ui-managers": "1.5.2"
     }
   },
   "dependencies": {
