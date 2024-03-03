@@ -54,7 +54,7 @@ export const PlaylistWrapper = withText(translates)(
       playlistData.then(data => {
         setPlaylistExtraData(data);
       });
-      eventManager.listen(player, player.Event.MEDIA_LOADED, () => {
+      eventManager.listen(player, player.Event.CHANGE_SOURCE_ENDED, () => {
         setActiveIndex(playlist.current.index);
       });
     }, []);
