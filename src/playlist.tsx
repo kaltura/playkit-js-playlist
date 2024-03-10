@@ -7,7 +7,7 @@ import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 import {icons} from './components/icons';
-import { pluginName } from "./index";
+import { PlaylistEvents, pluginName } from "./index";
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
 
@@ -153,6 +153,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.sidePanelsManager?.activateItem(this._playlistPanel);
       this._pluginState === PluginStates.OPENED;
       this.upperBarManager?.update(this._playlistIcon);
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_OPEN, {position: this.config.position})
     });
   };
 
@@ -162,6 +163,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.sidePanelsManager?.deactivateItem(this._playlistPanel);
       this._pluginState = PluginStates.CLOSED;
       this.upperBarManager?.update(this._playlistIcon);
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, {position: this.config.position})
     });
   };
 

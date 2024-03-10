@@ -10,6 +10,6 @@ const NAME = __NAME__;
 
 export {Playlist as Plugin};
 export {VERSION, NAME};
-
+export {PlaylistEvents} from './events'
 export const pluginName: string = 'playlist';
 KalturaPlayer.core.registerPlugin(pluginName, Playlist);
