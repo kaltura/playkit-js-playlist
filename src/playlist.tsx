@@ -8,6 +8,7 @@ import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 import {icons} from './components/icons';
 import { pluginName } from "./index";
+import {PlaylistEvents} from './events'
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
 
@@ -104,7 +105,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     }) as number;
 
     if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
-      this._activatePlugin();
+      this._activatePlugin(true);
     }
   }
 
@@ -148,11 +149,12 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this._deactivatePlugin();
   };
 
-  private _activatePlugin = () => {
+  private _activatePlugin = (isFirstOpen = false) => {
     this.ready.then(() => {
       this.sidePanelsManager?.activateItem(this._playlistPanel);
       this._pluginState === PluginStates.OPENED;
       this.upperBarManager?.update(this._playlistIcon);
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_OPEN, {position: this.config.position, auto: isFirstOpen})
     });
   };
 
@@ -162,6 +164,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.sidePanelsManager?.deactivateItem(this._playlistPanel);
       this._pluginState = PluginStates.CLOSED;
       this.upperBarManager?.update(this._playlistIcon);
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, {position: this.config.position})
     });
   };
 
