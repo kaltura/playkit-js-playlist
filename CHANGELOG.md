@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.6 (2024-03-14)
+
+
+### Bug Fixes
+
+* **FEC-13742:** [Playlist Plugin]: Add Events (used by kava analytics) ([#56](https://github.com/kaltura/playkit-js-playlist/issues/56)) ([caa1020](https://github.com/kaltura/playkit-js-playlist/commit/caa102023c62ffcea2ab507895258fca584e47b5))
+
 ### 3.3.5 (2024-02-04)
 
 
