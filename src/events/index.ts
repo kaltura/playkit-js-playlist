@@ -1,2 +1,0 @@
-export {PlaylistEvents} from './events';
-
