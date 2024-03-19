@@ -8,17 +8,20 @@ import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 import {icons} from './components/icons';
 import { pluginName } from "./index";
-import {PlaylistEvents} from './events'
+import {PlaylistEvents} from './events/events'
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
+const {PLAYER_SIZE} = ui.Components;
 
 export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
   private _playlistPanel = -1;
   private _playlistIcon = -1;
+  private _loaded = false;
   private _pluginState: PluginStates | null = null;
   private _dataManager: DataManager;
   private _offlineSlateActive = false;
+  private pluginMode: PluginPositions | null = null;
   private _activePresetName = '';
   private _unsubscribeStore: Function = () => {};
   private _triggeredByKeyboard = false;
@@ -49,6 +52,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       } else if (this._activePresetName === '') {
         this._activePresetName = state.shell.activePresetName;
       }
+      this._addSidePanel();
     });
   }
 
@@ -61,34 +65,13 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   }
 
   loadMedia(): void {
+    this._loaded = true;
     this._offlineSlateActive = false;
     if (!this._isPlaylistValid()) {
       return;
     }
 
-    const pluginMode: PluginPositions = [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position)
-      ? PluginPositions.VERTICAL
-      : PluginPositions.HORIZONTAL;
-    // add side panel
-    this._playlistPanel = this.sidePanelsManager!.add({
-      label: 'Playlist',
-      panelComponent: () => {
-        return (
-          <PlaylistWrapper
-            eventManager={this.eventManager}
-            onClose={this._handleClose}
-            player={this._player}
-            pluginMode={pluginMode}
-            playlistData={this._dataManager.getPlaylistData()}
-            toggledByKeyboard={this._triggeredByKeyboard}
-          />
-        );
-      },
-      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Ads],
-      position: this.config.position,
-      expandMode: this.config.expandMode === SidePanelModes.ALONGSIDE ? SidePanelModes.ALONGSIDE : SidePanelModes.OVER
-    }) as number;
-
+    this._addSidePanel();
     // add plugin button
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -105,6 +88,44 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     }) as number;
 
     if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
+      this._activatePlugin(true);
+    }
+  }
+
+  private _addSidePanel(){
+    if (!this._loaded) {return}
+
+    const pluginMode = [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position)
+    || [PLAYER_SIZE?.SMALL,PLAYER_SIZE?.EXTRA_SMALL, PLAYER_SIZE?.TINY].includes(this._player.ui.store.getState().shell.playerSize)
+        ? PluginPositions.VERTICAL
+        : PluginPositions.HORIZONTAL;
+
+    if (this.pluginMode === pluginMode) {
+      return
+    }
+    this.pluginMode = pluginMode;
+    const isPluginActive = this._isPluginActive()
+
+    this._playlistPanel = this.sidePanelsManager!.add({
+      label: 'Playlist',
+      panelComponent: () => {
+        return (
+            <PlaylistWrapper
+                eventManager={this.eventManager}
+                onClose={this._handleClose}
+                player={this._player}
+                pluginMode={pluginMode}
+                playlistData={this._dataManager.getPlaylistData()}
+                toggledByKeyboard={this._triggeredByKeyboard}
+            />
+        );
+      },
+      presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Ads],
+      position: this.config.position,
+      expandMode: this.config.expandMode === SidePanelModes.ALONGSIDE ? SidePanelModes.ALONGSIDE : SidePanelModes.OVER
+    }) as number;
+
+    if (isPluginActive) {
       this._activatePlugin(true);
     }
   }
