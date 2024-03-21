@@ -8,7 +8,7 @@ import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 import {icons} from './components/icons';
 import { pluginName } from "./index";
-import {PlaylistEvents} from './events'
+import {PlaylistEvents} from './events/events'
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
 
