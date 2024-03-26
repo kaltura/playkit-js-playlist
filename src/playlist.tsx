@@ -65,12 +65,12 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   }
 
   loadMedia(): void {
-    this._loaded = true;
     this._offlineSlateActive = false;
     if (!this._isPlaylistValid()) {
       return;
     }
 
+    this._loaded = true;
     this._addSidePanel();
     // add plugin button
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -202,6 +202,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this.eventManager.removeAll();
     this._playlistPanel = -1;
     this._playlistIcon = -1;
+    this._loaded = false;
     this._pluginButtonRef = null;
     this._pluginState = null;
     this._triggeredByKeyboard = false;
