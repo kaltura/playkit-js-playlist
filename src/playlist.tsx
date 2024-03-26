@@ -7,8 +7,8 @@ import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 import {icons} from './components/icons';
-import { pluginName } from "./index";
-import {PlaylistEvents} from './events/events'
+import {pluginName} from './index';
+import {PlaylistEvents} from './events/events';
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
 const {PLAYER_SIZE} = ui.Components;
@@ -92,32 +92,35 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     }
   }
 
-  private _addSidePanel(){
-    if (!this._loaded) {return}
+  private _addSidePanel() {
+    if (!this._loaded) {
+      return;
+    }
 
-    const pluginMode = [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position)
-    || [PLAYER_SIZE?.SMALL,PLAYER_SIZE?.EXTRA_SMALL, PLAYER_SIZE?.TINY].includes(this._player.ui.store.getState().shell.playerSize)
+    const pluginMode =
+      [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position) ||
+      [PLAYER_SIZE?.SMALL, PLAYER_SIZE?.EXTRA_SMALL, PLAYER_SIZE?.TINY].includes(this._player.ui.store.getState().shell.playerSize)
         ? PluginPositions.VERTICAL
         : PluginPositions.HORIZONTAL;
 
     if (this.pluginMode === pluginMode) {
-      return
+      return;
     }
     this.pluginMode = pluginMode;
-    const isPluginActive = this._isPluginActive()
+    const isPluginActive = this._isPluginActive();
 
     this._playlistPanel = this.sidePanelsManager!.add({
       label: 'Playlist',
       panelComponent: () => {
         return (
-            <PlaylistWrapper
-                eventManager={this.eventManager}
-                onClose={this._handleClose}
-                player={this._player}
-                pluginMode={pluginMode}
-                playlistData={this._dataManager.getPlaylistData()}
-                toggledByKeyboard={this._triggeredByKeyboard}
-            />
+          <PlaylistWrapper
+            eventManager={this.eventManager}
+            onClose={this._handleClose}
+            player={this._player}
+            pluginMode={pluginMode}
+            playlistData={this._dataManager.getPlaylistData()}
+            toggledByKeyboard={this._triggeredByKeyboard}
+          />
         );
       },
       presets: [ReservedPresetNames.Playback, ReservedPresetNames.Live, ReservedPresetNames.Ads],
@@ -175,7 +178,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.sidePanelsManager?.activateItem(this._playlistPanel);
       this._pluginState === PluginStates.OPENED;
       this.upperBarManager?.update(this._playlistIcon);
-      this.dispatchEvent(PlaylistEvents.PLAYLIST_OPEN, {position: this.config.position, auto: isFirstOpen})
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_OPEN, {position: this.config.position, auto: isFirstOpen});
     });
   };
 
@@ -185,7 +188,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.sidePanelsManager?.deactivateItem(this._playlistPanel);
       this._pluginState = PluginStates.CLOSED;
       this.upperBarManager?.update(this._playlistIcon);
-      this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, {position: this.config.position})
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, {position: this.config.position});
     });
   };
 
