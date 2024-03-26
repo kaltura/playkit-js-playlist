@@ -7,18 +7,21 @@ import {PluginButton} from './components/plugin-button';
 import {PlaylistWrapper} from './components/playlist-wrapper';
 import {DataManager} from './data-manager';
 import {icons} from './components/icons';
-import { pluginName } from "./index";
-import {PlaylistEvents} from './events/events'
+import {pluginName} from './index';
+import {PlaylistEvents} from './events/events';
 
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
+const {PLAYER_SIZE} = ui.Components;
 
 export class Playlist extends KalturaPlayer.core.BasePlugin {
   private _player: KalturaPlayerTypes.Player;
   private _playlistPanel = -1;
   private _playlistIcon = -1;
+  private _loaded = false;
   private _pluginState: PluginStates | null = null;
   private _dataManager: DataManager;
   private _offlineSlateActive = false;
+  private pluginMode: PluginPositions | null = null;
   private _activePresetName = '';
   private _unsubscribeStore: Function = () => {};
   private _triggeredByKeyboard = false;
@@ -49,6 +52,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       } else if (this._activePresetName === '') {
         this._activePresetName = state.shell.activePresetName;
       }
+      this._addSidePanel();
     });
   }
 
@@ -66,10 +70,45 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       return;
     }
 
-    const pluginMode: PluginPositions = [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position)
-      ? PluginPositions.VERTICAL
-      : PluginPositions.HORIZONTAL;
-    // add side panel
+    this._loaded = true;
+    this._addSidePanel();
+    // add plugin button
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    this._playlistIcon = this.upperBarManager!.add({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      ariaLabel: 'Playlist',
+      displayName: 'Playlist',
+      svgIcon: {path: icons.PLUGIN_ICON},
+      onClick: this._handleClickOnPluginIcon,
+      component: () => {
+        return <PluginButton isActive={this._isPluginActive()} setRef={this._setPluginButtonRef} />;
+      }
+    }) as number;
+
+    if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
+      this._activatePlugin(true);
+    }
+  }
+
+  private _addSidePanel() {
+    if (!this._loaded) {
+      return;
+    }
+
+    const pluginMode =
+      [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position) ||
+      [PLAYER_SIZE?.SMALL, PLAYER_SIZE?.EXTRA_SMALL, PLAYER_SIZE?.TINY].includes(this._player.ui.store.getState().shell.playerSize)
+        ? PluginPositions.VERTICAL
+        : PluginPositions.HORIZONTAL;
+
+    if (this.pluginMode === pluginMode) {
+      return;
+    }
+    this.pluginMode = pluginMode;
+    const isPluginActive = this._isPluginActive();
+
     this._playlistPanel = this.sidePanelsManager!.add({
       label: 'Playlist',
       panelComponent: () => {
@@ -89,22 +128,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       expandMode: this.config.expandMode === SidePanelModes.ALONGSIDE ? SidePanelModes.ALONGSIDE : SidePanelModes.OVER
     }) as number;
 
-    // add plugin button
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    this._playlistIcon = this.upperBarManager!.add({
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      ariaLabel: 'Playlist',
-      displayName: 'Playlist',
-      svgIcon: {path: icons.PLUGIN_ICON},
-      onClick: this._handleClickOnPluginIcon,
-      component: () => {
-        return <PluginButton isActive={this._isPluginActive()} setRef={this._setPluginButtonRef} />;
-      }
-    }) as number;
-
-    if ((this.config.expandOnFirstPlay && !this._pluginState) || this._pluginState === PluginStates.OPENED) {
+    if (isPluginActive) {
       this._activatePlugin(true);
     }
   }
@@ -154,7 +178,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.sidePanelsManager?.activateItem(this._playlistPanel);
       this._pluginState === PluginStates.OPENED;
       this.upperBarManager?.update(this._playlistIcon);
-      this.dispatchEvent(PlaylistEvents.PLAYLIST_OPEN, {position: this.config.position, auto: isFirstOpen})
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_OPEN, {position: this.config.position, auto: isFirstOpen});
     });
   };
 
@@ -164,7 +188,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.sidePanelsManager?.deactivateItem(this._playlistPanel);
       this._pluginState = PluginStates.CLOSED;
       this.upperBarManager?.update(this._playlistIcon);
-      this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, {position: this.config.position})
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, {position: this.config.position});
     });
   };
 
@@ -178,6 +202,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this.eventManager.removeAll();
     this._playlistPanel = -1;
     this._playlistIcon = -1;
+    this._loaded = false;
     this._pluginButtonRef = null;
     this._pluginState = null;
     this._triggeredByKeyboard = false;
