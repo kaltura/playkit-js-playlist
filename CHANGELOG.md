@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.7 (2024-03-31)
+
+
+### Bug Fixes
+
+* **SUP-0:** fix import issue ([#57](https://github.com/kaltura/playkit-js-playlist/issues/57)) ([c3fe616](https://github.com/kaltura/playkit-js-playlist/commit/c3fe61603da9729da92ef0b729b00415c0801fd3))
+
 ### 3.3.6 (2024-03-14)
 
 
