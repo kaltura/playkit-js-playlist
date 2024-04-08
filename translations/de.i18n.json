@@ -7,9 +7,9 @@
         "one": "Video",
         "many": "{{count}} Videos"
       },
-      "hour": "h",
-      "min": "min",
-      "sec": "sek",
+      "hour": "Std.",
+      "min": "Min.",
+      "sec": "Sek.",
       "quiz_type": "Quiz",
       "live_type": "Live",
       "play-item-area-label": "Zum Abspielen anklicken:",
