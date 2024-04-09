@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.8 (2024-04-09)
+
+
+### Bug Fixes
+
+* **SUP-42158:** German translation for Player V7 ([#59](https://github.com/kaltura/playkit-js-playlist/issues/59)) ([943aa2b](https://github.com/kaltura/playkit-js-playlist/commit/943aa2bf3f738d405fd30b80a7d9b3342bcb8bb9))
+
 ### 3.3.7 (2024-03-31)
 
 
