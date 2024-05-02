@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.9 (2024-05-02)
+
+
+### Bug Fixes
+
+* **SUP-41465:** [GaTech] V7 Layout Issues on Mobile ([#58](https://github.com/kaltura/playkit-js-playlist/issues/58)) ([63bac2d](https://github.com/kaltura/playkit-js-playlist/commit/63bac2d30dc90511709298a23a6f13a7208b7501))
+
 ### 3.3.8 (2024-04-09)
 
 
