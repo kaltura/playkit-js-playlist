@@ -135,7 +135,6 @@ export const PlaylistWrapper = withText(translates)(
         <div
           className={[styles.playlistContent, scrolling ? styles.scrolling : ''].join(' ')}
           {...playlistContentParams}
-          role="list"
           aria-live="polite">
           {playlist.items.map((item: any) => {
             const {index} = item;

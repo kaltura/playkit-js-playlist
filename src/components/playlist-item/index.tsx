@@ -157,7 +157,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
   }, [playlistItemName, pluginMode, playlistItemIndex, renderDescription]);
 
   return (
-    <A11yWrapper onClick={onSelect} role="listitem">
+    <A11yWrapper onClick={onSelect} role="button">
       <div
         title={`${otherProps.playlistItemIndex}${index + 1}. ${
           active ? otherProps.currentlyPlaying : otherProps.toPlayAreaLabel
