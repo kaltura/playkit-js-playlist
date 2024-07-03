@@ -10,7 +10,7 @@ const {toHHMMSS, KeyMap} = KalturaPlayer.ui.utils;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 let scrollTimerId: ReturnType<typeof setTimeout>;
-const SCROLL_BAR_TIMEOUT = 250;
+const SCROLL_BAR_TIMEOUT = 500;
 
 const translates = ({player}: PlaylistWrapperProps) => {
   const amount = player.playlist?.items.length;
@@ -90,7 +90,19 @@ export const PlaylistWrapper = withText(translates)(
       },
       [onClose]
     );
-
+    const handleFocus = useCallback(() => {
+      setScrolling(true);
+    }, []);
+    
+    const handleBlur = useCallback(() => {
+      setScrolling(false);
+    }, []);
+    
+    const handleKeyDown = useCallback((event: KeyboardEvent) => {
+      if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        setScrolling(true);
+      }
+    }, []);
     const playlistDuration = useMemo(() => {
       const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
         return acc + (cur.sources.duration || 0);
@@ -121,9 +133,21 @@ export const PlaylistWrapper = withText(translates)(
 
     const playlistContentParams = useMemo(() => {
       if (pluginMode === PluginPositions.VERTICAL) {
-        return {onScroll: handleScroll};
+        return {
+          onScroll: handleScroll,
+          onFocus: handleFocus,
+          onBlur: handleBlur,
+          onKeyDown: handleKeyDown,
+        };
       }
-      return {onWheel: handleWheel, ref: playlistContentRef};
+      return {
+        onWheel: handleWheel,
+        ref: playlistContentRef,
+        tabIndex: 0,
+        onFocus: handleFocus,
+        onBlur: handleBlur,
+        onKeyDown: handleKeyDown,
+      };
     }, [pluginMode]);
 
     return (
