@@ -99,7 +99,7 @@ export const PlaylistWrapper = withText(translates)(
     }, []);
     
     const handleKeyDown = useCallback((event: KeyboardEvent) => {
-      if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      if (event.keyCode === KeyMap.UP || event.keyCode === KeyMap.DOWN || event.keyCode === KeyMap.LEFT || event.keyCode === KeyMap.RIGHT) {
         setScrolling(true);
       }
     }, []);
