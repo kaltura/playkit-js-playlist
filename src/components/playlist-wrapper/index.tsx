@@ -10,7 +10,7 @@ const {toHHMMSS, KeyMap} = KalturaPlayer.ui.utils;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
 let scrollTimerId: ReturnType<typeof setTimeout>;
-const SCROLL_BAR_TIMEOUT = 500;
+const SCROLL_BAR_TIMEOUT = 250;
 
 const translates = ({player}: PlaylistWrapperProps) => {
   const amount = player.playlist?.items.length;
