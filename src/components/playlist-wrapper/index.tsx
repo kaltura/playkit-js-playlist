@@ -90,7 +90,19 @@ export const PlaylistWrapper = withText(translates)(
       },
       [onClose]
     );
-
+    const handleFocus = useCallback(() => {
+      setScrolling(true);
+    }, []);
+    
+    const handleBlur = useCallback(() => {
+      setScrolling(false);
+    }, []);
+    
+    const handleKeyDown = useCallback((event: KeyboardEvent) => {
+      if (event.keyCode === KeyMap.UP || event.keyCode === KeyMap.DOWN || event.keyCode === KeyMap.LEFT || event.keyCode === KeyMap.RIGHT) {
+        setScrolling(true);
+      }
+    }, []);
     const playlistDuration = useMemo(() => {
       const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
         return acc + (cur.sources.duration || 0);
@@ -121,9 +133,21 @@ export const PlaylistWrapper = withText(translates)(
 
     const playlistContentParams = useMemo(() => {
       if (pluginMode === PluginPositions.VERTICAL) {
-        return {onScroll: handleScroll};
+        return {
+          onScroll: handleScroll,
+          onFocus: handleFocus,
+          onBlur: handleBlur,
+          onKeyDown: handleKeyDown,
+        };
       }
-      return {onWheel: handleWheel, ref: playlistContentRef};
+      return {
+        onWheel: handleWheel,
+        ref: playlistContentRef,
+        tabIndex: 0,
+        onFocus: handleFocus,
+        onBlur: handleBlur,
+        onKeyDown: handleKeyDown,
+      };
     }, [pluginMode]);
 
     return (
