@@ -11,11 +11,9 @@ $roundness-2: 8px;
   }
   &::-webkit-scrollbar-track {
     background: rgba(33, 33, 33, 0.9);
-    visibility: hidden;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
     background-color: rgba(255, 255, 255, 0.3);
-    visibility: hidden;
   }
 }

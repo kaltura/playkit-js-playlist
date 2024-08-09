@@ -27,7 +27,7 @@
     width: 100%;
     @include playlist-scrollbar();
     &.scrolling::-webkit-scrollbar-track,
-    &.scrolling::-webkit-scrollbar-thumb, {
+    &.scrolling::-webkit-scrollbar-thumb {
       visibility: visible;
     }
   }
