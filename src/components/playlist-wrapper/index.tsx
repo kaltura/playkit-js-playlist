@@ -77,11 +77,6 @@ export const PlaylistWrapper = withText(translates)(
       },
       [onClose]
     );
-
-    const handleFocus = useCallback(() => {}, []);
-    const handleBlur = useCallback(() => {}, []);
-    const handleKeyDown = useCallback(() => {}, []);
-
     const playlistDuration = useMemo(() => {
       const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
         return acc + (cur.sources.duration || 0);
@@ -113,18 +108,12 @@ export const PlaylistWrapper = withText(translates)(
     const playlistContentParams = useMemo(() => {
       if (pluginMode === PluginPositions.VERTICAL) {
         return {
-          onFocus: handleFocus,
-          onBlur: handleBlur,
-          onKeyDown: handleKeyDown,
         };
       }
       return {
         onWheel: handleWheel,
         ref: playlistContentRef,
         tabIndex: 0,
-        onFocus: handleFocus,
-        onBlur: handleBlur,
-        onKeyDown: handleKeyDown,
       };
     }, [pluginMode]);
 
