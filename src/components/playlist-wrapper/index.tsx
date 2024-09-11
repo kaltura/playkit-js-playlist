@@ -9,9 +9,6 @@ import {PluginPositions, PlaylistExtraData} from '../../types';
 const {toHHMMSS, KeyMap} = KalturaPlayer.ui.utils;
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 
-let scrollTimerId: ReturnType<typeof setTimeout>;
-const SCROLL_BAR_TIMEOUT = 250;
-
 const translates = ({player}: PlaylistWrapperProps) => {
   const amount = player.playlist?.items.length;
   return {
@@ -46,7 +43,6 @@ export const PlaylistWrapper = withText(translates)(
   ({onClose, player, pluginMode, playlistData, eventManager, toggledByKeyboard, ...otherProps}: PlaylistWrapperProps) => {
     const {playlist} = player;
     const [playlistExtraData, setPlaylistExtraData] = useState<PlaylistExtraData>({});
-    const [scrolling, setScrolling] = useState(false);
     const [activeIndex, setActiveIndex] = useState(playlist.current.index);
     const playlistContentRef = useRef<HTMLDivElement>(null);
 
@@ -66,19 +62,10 @@ export const PlaylistWrapper = withText(translates)(
       [playlist]
     );
 
-    const handleScroll = useCallback(() => {
-      clearTimeout(scrollTimerId);
-      setScrolling(true);
-      scrollTimerId = setTimeout(() => {
-        setScrolling(false);
-      }, SCROLL_BAR_TIMEOUT);
-    }, []);
-
     const handleWheel = useCallback((e: WheelEvent) => {
       e.preventDefault();
       if (playlistContentRef?.current) {
         playlistContentRef.current.scrollLeft += e.deltaY;
-        handleScroll();
       }
     }, []);
 
@@ -90,19 +77,6 @@ export const PlaylistWrapper = withText(translates)(
       },
       [onClose]
     );
-    const handleFocus = useCallback(() => {
-      setScrolling(true);
-    }, []);
-    
-    const handleBlur = useCallback(() => {
-      setScrolling(false);
-    }, []);
-    
-    const handleKeyDown = useCallback((event: KeyboardEvent) => {
-      if (event.keyCode === KeyMap.UP || event.keyCode === KeyMap.DOWN || event.keyCode === KeyMap.LEFT || event.keyCode === KeyMap.RIGHT) {
-        setScrolling(true);
-      }
-    }, []);
     const playlistDuration = useMemo(() => {
       const totalDuration = playlist.items.reduce((acc: number, cur: any) => {
         return acc + (cur.sources.duration || 0);
@@ -134,19 +108,12 @@ export const PlaylistWrapper = withText(translates)(
     const playlistContentParams = useMemo(() => {
       if (pluginMode === PluginPositions.VERTICAL) {
         return {
-          onScroll: handleScroll,
-          onFocus: handleFocus,
-          onBlur: handleBlur,
-          onKeyDown: handleKeyDown,
         };
       }
       return {
         onWheel: handleWheel,
         ref: playlistContentRef,
         tabIndex: 0,
-        onFocus: handleFocus,
-        onBlur: handleBlur,
-        onKeyDown: handleKeyDown,
       };
     }, [pluginMode]);
 
@@ -157,7 +124,7 @@ export const PlaylistWrapper = withText(translates)(
         onKeyUp={handleClose}>
         {renderPlaylistHeader}
         <div
-          className={[styles.playlistContent, scrolling ? styles.scrolling : ''].join(' ')}
+          className={[styles.playlistContent].join(' ')}
           {...playlistContentParams}
           aria-live="polite">
           {playlist.items.map((item: any) => {
