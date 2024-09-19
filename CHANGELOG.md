@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.14 (2024-09-19)
+
+
+### Bug Fixes
+
+* **ADA-1393:** Update dependencies ([#66](https://github.com/kaltura/playkit-js-playlist/issues/66)) ([078091d](https://github.com/kaltura/playkit-js-playlist/commit/078091d984221e50739bb927338964d1cc7462bd))
+
 ### 3.3.13 (2024-08-03)
 
 ### 3.3.12 (2024-06-30)
