@@ -202,7 +202,9 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   };
 
   private _handleError = () => {
-    this.player.playlist?.playNext();
+    if (this._player.playlist?.items?.length > 1) {
+      this.player.playlist.playNext();
+    }
   };
 
   static isValid(): boolean {
