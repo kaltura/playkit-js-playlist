@@ -201,8 +201,8 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     });
   };
 
-  private _handleError = () => {
-    if (this._player.playlist?.items?.length > 1) {
+  private _handleError = (e: any) => {
+    if (e.payload.severity === core.Error.Severity.CRITICAL && this._player.playlist?.items?.length > 1) {
       this.player.playlist.playNext();
     }
   };
