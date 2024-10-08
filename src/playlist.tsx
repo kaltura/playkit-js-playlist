@@ -1,5 +1,6 @@
 import {h} from 'preact';
-import {ui} from '@playkit-js/kaltura-player-js';
+// @ts-expect-error Module '"@playkit-js/kaltura-player-js"' has no exported member 'core'
+import {ui, core} from '@playkit-js/kaltura-player-js';
 import {OnClickEvent} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
@@ -30,7 +31,8 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   static defaultConfig: PlaylistConfig = {
     position: SidePanelPositions.RIGHT,
     expandMode: SidePanelModes.ALONGSIDE,
-    expandOnFirstPlay: true
+    expandOnFirstPlay: true,
+    playNextOnError: true
   };
 
   constructor(name: string, player: KalturaPlayerTypes.Player, config: PlaylistConfig) {
@@ -38,22 +40,29 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     this._player = player;
     this._dataManager = new DataManager(this._player, this.logger);
     // subscribe on store changes
-    this._unsubscribeStore = this._player.ui.store?.subscribe(() => {
-      const state = this._player.ui.store.getState();
-      if (state.shell.playerClasses.includes('has-live-plugin-overlay') && !this._offlineSlateActive) {
+    this._unsubscribeStore = this.uiStore?.subscribe(() => {
+      const {shell} = this.uiStore.getState();
+      if (shell.playerClasses.includes('has-live-plugin-overlay') && !this._offlineSlateActive) {
         this._offlineSlateActive = true;
         this._activatePlugin();
       }
-      if (this._activePresetName !== '' && this._activePresetName !== state.shell.activePresetName) {
-        this._activePresetName = state.shell.activePresetName;
+      if (this._activePresetName !== '' && this._activePresetName !== shell.activePresetName) {
+        this._activePresetName = shell.activePresetName;
         // when switching from non-broadcasting live to VOD we need to toggle the plugin since the live plugin disables it
         this._deactivatePlugin();
         this._activatePlugin();
       } else if (this._activePresetName === '') {
-        this._activePresetName = state.shell.activePresetName;
+        this._activePresetName = shell.activePresetName;
       }
       this._addSidePanel();
     });
+    if (this.config.playNextOnError) {
+      this.eventManager.listen(this.player, core.EventType.ERROR, this._handleError);
+    }
+  }
+
+  get uiStore() {
+    return this._player.ui.store;
   }
 
   get sidePanelsManager() {
@@ -190,6 +199,12 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.upperBarManager?.update(this._playlistIcon);
       this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, {position: this.config.position});
     });
+  };
+
+  private _handleError = (e: any) => {
+    if (e.payload.severity === core.Error.Severity.CRITICAL && this._player.playlist?.items?.length > 1) {
+      this.player.playlist.playNext();
+    }
   };
 
   static isValid(): boolean {

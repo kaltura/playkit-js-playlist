@@ -66,28 +66,71 @@ Finally, add the bundle as a script tag in your page, and initialize the player
 </div>
 ```
 
-## Documentation
+## Configuration
+#### Configuration Structure
 
-Playlist plugin configuration can been found here:
+```js
+//Default configuration
+"playlist" = {};
+//Plugin params
+"playlist" = {
+  expandOnFirstPlay?: boolean, // optional
+  position?: string, // optional
+  expandMode?: string, // optional
+  playNextOnError?: boolean // optional
+}
+```
 
-- **[Configuration](docs/configuration.md)**
+##
+
+> ### config.expandOnFirstPlay
+>
+> ##### Type: `boolean`
+>
+> ##### Default: true
+>
+> ##### Description: if plugin should automatically open on first play.
+>
+
+##
+
+> ### config.position
+>
+> ##### Type: `'right' | 'left' | 'top' | 'bottom'`
+>
+> ##### Default: `right`
+>
+> ##### Description: expand mode of side panel (‘alongside', ‘hidden’, 'over’, default 'alongside').
+>
+
+##
+
+> ### config.expandMode
+>
+> ##### Type: `string`
+>
+> ##### Default: `alongside`
+>
+> ##### Description: expand mode of side panel (‘alongside', ‘hidden’, 'over’, default 'alongside').
+>
+
+##
+
+> ### config.playNextOnError
+>
+> ##### Type: `boolean`
+>
+> ##### Default: true
+>
+> ##### Description: If entry playback fails the playlist will move playback to the next entry.
+>
 
 ## Running the tests
 
-Tests can be run locally via [Karma], which will run on Chrome, Firefox and Safari
+The plugin uses `cypress` tool for e2e tests
 
-[karma]: https://karma-runner.github.io/1.0/index.html
-
-```
+```javascript
 yarn run test
-```
-
-You can test individual browsers:
-
-```
-yarn run test:chrome
-yarn run test:firefox
-yarn run test:safari
 ```
 
 ### And coding style tests
