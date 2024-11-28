@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.17 (2024-11-28)
+
+
+### Bug Fixes
+
+* **SUP-45650:** [Oracle] Safari playlist vertical embed bottom side squeezed ([#70](https://github.com/kaltura/playkit-js-playlist/issues/70)) ([7afc976](https://github.com/kaltura/playkit-js-playlist/commit/7afc976c43b452136b5770d41729f2f4391f56d8))
+
 ### 3.3.16 (2024-11-14)
 
 ### 3.3.15 (2024-10-13)

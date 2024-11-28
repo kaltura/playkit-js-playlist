@@ -1,6 +1,6 @@
 {
   "name": "@playkit-js/playkit-js-playlist",
-  "version": "3.3.16",
+  "version": "3.3.17",
   "main": "dist/playkit-playlist.js",
   "scripts": {
     "clean": "rm -rf ./dist",
