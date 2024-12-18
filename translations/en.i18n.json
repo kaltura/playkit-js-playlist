@@ -16,7 +16,8 @@
       "document_type": "Document",
       "play-item-area-label": "Click to play:",
       "currently-playing": "Currently playing:",
-      "playlist-item-index": "Playlist item #"
+      "playlist-item-index": "Playlist item #",
+      "duration": "duration"
     }
   }
 }

@@ -11,6 +11,9 @@ import {KalturaViewHistoryUserEntry, KalturaBaseEntry, Capabilities} from '../..
 const {withText, Text} = KalturaPlayer.ui.preacti18n;
 const {Icon} = KalturaPlayer.ui.components;
 const {toHHMMSS} = KalturaPlayer.ui.utils;
+//@ts-ignore
+const {getDurationAsText} = KalturaPlayer.ui.utils
+const {withPlayer} = KalturaPlayer.ui.components;
 
 const PLACEHOLDER_IMAGE_SRC =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAAJklEQVR42u3OMQEAAAgDoJnc6BpjDyRgLrcpGgEBAQEBAQGBduABaVYs3Q5APwQAAAAASUVORK5CYII=';
@@ -23,7 +26,8 @@ const translates = ({}: PlaylistItemProps) => {
     document: <Text id="playlist.document_type">Document</Text>,
     toPlayAreaLabel: <Text id="playlist.play-item-area-label">Click to play:</Text>,
     currentlyPlaying: <Text id="playlist.currently-playing">Currently playing:</Text>,
-    playlistItemIndex: <Text id="playlist.playlist-item-index">Playlist item #</Text>
+    playlistItemIndex: <Text id="playlist.playlist-item-index">Playlist item #</Text>,
+    duration: <Text id="playlist.duration">duration</Text>
   };
 };
 
@@ -41,6 +45,8 @@ interface PlaylistItemProps {
   toPlayAreaLabel?: string;
   currentlyPlaying?: string;
   playlistItemIndex?: string;
+  duration?: string;
+  player: any
 }
 
 const MediaTypes = {
@@ -49,7 +55,7 @@ const MediaTypes = {
   Document: core.MediaType.DOCUMENT
 };
 
-export const PlaylistItem = withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, ...otherProps}: PlaylistItemProps) => {
+export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, ...otherProps}: PlaylistItemProps) => {
   const {sources, index} = item;
   const playlistItemIndex = index + 1;
   const playlistItemName = sources.metadata?.name;
@@ -161,7 +167,7 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
       <div
         title={`${otherProps.playlistItemIndex}${index + 1}. ${
           active ? otherProps.currentlyPlaying : otherProps.toPlayAreaLabel
-        } ${playlistItemName}`}
+        } ${playlistItemName} ${otherProps.duration}: ${getDurationAsText(sources.duration, otherProps.player.config.ui.locale)}`}
         className={[
           styles.playlistItem,
           pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal,
@@ -186,4 +192,4 @@ export const PlaylistItem = withText(translates)(({item, active, onSelect, plugi
       </div>
     </A11yWrapper>
   );
-});
+}));
