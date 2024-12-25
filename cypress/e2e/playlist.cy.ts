@@ -1,4 +1,3 @@
-// @ts-expect-error Module '"@playkit-js/kaltura-player-js"' has no exported member 'core'
 import {core} from '@playkit-js/kaltura-player-js';
 import {mockKalturaBe, loadPlayer, MANIFEST, MANIFEST_SAFARI} from './env';
 
