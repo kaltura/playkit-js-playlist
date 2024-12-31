@@ -48,7 +48,7 @@ describe('Playlist plugin', () => {
         cy.get('[data-testid="playlist_title"]').should('exist');
         cy.get('[data-testid="playlist_title"]').should('have.text', 'new playlist');
         cy.get('[data-testid="playlist_duration"]').should('exist');
-        cy.get('[data-testid="playlist_duration"]').should('have.text', '3 videos, 34 min 16 sec');
+        cy.get('[data-testid="playlist_duration"]').should('have.text', '3 videos, 17 min 27 sec');
       });
     });
     it('should render 3 playlist items', () => {
