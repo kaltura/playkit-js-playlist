@@ -1,5 +1,4 @@
 import {h} from 'preact';
-// @ts-expect-error Module '"@playkit-js/kaltura-player-js"' has no exported member 'core'
 import {ui, core} from '@playkit-js/kaltura-player-js';
 import {OnClickEvent} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';

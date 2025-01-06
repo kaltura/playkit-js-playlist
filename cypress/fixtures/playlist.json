@@ -58,5 +58,10 @@
       "thumbnailUrl": "https://cfvod.kaltura.com/p/27017/sp/2701700/thumbnail/entry_id/1_l4h9vq7r/version/100001",
       "objectType": "KalturaMediaEntry"
     }
-  ]
+  ],
+  {
+    "objectType": "KalturaUserEntryListResponse",
+    "objects": [],
+    "totalCount": 0
+  }
 ]
