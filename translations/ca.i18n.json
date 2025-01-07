@@ -1,0 +1,22 @@
+{
+  "ca": {
+    "playlist": {
+      "show_plugin": "Mostrar la llista de reproducció",
+      "hide_plugin": "Amagar la llista de reproducció",
+      "amount-items": {
+        "one": "vídeo",
+        "many": "{{count}} vídeos"
+      },
+      "hour": "h",
+      "min": "min",
+      "sec": "seg",
+      "quiz_type": "Questionari",
+      "live_type": "En directe",
+      "image_type": "Imatge",
+      "document_type": "Document",
+      "play-item-area-label": "Fes clic per reproduir:",
+      "currently-playing": "Actualment reproduint:",
+      "playlist-item-index": "Element de la llista de reproducció #"
+    }
+  }
+}
