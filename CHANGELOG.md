@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.3.20 (2025-01-09)
+
+
+### Bug Fixes
+
+* **ADA-1988:** [ORS] - Playlist items - duration not read aloud by screen reader ([#71](https://github.com/kaltura/playkit-js-playlist/issues/71)) ([f0c385b](https://github.com/kaltura/playkit-js-playlist/commit/f0c385b3911c46a37ab3322d29d6c31af697b8b4))
+
 ### 3.3.19 (2024-12-19)
 
 ### 3.3.18 (2024-12-01)
