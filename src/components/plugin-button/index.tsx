@@ -21,7 +21,7 @@ interface PluginButtonProps {
 
 export const PluginButton = withText(translates)(({isActive, setRef, ...otherProps}: PluginButtonProps) => {
   return (
-    <Tooltip label={otherProps.label} type="bottom">
+    <Tooltip label={otherProps.label} type="bottom-left" strictPosition={true}>
       <button
         type="button"
         data-testid={'playlist_pluginButton'}
