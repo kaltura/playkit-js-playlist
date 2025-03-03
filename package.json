@@ -65,6 +65,7 @@
   "dependencies": {
     "@playkit-js/common": "1.5.17",
     "@playkit-js/playkit-js-ui": "0.79.16",
-    "@playkit-js/ui-managers": "1.6.3"
+    "@playkit-js/ui-managers": "1.6.3",
+    "@playkit-js/webpack-common": "^1.0.1-canary.0-dfd24a9"
   }
 }
