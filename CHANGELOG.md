@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.4.0 (2025-03-06)
+
+
+### Features
+
+* **FEC-14380:** update package.json ([#76](https://github.com/kaltura/playkit-js-playlist/issues/76)) ([dca9561](https://github.com/kaltura/playkit-js-playlist/commit/dca9561adc212acb09a8cf0d1b89009cf0d190fa))
+
 ### 3.3.21 (2025-01-23)
 
 ### 3.3.20 (2025-01-09)
