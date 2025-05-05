@@ -35,7 +35,6 @@ export class Playlist extends BasePlugin {
 
   constructor(name: string, player: KalturaPlayer, config: PlaylistConfig) {
     super(name, player, config);
-    this.player = player;
     this._dataManager = new DataManager(player, this.logger);
     // subscribe on store changes
     this._unsubscribeStore = this.uiStore?.subscribe(() => {
