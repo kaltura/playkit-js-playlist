@@ -27,7 +27,7 @@ export class DataManager {
     const playlistItems = this._player.playlist.items;
     this._playlistExtraDataIsFetching = true;
     return this._player.provider
-      .doRequest([{loader: new PlaylistLoader({playlistItems}), params: {playlistItems}}])
+      .doRequest([{loader: new PlaylistLoader({ playlistItems }), params: {playlistItems}}])
       .then((data: Map<string, any>) => {
         if (data && data.has(PlaylistLoader.id)) {
           const playlistLoader = data.get(PlaylistLoader.id);
