@@ -1,19 +1,19 @@
 import {h, Fragment} from 'preact';
 import {useMemo} from 'preact/hooks';
 // @ts-ignore
-import {core} from '@playkit-js/kaltura-player-js';
+import {ui, core} from '@playkit-js/kaltura-player-js';
 import * as styles from './playlist-item.scss';
 import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {icons} from '../icons';
 import {PluginPositions} from '../../types';
 import {KalturaViewHistoryUserEntry, KalturaBaseEntry, Capabilities} from '../../providers';
 
-const {withText, Text} = KalturaPlayer.ui.preacti18n;
-const {Icon} = KalturaPlayer.ui.components;
-const {toHHMMSS} = KalturaPlayer.ui.utils;
+const {withText, Text} = ui.preacti18n;
+const {Icon} = ui.components;
+const {toHHMMSS} = ui.utils;
 //@ts-ignore
 const {getDurationAsText} = KalturaPlayer.ui.utils
-const {withPlayer} = KalturaPlayer.ui.components;
+const {withPlayer} = ui.components;
 
 const PLACEHOLDER_IMAGE_SRC =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAAJklEQVR42u3OMQEAAAgDoJnc6BpjDyRgLrcpGgEBAQEBAQGBduABaVYs3Q5APwQAAAAASUVORK5CYII=';

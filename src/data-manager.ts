@@ -1,5 +1,6 @@
-import {PlaylistLoader, KalturaViewHistoryUserEntry, KalturaBaseEntry} from './providers';
+import {KalturaViewHistoryUserEntry, KalturaBaseEntry, PlaylistLoader} from './providers';
 import {PlaylistExtraData} from './types';
+import {KalturaPlayer} from '@playkit-js/kaltura-player-js'
 
 export class DataManager {
   private _playlistData: PlaylistExtraData | null = null;
@@ -12,7 +13,7 @@ export class DataManager {
   private _playlistExtraDataResolvePromise = (data: PlaylistExtraData) => {};
   private _playlistExtraDataPromise = this._makePlaylistExtraDataResolvePromise();
 
-  constructor(private _player: KalturaPlayerTypes.Player, private _logger: KalturaPlayerTypes.Logger) {}
+  constructor(private _player: KalturaPlayer, private _logger: KalturaPlayerTypes.Logger) {}
 
   public getPlaylistData = () => {
     this._fetchPlaylistData();
@@ -26,6 +27,7 @@ export class DataManager {
     const playlistItems = this._player.playlist.items;
     this._playlistExtraDataIsFetching = true;
     return this._player.provider
+    // @ts-expect-error - Type 'typeof PlaylistLoader' is missing the following properties from type 'ILoader': requests, response, isValid
       .doRequest([{loader: PlaylistLoader, params: {playlistItems}}])
       .then((data: Map<string, any>) => {
         if (data && data.has(PlaylistLoader.id)) {
