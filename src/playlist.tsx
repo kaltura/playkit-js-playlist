@@ -1,5 +1,5 @@
 import {h} from 'preact';
-import {ui, core} from '@playkit-js/kaltura-player-js';
+import {ui, core, BasePlugin, KalturaPlayer} from '@playkit-js/kaltura-player-js';
 import {OnClickEvent} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
 import {PlaylistConfig, PluginPositions, PluginStates} from './types';
@@ -13,8 +13,7 @@ import {PlaylistEvents} from './events/events';
 const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
 const {PLAYER_SIZE} = ui.Components;
 
-export class Playlist extends KalturaPlayer.core.BasePlugin {
-  private _player: KalturaPlayerTypes.Player;
+export class Playlist extends BasePlugin {
   private _playlistPanel = -1;
   private _playlistIcon = -1;
   private _loaded = false;
@@ -34,10 +33,10 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
     playNextOnError: true
   };
 
-  constructor(name: string, player: KalturaPlayerTypes.Player, config: PlaylistConfig) {
+  constructor(name: string, player: KalturaPlayer, config: PlaylistConfig) {
     super(name, player, config);
-    this._player = player;
-    this._dataManager = new DataManager(this._player, this.logger);
+    this.player = player;
+    this._dataManager = new DataManager(player, this.logger);
     // subscribe on store changes
     this._unsubscribeStore = this.uiStore?.subscribe(() => {
       const {shell} = this.uiStore.getState();
@@ -61,7 +60,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   }
 
   get uiStore() {
-    return this._player.ui.store;
+    return this.player.ui.store;
   }
 
   get sidePanelsManager() {
@@ -107,7 +106,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
 
     const pluginMode =
       [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position) ||
-      [PLAYER_SIZE?.SMALL, PLAYER_SIZE?.EXTRA_SMALL, PLAYER_SIZE?.TINY].includes(this._player.ui.store.getState().shell.playerSize)
+      [PLAYER_SIZE?.SMALL, PLAYER_SIZE?.EXTRA_SMALL, PLAYER_SIZE?.TINY].includes(this.player.ui.store.getState().shell.playerSize)
         ? PluginPositions.VERTICAL
         : PluginPositions.HORIZONTAL;
 
@@ -124,7 +123,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
           <PlaylistWrapper
             eventManager={this.eventManager}
             onClose={this._handleClose}
-            player={this._player}
+            player={this.player}
             pluginMode={pluginMode}
             playlistData={this._dataManager.getPlaylistData()}
             toggledByKeyboard={this._triggeredByKeyboard}
@@ -163,7 +162,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
       this.logger.warn('playlist plugin already initialized');
       return false;
     }
-    if (!this._player.playlist?.items?.length) {
+    if (!this.player.playlist?.items?.length) {
       this.logger.warn("playlist doesn't have playlist items");
       return false;
     }
@@ -201,7 +200,7 @@ export class Playlist extends KalturaPlayer.core.BasePlugin {
   };
 
   private _handleError = (e: any) => {
-    if (e.payload.severity === core.Error.Severity.CRITICAL && this._player.playlist?.items?.length > 1) {
+    if (e.payload.severity === core.Error.Severity.CRITICAL && this.player.playlist?.items?.length > 1) {
       this.player.playlist.playNext(true);
     }
   };

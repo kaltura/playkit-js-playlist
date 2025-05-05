@@ -5,9 +5,10 @@ import * as styles from './playlist-wrapper.scss';
 import {PlaylistHeader} from '../playlist-header';
 import {PlaylistItem} from '../playlist-item';
 import {PluginPositions, PlaylistExtraData} from '../../types';
+import { KalturaPlayer, ui, core } from '@playkit-js/kaltura-player-js';
 
-const {toHHMMSS, KeyMap} = KalturaPlayer.ui.utils;
-const {withText, Text} = KalturaPlayer.ui.preacti18n;
+const {toHHMMSS, KeyMap} = ui.utils;
+const {withText, Text} = ui.preacti18n;
 
 const translates = ({player}: PlaylistWrapperProps) => {
   const amount = player.playlist?.items.length;
@@ -29,9 +30,9 @@ const translates = ({player}: PlaylistWrapperProps) => {
 interface PlaylistWrapperProps {
   toggledByKeyboard: boolean;
   onClose: OnClick;
-  player: KalturaPlayerTypes.Player;
+  player: KalturaPlayer;
   pluginMode: PluginPositions;
-  eventManager: KalturaPlayerTypes.EventManager;
+  eventManager: core.EventManager;
   playlistData: Promise<PlaylistExtraData>;
   amount?: string;
   hour?: string;
@@ -43,21 +44,21 @@ export const PlaylistWrapper = withText(translates)(
   ({onClose, player, pluginMode, playlistData, eventManager, toggledByKeyboard, ...otherProps}: PlaylistWrapperProps) => {
     const {playlist} = player;
     const [playlistExtraData, setPlaylistExtraData] = useState<PlaylistExtraData>({});
-    const [activeIndex, setActiveIndex] = useState(playlist.current.index);
+    const [activeIndex, setActiveIndex] = useState(playlist.current?.index);
     const playlistContentRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       playlistData.then(data => {
         setPlaylistExtraData(data);
       });
-      eventManager.listen(player, player.Event.CHANGE_SOURCE_ENDED, () => {
-        setActiveIndex(playlist.current.index);
+      eventManager.listen(player, core.EventType.CHANGE_SOURCE_ENDED, () => {
+        setActiveIndex(playlist.current?.index);
       });
     }, []);
 
     const handlePlaylistItemClick = useCallback(
       (index: number) => () => {
-        index === playlist.current.index ? (player.currentTime = 0) : playlist.playItem(index);
+        index === playlist.current?.index ? (player.currentTime = 0) : playlist.playItem(index);
       },
       [playlist]
     );

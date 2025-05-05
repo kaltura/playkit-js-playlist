@@ -1,6 +1,6 @@
-import ILoader = KalturaPlayerTypes.ILoader;
+import {providers} from '@playkit-js/kaltura-player-js'
 import {KalturaViewHistoryUserEntry, KalturaViewHistoryUserEntryListResponse, KalturaBaseEntry, KalturaBaseEntryListResponse} from './response-types';
-const {RequestBuilder} = KalturaPlayer.providers;
+const {RequestBuilder} = providers;
 
 interface PlaylistLoaderParams {
   playlistItems: Array<any>; // TODO take difinition from KalturaPlayerTypes.Playlist
@@ -11,7 +11,7 @@ interface PlaylistResponse {
   baseEntry: Array<KalturaBaseEntry>;
 }
 
-export class PlaylistLoader implements ILoader {
+export class PlaylistLoader implements KalturaPlayerTypes.ILoader {
   _playlistItems: Array<any> = [];
   _requests: typeof RequestBuilder[] = [];
   _response: PlaylistResponse = {
