@@ -7,6 +7,7 @@ import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {icons} from '../icons';
 import {PluginPositions} from '../../types';
 import {KalturaViewHistoryUserEntry, KalturaBaseEntry, Capabilities} from '../../providers';
+import {KalturaMultiLingualData, MultiLingualData} from '../../providers/response-types/kaltura-multi-lingual-data';
 
 const {withText, Text} = ui.preacti18n;
 const {Icon} = ui.components;
@@ -46,7 +47,9 @@ interface PlaylistItemProps {
   currentlyPlaying?: string;
   playlistItemIndex?: string;
   duration?: string;
-  player: any
+  player: any;
+  locale: string;
+  multiLingual?: KalturaMultiLingualData;
 }
 
 const MediaTypes = {
@@ -55,11 +58,25 @@ const MediaTypes = {
   Document: core.MediaType.DOCUMENT
 };
 
-export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, ...otherProps}: PlaylistItemProps) => {
+export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, multiLingual, locale, ...otherProps}: PlaylistItemProps) => {
   const {sources, index} = item;
   const playlistItemIndex = index + 1;
-  const playlistItemName = sources.metadata?.name;
   const duration = sources.duration || 0;
+
+  const playlistItemName = useMemo(() => {
+    // determine the title of the playlist item based on the multilingual data
+    if (multiLingual) {
+      const { name } = multiLingual;
+      if (Array.isArray(name) && name.length > 0) {
+        const nameInLocale = name.find((name: MultiLingualData) => name.language.toLowerCase() === locale);
+        if (nameInLocale) {
+          return nameInLocale.value;
+        }
+      }
+    }
+    // fallback to the base entry name
+    return sources.metadata?.name;
+  }, [baseEntry, locale]);
 
   const lastProgress = useMemo(() => {
     if (!viewHistory?.lastTimeReached) {

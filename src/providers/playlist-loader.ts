@@ -1,6 +1,8 @@
 import { RequestBuilder } from '@playkit-js/playkit-js-providers/ovp-provider';
 import {KalturaViewHistoryUserEntry, KalturaViewHistoryUserEntryListResponse, KalturaBaseEntry, KalturaBaseEntryListResponse} from './response-types';
 import {ILoader} from '@playkit-js/playkit-js-providers/types';
+import {KalturaMultiLingualResponse} from './response-types/kaltura-multi-lingual-response';
+import {KalturaMultiLingualData} from './response-types/kaltura-multi-lingual-data';
 
 interface PlaylistLoaderParams {
   playlistItems: Array<any>; // TODO take difinition from KalturaPlayerTypes.Playlist
@@ -9,6 +11,7 @@ interface PlaylistLoaderParams {
 interface PlaylistResponse {
   viewHistory: Array<KalturaViewHistoryUserEntry>;
   baseEntry: Array<KalturaBaseEntry>;
+  multiLingualData: Array<KalturaMultiLingualData>;
 }
 
 export class PlaylistLoader implements ILoader {
@@ -16,7 +19,8 @@ export class PlaylistLoader implements ILoader {
   _requests: RequestBuilder[] = [];
   _response: PlaylistResponse = {
     viewHistory: [],
-    baseEntry: []
+    baseEntry: [],
+    multiLingualData: []
   };
 
   static get id(): string {
@@ -50,7 +54,8 @@ export class PlaylistLoader implements ILoader {
       filter: {
         idIn: entryIds,
         objectType: 'KalturaMediaEntryFilter'
-      }
+      },
+      language: 'multi'
     };
     this.requests.push(baseEntryRequest);
 
@@ -70,9 +75,13 @@ export class PlaylistLoader implements ILoader {
     if (viewHistoryUserEntryListResponse.totalCount) {
       this._response.viewHistory = viewHistoryUserEntryListResponse?.data;
     }
-    const klalturaUserEntryListResponse = new KalturaBaseEntryListResponse(response[1]?.data);
-    if (klalturaUserEntryListResponse.totalCount) {
-      this._response.baseEntry = klalturaUserEntryListResponse?.data;
+    const kalturaUserEntryListResponse = new KalturaBaseEntryListResponse(response[1]?.data);
+    if (kalturaUserEntryListResponse.totalCount) {
+      this._response.baseEntry = kalturaUserEntryListResponse?.data;
+    }
+    const multiLingualResponse = new KalturaMultiLingualResponse(response[1]?.data);
+    if (multiLingualResponse.totalCount) {
+      this._response.multiLingualData = multiLingualResponse?.data;
     }
   }
 

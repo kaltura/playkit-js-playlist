@@ -1,6 +1,7 @@
 import {KalturaViewHistoryUserEntry, KalturaBaseEntry, PlaylistLoader} from './providers';
 import {PlaylistExtraData} from './types';
 import {KalturaPlayer} from '@playkit-js/kaltura-player-js'
+import {KalturaMultiLingualData} from './providers/response-types/kaltura-multi-lingual-data';
 
 export class DataManager {
   private _playlistData: PlaylistExtraData | null = null;
@@ -34,6 +35,7 @@ export class DataManager {
           const playlistLoader = data.get(PlaylistLoader.id);
           const viewHistory: Array<KalturaViewHistoryUserEntry> = playlistLoader?.response?.viewHistory;
           const baseEntry: Array<KalturaBaseEntry> = playlistLoader?.response?.baseEntry;
+          const multiLingual: Array<KalturaMultiLingualData> = playlistLoader?.response?.multiLingualData;
           if (!this._playlistData) {
             this._playlistData = {};
           }
@@ -44,6 +46,11 @@ export class DataManager {
           }
           if (baseEntry) {
             this._playlistData.baseEntry = baseEntry.reduce((acc, cur) => {
+              return {...acc, [cur.id]: cur};
+            }, {});
+          }
+          if (multiLingual) {
+            this._playlistData.multiLingual = multiLingual.reduce((acc, cur) => {
               return {...acc, [cur.id]: cur};
             }, {});
           }
