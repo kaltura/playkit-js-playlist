@@ -76,7 +76,7 @@ export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSe
     }
     // fallback to the base entry name
     return sources.metadata?.name;
-  }, [baseEntry, locale]);
+  }, [multiLingual, locale]);
 
   const lastProgress = useMemo(() => {
     if (!viewHistory?.lastTimeReached) {
