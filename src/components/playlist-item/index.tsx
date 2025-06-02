@@ -7,7 +7,7 @@ import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import {icons} from '../icons';
 import {PluginPositions} from '../../types';
 import {KalturaViewHistoryUserEntry, KalturaBaseEntry, Capabilities} from '../../providers';
-import {KalturaMultiLingualData, MultiLingualData} from '../../providers/response-types/kaltura-multi-lingual-data';
+import {KalturaMultiLingualData, MultiLingualName} from '../../providers/response-types/kaltura-multi-lingual-data';
 
 const {withText, Text} = ui.preacti18n;
 const {Icon} = ui.components;
@@ -66,9 +66,9 @@ export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSe
   const playlistItemName = useMemo(() => {
     // determine the title of the playlist item based on the multilingual data
     if (multiLingual) {
-      const { name } = multiLingual;
-      if (Array.isArray(name) && name.length > 0) {
-        const nameInLocale = name.find((name: MultiLingualData) => name.language.toLowerCase() === locale);
+      const { names } = multiLingual;
+      if (Array.isArray(names) && names.length > 0) {
+        const nameInLocale = names.find((mlName: MultiLingualName) => mlName.language.toLowerCase() === locale);
         if (nameInLocale) {
           return nameInLocale.value;
         }
