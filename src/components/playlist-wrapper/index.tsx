@@ -138,6 +138,8 @@ export const PlaylistWrapper = withText(translates)(
                 pluginMode={pluginMode}
                 viewHistory={playlistExtraData?.viewHistory?.[item.sources.id]}
                 baseEntry={playlistExtraData?.baseEntry?.[item.sources.id]}
+                multiLingual={playlistExtraData?.multiLingual?.[item.sources.id]}
+                locale={player.config.ui.locale}
               />
             );
           })}
