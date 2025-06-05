@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 3.5.0 (2025-06-05)
+
+
+### Features
+
+* **FEC-14489:** Playlist language translation ([#80](https://github.com/kaltura/playkit-js-playlist/issues/80)) ([2470522](https://github.com/kaltura/playkit-js-playlist/commit/247052217702b37dc1b8203471ca21fb2574e783))
+
 ### 3.4.3 (2025-05-22)
 
 ### 3.4.2 (2025-04-24)
