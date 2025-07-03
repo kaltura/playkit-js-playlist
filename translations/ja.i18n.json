@@ -14,7 +14,8 @@
       "live_type": "ライブ",
       "play-item-area-label": "クリックして再生する",
       "currently-playing": "現在プレー中：",
-      "playlist-item-index": "プレーリスト項目#"
+      "playlist-item-index": "プレーリスト項目#",
+      "duration": "長さ"
     }
   }
 }

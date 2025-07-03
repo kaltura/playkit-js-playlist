@@ -14,7 +14,8 @@
       "live_type": "Live",
       "play-item-area-label": "Fai clic per riprodurre:",
       "currently-playing": "In riproduzione:",
-      "playlist-item-index": "Elemento playlist n."
+      "playlist-item-index": "Elemento playlist n.",
+      "duration": "Durata"
     }
   }
 }
