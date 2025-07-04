@@ -14,7 +14,8 @@
       "live_type": "Live",
       "play-item-area-label": "Toista klikkaamalla:",
       "currently-playing": "Tällä hetkellä toistetaan:",
-      "playlist-item-index": "Soittolistan kohde # "
+      "playlist-item-index": "Soittolistan kohde # ",
+      "duration": "Kesto"
     }
   }
 }

@@ -14,7 +14,8 @@
       "live_type": "En direct",
       "play-item-area-label": "Cliquez pour lire :",
       "currently-playing": "En cours de lecture :",
-      "playlist-item-index": "Elément de liste de lecture #"
+      "playlist-item-index": "Elément de liste de lecture #",
+      "duration": "Durée"
     }
   }
 }

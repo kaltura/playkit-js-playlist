@@ -14,7 +14,8 @@
       "live_type": "Ao vivo",
       "play-item-area-label": "Clique para reproduzir:",
       "currently-playing": "Reproduzindo agora:",
-      "playlist-item-index": "Nº do item da playlist"
+      "playlist-item-index": "Nº do item da playlist",
+      "duration": "Duração"
     }
   }
 }

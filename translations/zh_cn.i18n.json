@@ -14,7 +14,8 @@
       "live_type": "直播",
       "play-item-area-label": "点击播放：",
       "currently-playing": "当前正在播放：",
-      "playlist-item-index": "播放列表项目 #"
+      "playlist-item-index": "播放列表项目 #",
+      "duration": "时长"
     }
   }
 }

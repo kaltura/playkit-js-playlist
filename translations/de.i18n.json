@@ -14,7 +14,8 @@
       "live_type": "Live",
       "play-item-area-label": "Zum Abspielen anklicken:",
       "currently-playing": "Wird abgespielt:",
-      "playlist-item-index": "Wiedergabelistennr. #"
+      "playlist-item-index": "Wiedergabelistennr. #",
+      "duration": "Dauer"
     }
   }
 }
