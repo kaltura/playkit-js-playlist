@@ -14,7 +14,8 @@
       "live_type": "라이브",
       "play-item-area-label": "클릭하여 재생:",
       "currently-playing": "현재 재생:",
-      "playlist-item-index": "재생 목록 번호"
+      "playlist-item-index": "재생 목록 번호",
+      "duration": "기간"
     }
   }
 }

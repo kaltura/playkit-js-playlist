@@ -14,7 +14,8 @@
       "live_type": "Live",
       "play-item-area-label": "Klik om af te spelen:",
       "currently-playing": "Speelt nu af:",
-      "playlist-item-index": "Afspeellijst item nr."
+      "playlist-item-index": "Afspeellijst item nr.",
+      "duration": "Duur"
     }
   }
 }

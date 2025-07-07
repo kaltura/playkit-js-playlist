@@ -14,7 +14,8 @@
       "live_type": "En directo",
       "play-item-area-label": "Haga clic para reproducir:",
       "currently-playing": "Actualmente reproduciendo:",
-      "playlist-item-index": "N.º de elemento de la lista de reproducción"
+      "playlist-item-index": "N.º de elemento de la lista de reproducción",
+      "duration": "Duración"
     }
   }
 }
