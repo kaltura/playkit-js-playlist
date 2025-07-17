@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.5.1 (2025-07-17)
+
+
+### Bug Fixes
+
+* **FEC-14467:** Duration translations ([#81](https://github.com/kaltura/playkit-js-playlist/issues/81)) ([d605b61](https://github.com/kaltura/playkit-js-playlist/commit/d605b615ea9c9ff663c3eabe518f3e00fbc80ced))
+
 ## 3.5.0 (2025-06-05)
 
 
