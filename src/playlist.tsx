@@ -1,17 +1,16 @@
-import {h} from 'preact';
-import {ui, core, BasePlugin, KalturaPlayer} from '@playkit-js/kaltura-player-js';
-import {OnClickEvent} from '@playkit-js/common/dist/hoc/a11y-wrapper';
-import {UpperBarManager, SidePanelsManager} from '@playkit-js/ui-managers';
-import {PlaylistConfig, PluginPositions, PluginStates} from './types';
-import {PluginButton} from './components/plugin-button';
-import {PlaylistWrapper} from './components/playlist-wrapper';
-import {DataManager} from './data-manager';
-import {icons} from './components/icons';
-import {pluginName} from './index';
-import {PlaylistEvents} from './events/events';
+import { h } from 'preact';
+import { ui, core, BasePlugin, KalturaPlayer } from '@playkit-js/kaltura-player-js';
+import { OnClickEvent } from '@playkit-js/common/dist/hoc/a11y-wrapper';
+import { UpperBarManager, SidePanelsManager } from '@playkit-js/ui-managers';
+import { PlaylistConfig, PluginPositions, PluginStates } from './types';
+import { PluginButton } from './components/plugin-button';
+import { PlaylistWrapper } from './components/playlist-wrapper';
+import { DataManager } from './data-manager';
+import { icons } from './components/icons';
+import { PlaylistEvents } from './events/events';
 
-const {SidePanelModes, SidePanelPositions, ReservedPresetNames} = ui;
-const {PLAYER_SIZE} = ui.Components;
+const { SidePanelModes, SidePanelPositions, ReservedPresetNames } = ui;
+const { PLAYER_SIZE } = ui.Components;
 
 export class Playlist extends BasePlugin {
   private _playlistPanel = -1;
@@ -22,7 +21,7 @@ export class Playlist extends BasePlugin {
   private _offlineSlateActive = false;
   private pluginMode: PluginPositions | null = null;
   private _activePresetName = '';
-  private _unsubscribeStore: Function = () => {};
+  private _unsubscribeStore: Function = () => { };
   private _triggeredByKeyboard = false;
   private _pluginButtonRef: HTMLButtonElement | null = null;
 
@@ -30,7 +29,8 @@ export class Playlist extends BasePlugin {
     position: SidePanelPositions.RIGHT,
     expandMode: SidePanelModes.ALONGSIDE,
     expandOnFirstPlay: true,
-    playNextOnError: true
+    playNextOnError: true,
+    displayCreationDate: false,
   };
 
   constructor(name: string, player: KalturaPlayer, config: PlaylistConfig) {
@@ -38,7 +38,7 @@ export class Playlist extends BasePlugin {
     this._dataManager = new DataManager(player, this.logger);
     // subscribe on store changes
     this._unsubscribeStore = this.uiStore?.subscribe(() => {
-      const {shell} = this.uiStore.getState();
+      const { shell } = this.uiStore.getState();
       if (shell.playerClasses.includes('has-live-plugin-overlay') && !this._offlineSlateActive) {
         this._offlineSlateActive = true;
         this._activatePlugin();
@@ -86,7 +86,7 @@ export class Playlist extends BasePlugin {
       // @ts-ignore
       ariaLabel: 'Playlist',
       displayName: 'Playlist',
-      svgIcon: {path: icons.PLUGIN_ICON},
+      svgIcon: { path: icons.PLUGIN_ICON },
       onClick: this._handleClickOnPluginIcon,
       component: () => {
         return <PluginButton isActive={this._isPluginActive()} setRef={this._setPluginButtonRef} />;
@@ -105,7 +105,7 @@ export class Playlist extends BasePlugin {
 
     const pluginMode =
       [SidePanelPositions.RIGHT, SidePanelPositions.LEFT].includes(this.config.position) ||
-      [PLAYER_SIZE?.SMALL, PLAYER_SIZE?.EXTRA_SMALL, PLAYER_SIZE?.TINY].includes(this.player.ui.store.getState().shell.playerSize)
+        [PLAYER_SIZE?.SMALL, PLAYER_SIZE?.EXTRA_SMALL, PLAYER_SIZE?.TINY].includes(this.player.ui.store.getState().shell.playerSize)
         ? PluginPositions.VERTICAL
         : PluginPositions.HORIZONTAL;
 
@@ -126,6 +126,7 @@ export class Playlist extends BasePlugin {
             pluginMode={pluginMode}
             playlistData={this._dataManager.getPlaylistData()}
             toggledByKeyboard={this._triggeredByKeyboard}
+            displayCreationDate={this.config.displayCreationDate}
           />
         );
       },
@@ -184,7 +185,7 @@ export class Playlist extends BasePlugin {
       this.sidePanelsManager?.activateItem(this._playlistPanel);
       this._pluginState === PluginStates.OPENED;
       this.upperBarManager?.update(this._playlistIcon);
-      this.dispatchEvent(PlaylistEvents.PLAYLIST_OPEN, {position: this.config.position, auto: isFirstOpen});
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_OPEN, { position: this.config.position, auto: isFirstOpen });
     });
   };
 
@@ -194,7 +195,7 @@ export class Playlist extends BasePlugin {
       this.sidePanelsManager?.deactivateItem(this._playlistPanel);
       this._pluginState = PluginStates.CLOSED;
       this.upperBarManager?.update(this._playlistIcon);
-      this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, {position: this.config.position});
+      this.dispatchEvent(PlaylistEvents.PLAYLIST_CLOSE, { position: this.config.position });
     });
   };
 
@@ -208,7 +209,7 @@ export class Playlist extends BasePlugin {
     return true;
   }
 
-  reset(): void {}
+  reset(): void { }
 
   destroy(): void {
     this.eventManager.removeAll();
