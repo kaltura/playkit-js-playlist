@@ -64,9 +64,6 @@ export const PlaylistItem = withPlayer(withText(translates)(({ item, active, onS
   const playlistItemIndex = index + 1;
   const duration = sources.duration || 0;
 
-  console.log('pluginMode: ', pluginMode);
-
-
   const playlistItemName = useMemo(() => {
     // determine the title of the playlist item based on the multilingual data
     if (multiLingual) {
