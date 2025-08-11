@@ -3,4 +3,5 @@ export interface PlaylistConfig {
   expandMode: string;
   expandOnFirstPlay: boolean;
   playNextOnError: boolean;
+  displayCreationDate: boolean;
 }

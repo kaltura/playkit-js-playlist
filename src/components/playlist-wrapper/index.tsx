@@ -1,16 +1,16 @@
-import {h} from 'preact';
-import {useCallback, useMemo, useEffect, useState, useRef} from 'preact/hooks';
-import {OnClick} from '@playkit-js/common/dist/hoc/a11y-wrapper';
+import { h } from 'preact';
+import { useCallback, useMemo, useEffect, useState, useRef } from 'preact/hooks';
+import { OnClick } from '@playkit-js/common/dist/hoc/a11y-wrapper';
 import * as styles from './playlist-wrapper.scss';
-import {PlaylistHeader} from '../playlist-header';
-import {PlaylistItem} from '../playlist-item';
-import {PluginPositions, PlaylistExtraData} from '../../types';
+import { PlaylistHeader } from '../playlist-header';
+import { PlaylistItem } from '../playlist-item';
+import { PluginPositions, PlaylistExtraData } from '../../types';
 import { KalturaPlayer, ui, core } from '@playkit-js/kaltura-player-js';
 
-const {toHHMMSS, KeyMap} = ui.utils;
-const {withText, Text} = ui.preacti18n;
+const { toHHMMSS, KeyMap } = ui.utils;
+const { withText, Text } = ui.preacti18n;
 
-const translates = ({player}: PlaylistWrapperProps) => {
+const translates = ({ player }: PlaylistWrapperProps) => {
   const amount = player.playlist?.items.length;
   return {
     amount: (
@@ -34,6 +34,7 @@ interface PlaylistWrapperProps {
   pluginMode: PluginPositions;
   eventManager: core.EventManager;
   playlistData: Promise<PlaylistExtraData>;
+  displayCreationDate: boolean;
   amount?: string;
   hour?: string;
   min?: string;
@@ -41,8 +42,8 @@ interface PlaylistWrapperProps {
 }
 
 export const PlaylistWrapper = withText(translates)(
-  ({onClose, player, pluginMode, playlistData, eventManager, toggledByKeyboard, ...otherProps}: PlaylistWrapperProps) => {
-    const {playlist} = player;
+  ({ onClose, player, pluginMode, playlistData, eventManager, toggledByKeyboard, displayCreationDate, ...otherProps }: PlaylistWrapperProps) => {
+    const { playlist } = player;
     const [playlistExtraData, setPlaylistExtraData] = useState<PlaylistExtraData>({});
     const [activeIndex, setActiveIndex] = useState(playlist.current?.index);
     const playlistContentRef = useRef<HTMLDivElement>(null);
@@ -129,7 +130,7 @@ export const PlaylistWrapper = withText(translates)(
           {...playlistContentParams}
           aria-live="polite">
           {playlist.items.map((item: any) => {
-            const {index} = item;
+            const { index } = item;
             return (
               <PlaylistItem
                 item={item}
@@ -140,6 +141,7 @@ export const PlaylistWrapper = withText(translates)(
                 baseEntry={playlistExtraData?.baseEntry?.[item.sources.id]}
                 multiLingual={playlistExtraData?.multiLingual?.[item.sources.id]}
                 locale={player.config.ui.locale}
+                displayCreationDate={displayCreationDate}
               />
             );
           })}

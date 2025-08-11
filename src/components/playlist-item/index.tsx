@@ -1,25 +1,25 @@
-import {h, Fragment} from 'preact';
-import {useMemo} from 'preact/hooks';
+import { h, Fragment } from 'preact';
+import { useMemo } from 'preact/hooks';
 // @ts-ignore
-import {ui, core} from '@playkit-js/kaltura-player-js';
+import { ui, core } from '@playkit-js/kaltura-player-js';
 import * as styles from './playlist-item.scss';
-import {A11yWrapper} from '@playkit-js/common/dist/hoc/a11y-wrapper';
-import {icons} from '../icons';
-import {PluginPositions} from '../../types';
-import {KalturaViewHistoryUserEntry, KalturaBaseEntry, Capabilities} from '../../providers';
-import {KalturaMultiLingualData, MultiLingualName} from '../../providers/response-types/kaltura-multi-lingual-data';
+import { A11yWrapper } from '@playkit-js/common/dist/hoc/a11y-wrapper';
+import { icons } from '../icons';
+import { PluginPositions } from '../../types';
+import { KalturaViewHistoryUserEntry, KalturaBaseEntry, Capabilities } from '../../providers';
+import { KalturaMultiLingualData, MultiLingualName } from '../../providers/response-types/kaltura-multi-lingual-data';
 
-const {withText, Text} = ui.preacti18n;
-const {Icon} = ui.components;
-const {toHHMMSS} = ui.utils;
+const { withText, Text } = ui.preacti18n;
+const { Icon } = ui.components;
+const { toHHMMSS } = ui.utils;
 //@ts-ignore
-const {getDurationAsText} = KalturaPlayer.ui.utils
-const {withPlayer} = ui.components;
+const { getDurationAsText } = KalturaPlayer.ui.utils
+const { withPlayer } = ui.components;
 
 const PLACEHOLDER_IMAGE_SRC =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAASCAYAAAA6yNxSAAAAJklEQVR42u3OMQEAAAgDoJnc6BpjDyRgLrcpGgEBAQEBAQGBduABaVYs3Q5APwQAAAAASUVORK5CYII=';
 
-const translates = ({}: PlaylistItemProps) => {
+const translates = ({ }: PlaylistItemProps) => {
   return {
     quiz: <Text id="playlist.quiz_type">Quiz</Text>,
     live: <Text id="playlist.live_type">Live</Text>,
@@ -50,6 +50,7 @@ interface PlaylistItemProps {
   player: any;
   locale: string;
   multiLingual?: KalturaMultiLingualData;
+  displayCreationDate?: boolean;
 }
 
 const MediaTypes = {
@@ -58,8 +59,8 @@ const MediaTypes = {
   Document: core.MediaType.DOCUMENT
 };
 
-export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSelect, pluginMode, viewHistory, baseEntry, multiLingual, locale, ...otherProps}: PlaylistItemProps) => {
-  const {sources, index} = item;
+export const PlaylistItem = withPlayer(withText(translates)(({ item, active, onSelect, pluginMode, viewHistory, baseEntry, multiLingual, locale, displayCreationDate, ...otherProps }: PlaylistItemProps) => {
+  const { sources, index } = item;
   const playlistItemIndex = index + 1;
   const duration = sources.duration || 0;
 
@@ -99,7 +100,7 @@ export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSe
         <div className={styles.playlistItemDuration}>{toHHMMSS(sources.duration)}</div>
         {lastProgress > 0 && (
           <div className={styles.playlistItemProgress}>
-            <div className={styles.lastProgress} style={{width: `${lastProgress}%`}} />
+            <div className={styles.lastProgress} style={{ width: `${lastProgress}%` }} />
           </div>
         )}
       </Fragment>
@@ -108,6 +109,7 @@ export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSe
 
   const renderDescription = useMemo(() => {
     const type = sources.mediaEntryType || sources.type;
+
     if (type === MediaTypes.Live) {
       // TODO: get stream date
       return <div className={styles.playlistItemDescription}></div>;
@@ -168,13 +170,29 @@ export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSe
     return null;
   }, [sources, baseEntry]);
 
+  const renderTimestampToDate = useMemo(() => (timestamp: number): string => {
+    return new Date(timestamp * 1000).toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+  }, []);
+
   const renderTitle = useMemo(() => {
+    const displayCreatedAt = displayCreationDate && sources.metadata?.createdAt;
+
     return (
       <Fragment>
-        <div className={[styles.playlistItemTitle, renderDescription ? styles.hasDescription : ''].join(' ')}>
+        <div className={[styles.playlistItemTitle, renderDescription ? styles.hasDescription : '', displayCreatedAt ? styles.hasCreatedAt : ''].join(' ')}>
           {pluginMode === PluginPositions.VERTICAL ? playlistItemName : `${playlistItemIndex}. ${playlistItemName}`}
         </div>
-        {renderDescription}
+        {
+          //In horizontal mode, we don't want to show the description if displayCreatedAt is true, because there is no space for it.  
+          !displayCreatedAt || (displayCreatedAt && pluginMode === PluginPositions.VERTICAL) ?
+            renderDescription
+            : null
+        }
+        {displayCreatedAt &&
+          <div className={styles.playlistItemCreatedAt}>{renderTimestampToDate(sources.metadata.createdAt)}</div>
+        }
       </Fragment>
     );
   }, [playlistItemName, pluginMode, playlistItemIndex, renderDescription]);
@@ -182,9 +200,8 @@ export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSe
   return (
     <A11yWrapper onClick={onSelect} role="button">
       <div
-        title={`${otherProps.playlistItemIndex}${index + 1}. ${
-          active ? otherProps.currentlyPlaying : otherProps.toPlayAreaLabel
-        } ${playlistItemName} ${otherProps.duration}: ${getDurationAsText(sources.duration, otherProps.player.config.ui.locale)}`}
+        title={`${otherProps.playlistItemIndex}${index + 1}. ${active ? otherProps.currentlyPlaying : otherProps.toPlayAreaLabel
+          } ${playlistItemName} ${otherProps.duration}: ${getDurationAsText(sources.duration, otherProps.player.config.ui.locale)}`}
         className={[
           styles.playlistItem,
           pluginMode === PluginPositions.VERTICAL ? styles.vertical : styles.horizontal,
@@ -198,10 +215,10 @@ export const PlaylistItem = withPlayer(withText(translates)(({item, active, onSe
             {item.index + 1}
           </div>
         )}
-        <div className={styles.playlistItemThumbnailWrapper} style={{backgroundImage: `url('${sources.poster}')`}} aria-hidden="true">
+        <div className={styles.playlistItemThumbnailWrapper} style={{ backgroundImage: `url('${sources.poster}')` }} aria-hidden="true">
           {/*for horizontal mode need to add image element in order to match width-height proportion*/}
           {pluginMode === PluginPositions.HORIZONTAL && (
-            <img src={PLACEHOLDER_IMAGE_SRC} style={{width: 'auto', height: '100%', visibility: 'hidden'}} />
+            <img src={PLACEHOLDER_IMAGE_SRC} style={{ width: 'auto', height: '100%', visibility: 'hidden' }} />
           )}
           <div className={styles.playlistItemAddons}>{renderAddons}</div>
         </div>
