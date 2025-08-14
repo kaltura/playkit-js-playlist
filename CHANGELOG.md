@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.5.2 (2025-08-14)
+
+
+### Bug Fixes
+
+* **PSVAMB-90052:** Display creation date for each media item within the playlist player ([#82](https://github.com/kaltura/playkit-js-playlist/issues/82)) ([2081140](https://github.com/kaltura/playkit-js-playlist/commit/2081140f8e4bcd963ce22c1425493438a27b20e5))
+
 ### 3.5.1 (2025-07-17)
 
 
