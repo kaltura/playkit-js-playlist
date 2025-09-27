@@ -24,6 +24,9 @@ export class Playlist extends BasePlugin {
   private _unsubscribeStore: Function = () => { };
   private _triggeredByKeyboard = false;
   private _pluginButtonRef: HTMLButtonElement | null = null;
+  private _retryAttempts = 0;
+  private _maxRetryAttempts = 30;
+  private _retryInterval = 20000;
 
   static defaultConfig: PlaylistConfig = {
     position: SidePanelPositions.RIGHT,
@@ -56,6 +59,15 @@ export class Playlist extends BasePlugin {
     if (this.config.playNextOnError) {
       this.eventManager.listen(this.player, core.EventType.ERROR, this._handleError);
     }
+
+    // Timeout check for empty playlist
+    setTimeout(() => {
+      this.logger.warn(`Playlist items: ${this.player.playlist?.items?.length || 0}`);
+      if (this.player.playlist?.items?.length === 0) {
+        this.logger.warn('Empty playlist detected in timeout - starting retry logic');
+        this._retryPlaylistLoading();
+      }
+    }, 2000);
   }
 
   get uiStore() {
@@ -153,6 +165,42 @@ export class Playlist extends BasePlugin {
     }
   };
 
+  private _retryPlaylistLoading = () => {
+    if (this._retryAttempts >= this._maxRetryAttempts) {
+      this.logger.warn('Max retry attempts reached for empty playlist - stopping retries');
+      return;
+    }
+
+    this._retryAttempts++;
+    this.logger.warn(`Retrying playlist loading attempt ${this._retryAttempts}/${this._maxRetryAttempts} due to empty playlist`);
+
+    setTimeout(() => {
+      // Trigger playlist reload to retry the multi-request
+      try {
+        if (this.player.playlist && this.player.playlist.id) {
+          this.logger.warn(`Reloading playlist with ID: ${this.player.playlist.id}`);
+          (this.player as any).loadPlaylist({playlistId: this.player.playlist.id});
+
+          // Check again after playlist reload to continue retrying if still empty
+          setTimeout(() => {
+            this.logger.warn(`Checking playlist after reload attempt ${this._retryAttempts}`);
+            if (this.player.playlist?.items?.length === 0) {
+              this._retryPlaylistLoading();
+            } else {
+              this.logger.warn(`Playlist now has ${this.player.playlist?.items?.length} items - stopping retries`);
+              this._retryAttempts = 0;
+            }
+          }, 1000);
+        } else {
+          this.player.reset();
+          this.player.load();
+        }
+      } catch (error) {
+        this.logger.warn('Error during playlist reload:', error);
+      }
+    }, this._retryInterval);
+  };
+
   private _isPlaylistValid = () => {
     if (!this.sidePanelsManager || !this.upperBarManager) {
       this.logger.warn('sidePanelsManager or upperBarManager service not registered');
@@ -209,7 +257,9 @@ export class Playlist extends BasePlugin {
     return true;
   }
 
-  reset(): void { }
+  reset(): void {
+    this._retryAttempts = 0;
+  }
 
   destroy(): void {
     this.eventManager.removeAll();
@@ -219,6 +269,7 @@ export class Playlist extends BasePlugin {
     this._pluginButtonRef = null;
     this._pluginState = null;
     this._triggeredByKeyboard = false;
+    this._retryAttempts = 0;
     this._unsubscribeStore();
     this._dataManager.destroy();
   }
