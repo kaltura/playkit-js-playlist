@@ -1,6 +1,6 @@
 {
   "name": "@playkit-js/playkit-js-playlist",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "main": "dist/playkit-playlist.js",
   "scripts": {
     "serve": "webpack serve --open --mode development",
