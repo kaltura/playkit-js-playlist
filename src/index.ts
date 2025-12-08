@@ -1,6 +1,7 @@
 /// <reference path="./global.d.ts" />
 
 import {Playlist} from './playlist';
+import {registerPlugin} from '@playkit-js/kaltura-player-js';
 
 declare var __VERSION__: string;
 declare var __NAME__: string;
@@ -12,4 +13,4 @@ export {Playlist as Plugin};
 export {VERSION, NAME};
 export {PlaylistEvents} from './events/events'
 export const pluginName: string = 'playlist';
-KalturaPlayer.core.registerPlugin(pluginName, Playlist);
+registerPlugin(pluginName, Playlist);
