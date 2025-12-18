@@ -1,9 +1,9 @@
 {
   "name": "@playkit-js/playkit-js-playlist",
-  "version": "3.5.5",
+  "version": "3.5.6",
   "main": "dist/playkit-playlist.js",
   "scripts": {
-    "preinstall": "npx --yes --prefer-online --registry=https://npm.pkg.github.com --package @kaltura/kaltura-tools@latest kaltura-tools check --root=.",
+    "disabled-preinstall": "npx --yes --prefer-online --registry=https://npm.pkg.github.com --package @kaltura/kaltura-tools@latest kaltura-tools check --root=.",
     "serve": "webpack serve --open --mode development",
     "clean": "rm -rf ./dist",
     "prebuild": "npm run clean",
