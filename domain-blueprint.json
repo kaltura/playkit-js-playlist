@@ -1,0 +1,176 @@
+{
+  "repositoryName": "playkit-js-playlist",
+  "packageName": "@playkit-js/playkit-js-playlist",
+
+  "coreResponsibility": "A UI plugin for Kaltura Player that provides a side-panel playlist component enabling users to view, navigate, and manage media item playback within a multi-item playlist.",
+
+  "domainAndLogicOwnership": {
+    "featureOwnership": [
+      "Playlist side-panel UI rendering (vertical and horizontal modes)",
+      "Playlist item navigation and playback selection",
+      "Display of playlist metadata (name, duration, item count)",
+      "View history progress tracking per playlist item",
+      "Support for various media types (video, live, image, document, quiz)",
+      "Automatic play-next-on-error functionality",
+      "Multi-lingual playlist item name translations",
+      "Playlist expand/collapse on first play behavior",
+      "Accessibility (A11y) support for keyboard navigation",
+      "Side panel positioning (right, left, top, bottom)",
+      "Display creation date per playlist item"
+    ],
+    "dataHandling": [
+      "Playlist item state (active item index, playback progress)",
+      "View history user entries (last time reached per entry)",
+      "Base entry metadata (capabilities, media type)",
+      "Multilingual name data for playlist items",
+      "Playlist metadata (name, item count, total duration)"
+    ]
+  },
+
+  "integrationPoints": {
+    "upstream": [
+      {
+        "name": "@playkit-js/kaltura-player-js",
+        "description": "Core Kaltura Player providing the playlist API, playback engine, and event system"
+      },
+      {
+        "name": "@playkit-js/playkit-js-providers",
+        "description": "OVP provider layer used for making Kaltura API requests"
+      },
+      {
+        "name": "@playkit-js/ui-managers",
+        "description": "UI service managers (SidePanelsManager, UpperBarManager) for plugin registration"
+      }
+    ],
+    "downstream": [
+      {
+        "name": "Kaltura Player UI",
+        "description": "The plugin registers its UI components with the player's side panel and upper bar"
+      },
+      {
+        "name": "Video Portal / Embedding Applications",
+        "description": "Applications embedding Kaltura Player with playlist functionality"
+      }
+    ],
+    "externalApis": [
+      {
+        "name": "Kaltura userEntry API",
+        "service": "userEntry",
+        "action": "list",
+        "description": "Fetches view history for playlist items to show playback progress"
+      },
+      {
+        "name": "Kaltura baseEntry API",
+        "service": "baseEntry",
+        "action": "list",
+        "description": "Fetches base entry metadata including capabilities (e.g., quiz) and multilingual data"
+      }
+    ]
+  },
+
+  "technicalStack": {
+    "primaryLanguages": ["TypeScript", "SCSS"],
+    "frameworks": ["Preact (JSX/TSX)", "Webpack"],
+    "testingTools": ["Cypress (E2E testing)"],
+    "buildTools": ["Webpack", "ts-loader", "sass-loader"],
+    "entryPoints": [
+      {
+        "file": "src/index.ts",
+        "description": "Main entry point that exports and registers the Playlist plugin with Kaltura Player"
+      },
+      {
+        "file": "src/playlist.tsx",
+        "description": "Core plugin class implementing BasePlugin, manages side panel, upper bar integration, and plugin lifecycle"
+      },
+      {
+        "file": "src/data-manager.ts",
+        "description": "Data layer managing playlist extra data fetching (view history, base entry, multilingual)"
+      },
+      {
+        "file": "src/components/playlist-wrapper/index.tsx",
+        "description": "Main UI wrapper component rendering the playlist header and items"
+      },
+      {
+        "file": "src/components/playlist-item/index.tsx",
+        "description": "Individual playlist item UI component with thumbnail, progress, and metadata"
+      },
+      {
+        "file": "src/providers/playlist-loader.ts",
+        "description": "Data loader for fetching playlist-related data from Kaltura APIs"
+      }
+    ]
+  },
+
+  "triageKeywords": [
+    "playlist",
+    "playlist panel",
+    "playlist side panel",
+    "playlist plugin",
+    "playlist items",
+    "playkit-js-playlist",
+    "playlist navigation",
+    "playNext",
+    "playItem",
+    "playlist progress",
+    "view history",
+    "playlist thumbnail",
+    "playlist expand",
+    "playlist collapse",
+    "playlist_open event",
+    "playlist_close event",
+    "sidePanelsManager playlist",
+    "upperBarManager playlist",
+    "playlist vertical mode",
+    "playlist horizontal mode",
+    "playlist quiz icon",
+    "playlist live label",
+    "playNextOnError",
+    "expandOnFirstPlay",
+    "playlist position config",
+    "playlist expandMode",
+    "KalturaViewHistoryUserEntry",
+    "playlist multilingual",
+    "playlist creation date"
+  ],
+
+  "events": {
+    "emitted": [
+      "playlist_open",
+      "playlist_close"
+    ],
+    "listened": [
+      "CHANGE_SOURCE_ENDED",
+      "ERROR"
+    ]
+  },
+
+  "configurationOptions": {
+    "expandOnFirstPlay": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether the playlist panel should automatically open on first play"
+    },
+    "position": {
+      "type": "string",
+      "values": ["right", "left", "top", "bottom"],
+      "default": "right",
+      "description": "Position of the playlist side panel"
+    },
+    "expandMode": {
+      "type": "string",
+      "values": ["alongside", "over", "hidden"],
+      "default": "alongside",
+      "description": "How the side panel expands relative to the player"
+    },
+    "playNextOnError": {
+      "type": "boolean",
+      "default": true,
+      "description": "Automatically move to the next playlist item when playback fails"
+    },
+    "displayCreationDate": {
+      "type": "boolean",
+      "default": false,
+      "description": "Display creation date for each playlist item"
+    }
+  }
+}
