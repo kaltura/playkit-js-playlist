@@ -5,7 +5,7 @@
       "hide_plugin": "Ocultar lista de reproducción",
       "amount-items": {
         "one": "vídeo",
-        "many": "{{count}} videos"
+        "many": "{{count}} vídeos"
       },
       "hour": "h",
       "min": "min",
