@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 3.5.12 (2026-10-29)
+
+
+### Bug Fixes
+
+* **SUP-53845:**  Localization issues with Catalan language in playlists and related content ([#94](https://github.com/kaltura/playkit-js-playlist/issues/94)) ([fa96586](https://github.com/kaltura/playkit-js-playlist/commit/fa96586531d94d54fb8510c23336b6720e25b8d2))
+
 ### 3.5.11 (2026-10-18)
 
 ### 3.5.10 (2026-09-24)
